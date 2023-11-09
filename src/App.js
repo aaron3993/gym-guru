@@ -7,7 +7,7 @@ import Register from './Register/register';
 
 function App() {
   return (
-    // <Router>
+    <Router>
       <div className="App">
         <Routes>
           <Route path="/" exact element={<Register />} />
@@ -15,7 +15,7 @@ function App() {
           <Route path="/login" element={<Login />} />
         </Routes>
       </div>
-    // </Router>
+    </Router>
   );
 }
 
