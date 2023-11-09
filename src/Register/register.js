@@ -1,56 +1,90 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Link, useNavigate } from 'react-router-dom';
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
-
-const Register = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState(null);
-  const navigate = useNavigate();
-
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    const auth = getAuth();
-
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      // Successfully registered
-      navigate.push('/dashboard');
-    } catch (error) {
-      setError(error.message);
+import React, {useState} from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import {  createUserWithEmailAndPassword  } from 'firebase/auth';
+import { auth } from '../firebase';
+ 
+const Signup = () => {
+    const navigate = useNavigate();
+ 
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('');
+ 
+    const onSubmit = async (e) => {
+      e.preventDefault()
+     
+      await createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            console.log(user);
+            navigate("/login")
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.log(errorCode, errorMessage);
+            // ..
+        });
+ 
+   
     }
-  };
-
+ 
   return (
-    <div className="register-container">
-      <h1>Register</h1>
-      <form onSubmit={handleRegister}>
-        <div className="input-container">
-          <label>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            style={{ backgroundColor: '#cce6ff' }}
-          />
-        </div>
-        <div className="input-container">
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={{ backgroundColor: '#cce6ff' }}
-          />
-        </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        <button type="submit">Register</button>
-      </form>
-      <p>
-        Already have an account? <Link to="/login">Login</Link>
-      </p>
-    </div>
-  );
-};
+    <main >        
+        <section>
+            <div>
+                <div>                  
+                    <h1> FocusApp </h1>                                                                            
+                    <form>                                                                                            
+                        <div>
+                            <label htmlFor="email-address">
+                                Email address
+                            </label>
+                            <input
+                                type="email"
+                                label="Email address"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}  
+                                required                                    
+                                placeholder="Email address"                                
+                            />
+                        </div>
 
-export default Register;
+                        <div>
+                            <label htmlFor="password">
+                                Password
+                            </label>
+                            <input
+                                type="password"
+                                label="Create password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)} 
+                                required                                 
+                                placeholder="Password"              
+                            />
+                        </div>                                             
+                        
+                        <button
+                            type="submit" 
+                            onClick={onSubmit}                        
+                        >  
+                            Sign up                                
+                        </button>
+                                                                     
+                    </form>
+                   
+                    <p>
+                        Already have an account?{' '}
+                        <NavLink to="/login" >
+                            Sign in
+                        </NavLink>
+                    </p>                   
+                </div>
+            </div>
+        </section>
+    </main>
+  )
+}
+ 
+export default Signup
