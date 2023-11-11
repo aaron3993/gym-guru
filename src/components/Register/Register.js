@@ -2,8 +2,9 @@ import React, {useState} from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import {  createUserWithEmailAndPassword  } from 'firebase/auth';
 import { auth } from '../../firebase';
+import "./Register.css"
  
-const Signup = () => {
+const Register = () => {
     const navigate = useNavigate();
  
     const [email, setEmail] = useState('')
@@ -33,9 +34,9 @@ const Signup = () => {
   return (
     <main >        
         <section>
-            <div>
+            <div className="signup-container">
                 <div>                  
-                    <h1> FocusApp </h1>                                                                            
+                    <p className='title'> Gym Guru </p>                                                                            
                     <form>                                                                                            
                         <div>
                             <label htmlFor="email-address">
@@ -87,4 +88,4 @@ const Signup = () => {
   )
 }
  
-export default Signup
+export default Register
