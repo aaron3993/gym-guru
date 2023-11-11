@@ -1,24 +1,26 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes, Switch } from 'react-router-dom';
-// import Home from './Home';
-// import Dashboard from './Dashboard';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './Home/home';
 import Login from './Login/login';
 import Register from './Register/register';
-import Home from './Home/home';
+import Navbar from './Navbar/navbar';
+// import firebase from 'firebase/app';
+// import 'firebase/auth';
 
-function App() {
+const App = () => {
+  // const isAuthenticated = firebase.auth().currentUser !== null;
+
   return (
     <Router>
-      <div className="App">
-        <Routes>
-        <Route path="/signup" element={<Register/>}/>
-          {/* <Route path="/dashboard" component={Dashboard} /> */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/home" element={<Home />} />
-        </Routes>
-      </div>
+      {/* <Navbar isAuthenticated={isAuthenticated} /> */}
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        {/* Other routes */}
+      </Routes>
     </Router>
   );
-}
+};
 
 export default App;

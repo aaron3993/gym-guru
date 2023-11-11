@@ -2,6 +2,7 @@ import React from 'react';
 import {  signOut } from "firebase/auth";
 import {auth} from '../firebase';
 import { useNavigate } from 'react-router-dom';
+import Navbar from '../Navbar/navbar';
  
 const Home = () => {
     const navigate = useNavigate();
@@ -18,17 +19,7 @@ const Home = () => {
    
     return(
         <>
-            <nav>
-                <p>
-                    Welcome Home
-                </p>
- 
-                <div>
-        			<button onClick={handleLogout}>
-                        Logout
-                    </button>
-        		</div>
-            </nav>
+        <Navbar />
         </>
     )
 }
