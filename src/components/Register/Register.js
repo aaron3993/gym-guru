@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
+import { collection, addDoc } from "firebase/firestore";
 import {  createUserWithEmailAndPassword  } from 'firebase/auth';
-import { auth } from '../../firebase';
+import { auth, db } from '../../firebase';
 import "./Register.css"
  
 const Register = () => {
@@ -13,20 +14,23 @@ const Register = () => {
     const onSubmit = async (e) => {
       e.preventDefault()
      
-      await createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            console.log(user);
-            navigate("/login")
-            // ...
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            console.log(errorCode, errorMessage);
+      try {
+          const userCredential = await createUserWithEmailAndPassword(auth, email, password)
+          const user = userCredential.user;
+          const docRef = await addDoc(collection(db, "users"), {
+            uid: user.uid,
+            email: user.email,
+            // Add any additional user data you want to store in Firestore
+            // For example: first name, last name, etc.
+          });
+          console.log("Document written with ID: ", docRef.id);
+          navigate("/login")
+      } catch (error) {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          console.log(errorCode, errorMessage);
+      }
             // ..
-        });
  
    
     }
