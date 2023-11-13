@@ -30,9 +30,6 @@ const Register = () => {
           const errorMessage = error.message;
           console.log(errorCode, errorMessage);
       }
-            // ..
- 
-   
     }
  
   return (
