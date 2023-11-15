@@ -10,11 +10,13 @@ const ExerciseList = () => {
   const [endOfData, setEndOfData] = useState(false);
 
   useEffect(() => {
+    console.log('fetching exercises')
     // Fetch exercises when the component mounts or when the page changes
     fetchExercises();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Run whenever the page changes
+  // }, [page]); // Run whenever the page changes
 
   const fetchExercises = () => {
     if (loading || endOfData) return;
