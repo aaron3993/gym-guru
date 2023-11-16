@@ -29,7 +29,7 @@ const ExerciseList = () => {
       url: 'https://exercisedb.p.rapidapi.com/exercises',
       params: {limit: '10'},
       headers: {
-        'X-RapidAPI-Key': '5c16cbd4dcmsh3b9a198ce5bf6c4p14b102jsnb2cdf3972a14',
+        'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
         'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
       }
     };

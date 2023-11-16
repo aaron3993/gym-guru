@@ -6,6 +6,7 @@ import Register from './components/Register/Register';
 import PrivateRoute from './components/PrivateRoute';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from './firebase';
+import Navbar from './components/Navbar/Navbar';
 
 const App = () => {
   console.log('app');
@@ -33,24 +34,25 @@ const App = () => {
   }
 
   return (
-    <Router>
-      <Routes>
-        <Route
-          path="/"
-          element={
-            <PrivateRoute isAuthenticated={isAuthenticated}>
-              <Home />
-            </PrivateRoute>
-          }
-        />
-        <Route
-          path="/login"
-          element={isAuthenticated ? <Navigate to="/" /> : <Login />}
-        />
-        <Route path="/register" element={<Register />} />
-        {/* Other routes */}
-      </Routes>
-    </Router>
+      <Router>
+      {isAuthenticated && <Navbar />}
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <PrivateRoute isAuthenticated={isAuthenticated}>
+                <Home />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/login"
+            element={isAuthenticated ? <Navigate to="/" /> : <Login />}
+          />
+          <Route path="/register" element={<Register />} />
+          {/* Other routes */}
+        </Routes>
+      </Router>
   );
 };
 

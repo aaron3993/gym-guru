@@ -1,30 +1,61 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import {  signOut } from "firebase/auth";
-import {auth} from '../../firebase';
-
+import { signOut } from 'firebase/auth';
+import { auth } from '../../firebase';
+import './Navbar.css';
 
 const Navbar = () => {
   const navigate = useNavigate();
+  const [logoutConfirmation, setLogoutConfirmation] = useState(false);
 
   const handleLogout = () => {
-    signOut(auth).then(() => {
-        // Sign-out successful.
-            navigate("/login");
-            console.log("Signed out successfully")
-        }).catch((error) => {
-        // An error happened.
-        });
+    setLogoutConfirmation(true);
+  };
+
+  const confirmLogout = () => {
+    signOut(auth)
+      .then(() => {
+        navigate('/login');
+        console.log('Signed out successfully');
+      })
+      .catch((error) => {
+        console.error('Error signing out:', error);
+      })
+      .finally(() => {
+        setLogoutConfirmation(false);
+      });
+  };
+
+  const cancelLogout = () => {
+    setLogoutConfirmation(false);
   };
 
   return (
-    <nav style={{ background: '#3498db', padding: '10px', color: 'white' }}>
-      <Link to="/" style={{ color: 'white', marginRight: '20px' }}>
-        Home
-      </Link>
-        <button onClick={handleLogout} style={{ background: 'transparent', border: 'none', color: 'white', cursor: 'pointer' }}>
+    <nav className="navbar">
+      <div className="nav-links">
+        <Link to="/" className="nav-link">
+          Home
+        </Link>
+        <Link to="/exercises" className="nav-link">
+          Exercises
+        </Link>
+        <Link to="/workouts" className="nav-link">
+          Workouts
+        </Link>
+      </div>
+      <div className="logout-btn-container">
+        <button className="logout-btn" onClick={handleLogout}>
           Logout
         </button>
+      </div>
+
+      {logoutConfirmation && (
+        <div className="logout-confirmation">
+          <p>Are you sure you want to logout?</p>
+          <button onClick={confirmLogout}>Yes</button>
+          <button onClick={cancelLogout}>No</button>
+        </div>
+      )}
     </nav>
   );
 };

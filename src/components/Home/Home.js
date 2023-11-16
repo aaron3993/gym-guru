@@ -9,9 +9,9 @@ const Home = () => {
     })
     return(
         <>
-            <Navbar />
+            {/* <Navbar /> */}
             {/* <h1>Home</h1> */}
-            <ExerciseList />
+            {/* <ExerciseList /> */}
             {/* <WorkoutList /> */}
         </>
     )
