@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import Table from '../Table/Table'; // Assume you have a Table component
-import wgerApi from '../../api/wgerApi'; // Assuming you have a configured wgerApi instance
 
 const ExerciseList = () => {
   const [exercises, setExercises] = useState([]);
@@ -10,63 +10,57 @@ const ExerciseList = () => {
   const [endOfData, setEndOfData] = useState(false);
 
   useEffect(() => {
-    console.log('fetching exercises')
+    console.log('fetching exercises');
     // Fetch exercises when the component mounts or when the page changes
     fetchExercises();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []); // Run whenever the page changes
-  // }, [page]); // Run whenever the page changes
 
-  const fetchExercises = () => {
+  const fetchExercises = async () => {
     if (loading || endOfData) return;
 
     setLoading(true);
 
-    wgerApi
-      .get(`/exercise/?page=${page}&limit=${limit}`)
-      .then(response => {
-        console.log('Exercises fetched:', response.data);
+    // const offset = (page - 1) * limit;
 
-        // Update state to accumulate results
-        setExercises(prevExercises => [...prevExercises, ...response.data.results]);
-
-        // If the API response contains less than the expected number of items, it's the end of the data
-        if (response.data.results.length < limit) {
-          console.log('End of data reached');
-          setEndOfData(true);
-        } else {
-          // Increment the page for the next API call
-          setPage(prevPage => prevPage + 1);
-        }
-      })
-      .catch(error => {
-        console.error('Error fetching exercises:', error);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  };
-
-  const handlePrevPage = () => {
-    if (page > 1) {
-      setPage(prevPage => prevPage - 1);
-      setEndOfData(false); // Reset endOfData when navigating to the previous page
+    const options = {
+      method: 'GET',
+      url: 'https://exercisedb.p.rapidapi.com/exercises',
+      params: {limit: '10'},
+      headers: {
+        'X-RapidAPI-Key': '5c16cbd4dcmsh3b9a198ce5bf6c4p14b102jsnb2cdf3972a14',
+        'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
+      }
+    };
+    
+    try {
+      const response = await axios.request(options);
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
     }
   };
 
-  const handleNextPage = () => {
-    setPage(prevPage => prevPage + 1);
-  };
+  // const handlePrevPage = () => {
+  //   if (page > 1) {
+  //     setPage(prevPage => prevPage - 1);
+  //     setEndOfData(false); // Reset endOfData when navigating to the previous page
+  //   }
+  // };
+
+  // const handleNextPage = () => {
+  //   setPage(prevPage => prevPage + 1);
+  // };
 
   return (
     <div>
-      <Table
+      {/* <Table
         data={exercises}
         columns={['Name', 'Description', 'Equipment', 'Category']}
         rowKeys={['name', 'description', 'equipment', 'category']}
-      />
-      <div>
+      /> */}
+      {/* <div>
         <button onClick={handlePrevPage} disabled={page === 1 || loading}>
           Previous
         </button>
@@ -76,7 +70,7 @@ const ExerciseList = () => {
         </button>
       </div>
       {loading && <p>Loading...</p>}
-      {endOfData && <p>End of data reached</p>}
+      {endOfData && <p>End of data reached</p>} */}
     </div>
   );
 };
