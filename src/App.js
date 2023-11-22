@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import Home from './components/Home/Home';
-import Login from './components/Login/Login';
-import Register from './components/Register/Register';
+import Home from './pages/Home/Home';
+import Login from './pages/Login/Login';
+import Register from './pages/Register/Register';
 import PrivateRoute from './components/PrivateRoute';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from './firebase';
 import Navbar from './components/Navbar/Navbar';
+import WorkoutList from './pages/WorkoutList/WorkoutList';
+import ExercisePage from './pages/ExercisePage/ExercisePage';
 
 const App = () => {
   console.log('app');
@@ -43,6 +45,18 @@ const App = () => {
               <PrivateRoute isAuthenticated={isAuthenticated}>
                 <Home />
               </PrivateRoute>
+            }
+          />
+          <Route
+            path="/exercises"
+            element={
+              <ExercisePage />
+            }
+          />
+          <Route
+            path="/workouts"
+            element={
+              <WorkoutList />
             }
           />
           <Route
