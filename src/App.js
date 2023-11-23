@@ -4,7 +4,7 @@ import Home from './pages/Home/Home';
 import Login from './pages/Login/Login';
 import Register from './pages/Register/Register';
 import PrivateRoute from './components/PrivateRoute';
-import { onAuthStateChanged } from "firebase/auth";
+import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from './firebase';
 import Navbar from './components/Navbar/Navbar';
 import WorkoutList from './pages/WorkoutList/WorkoutList';
@@ -15,28 +15,32 @@ const App = () => {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, (user) => {
       if (user) {
         console.log({ user });
         setAuthenticated(true);
+      } else {
+        setAuthenticated(false)
       }
       setLoading(false);
     });
-
-    return () => {
-      // Unsubscribe when the component is unmounted
-      unsubscribe();
-    };
   }, []);
 
-  // Render loading indicator or the application based on the isLoading state
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+    } catch (error) {
+      console.error('Error signing out:', error);
+    }
+  };
+
   if (isLoading) {
     return <p>Loading...</p>;
   }
 
   return (
       <Router>
-      {isAuthenticated && <Navbar />}
+      {isAuthenticated && <Navbar onLogout={handleLogout} />}
         <Routes>
           <Route
             path="/"
