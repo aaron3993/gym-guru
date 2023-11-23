@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import wgerApi from '../../api/wgerApi';
 
 const WorkoutList = () => {
   const [workouts, setWorkouts] = useState([]);

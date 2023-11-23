@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import SearchBar from '../../components/SearchBar/Searchbar';
-import CategoryList from '../../components/CategoryList/CategoryList'; // Adjust the import path as needed
-import CardList from '../../components/CardList/CardList'; // Adjust the import path as needed
+import SearchBar from '../../components/SearchBar/SearchBar';
+import CategoryList from '../../components/CategoryList/CategoryList';
+import CardList from '../../components/CardList/CardList';
 
 const ExercisePage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [exercises, setExercises] = useState([])
   const [loading, setLoading] = useState(false);
   const [endOfData, setEndOfData] = useState(false);
 
@@ -32,11 +33,11 @@ const ExercisePage = () => {
     try {
       const response = await axios.request(options);
       console.log(response.data);
+      setExercises(response.data)
     } catch (error) {
       console.error(error);
     }
   };
-
 
   const handleSearch = (query) => {
     setSearchQuery(query);
@@ -48,28 +49,21 @@ const ExercisePage = () => {
     // Perform search based on the selected category
   };
 
-  // Example data for exercises
-  const exerciseData = [
-    { id: 1, name: 'Exercise 1' },
-    { id: 2, name: 'Exercise 2' },
-    // Add more exercise items as needed
-  ];
-
-  // Example data for categories
-  const categoryData = ['Category 1', 'Category 2', 'Category 3'];
-
   return (
     <div>
       <SearchBar onSearch={handleSearch} />
       <div style={{ display: 'flex' }}>
         <div style={{ flex: 1 }}>
           <CategoryList
-            categories={categoryData}
+            categories={['Category 1', 'Category 2', 'Category 3']}
             onSelectCategory={handleCategoryClick}
           />
         </div>
         <div style={{ flex: 2 }}>
-          <CardList items={exerciseData} /> {/* Using CardList component */}
+          <CardList
+            items={exercises}
+            onItemClick={(exercise) => console.log(exercise)}
+          />
         </div>
       </div>
     </div>
