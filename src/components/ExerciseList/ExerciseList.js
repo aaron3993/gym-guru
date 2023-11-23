@@ -1,5 +1,6 @@
 import React from 'react';
 import ExerciseCard from './ExerciseCard/ExerciseCard';
+import './ExerciseList.css'
 
 const ExerciseList = ({ exercises, onItemClick }) => (
   <div className="exercise-list">

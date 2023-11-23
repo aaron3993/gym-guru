@@ -53,7 +53,7 @@ const ExercisePage = () => {
   return (
     <div className='exercise-container'>
       <SearchBar onSearch={handleSearch} />
-      <div style={{ display: 'flex' }}>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={{ flex: 1 }}>
           {/* <CategoryList
             categories={['Category 1', 'Category 2', 'Category 3']}
