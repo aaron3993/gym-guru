@@ -34,7 +34,7 @@ const Register = () => {
  
   return (
     <main >        
-        <section>
+        <section className='register-layout'>
             <div className="signup-container">
                 <div>                  
                     <p className='title'> Gym Guru </p>                                                                            

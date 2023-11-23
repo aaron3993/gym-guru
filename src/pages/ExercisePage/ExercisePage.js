@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import CategoryList from '../../components/CategoryList/CategoryList';
-import CardList from '../../components/CardList/CardList';
+import ExerciseList from '../../components/ExerciseList/ExerciseList';
+import './ExercisePage.css'
 
 const ExercisePage = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -23,7 +24,7 @@ const ExercisePage = () => {
     const options = {
       method: 'GET',
       url: 'https://exercisedb.p.rapidapi.com/exercises',
-      params: {limit: '9'},
+      params: {limit: '8'},
       headers: {
         'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
         'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
@@ -50,18 +51,18 @@ const ExercisePage = () => {
   };
 
   return (
-    <div>
+    <div className='exercise-container'>
       <SearchBar onSearch={handleSearch} />
       <div style={{ display: 'flex' }}>
         <div style={{ flex: 1 }}>
-          <CategoryList
+          {/* <CategoryList
             categories={['Category 1', 'Category 2', 'Category 3']}
             onSelectCategory={handleCategoryClick}
-          />
+          /> */}
         </div>
         <div style={{ flex: 2 }}>
-          <CardList
-            items={exercises}
+          <ExerciseList
+            exercises={exercises}
             onItemClick={(exercise) => console.log(exercise)}
           />
         </div>

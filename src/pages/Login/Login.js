@@ -29,7 +29,7 @@ const Login = () => {
     return(
         <>
             <main>
-                <section>
+                <section className='login-layout'>
                     <div className="login-container">
                     <p className='title'>Gym Guru</p>
                     <form>

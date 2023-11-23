@@ -11,7 +11,6 @@ import WorkoutList from './pages/WorkoutList/WorkoutList';
 import ExercisePage from './pages/ExercisePage/ExercisePage';
 
 const App = () => {
-  console.log('app');
   const [isAuthenticated, setAuthenticated] = useState(false);
   const [isLoading, setLoading] = useState(true);
 
@@ -64,7 +63,6 @@ const App = () => {
             element={isAuthenticated ? <Navigate to="/" /> : <Login />}
           />
           <Route path="/register" element={<Register />} />
-          {/* Other routes */}
         </Routes>
       </Router>
   );
