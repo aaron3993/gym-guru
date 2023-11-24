@@ -17,7 +17,6 @@ const App = () => {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        console.log({ user });
         setAuthenticated(true);
       } else {
         setAuthenticated(false)
@@ -28,6 +27,7 @@ const App = () => {
 
   const handleLogout = async () => {
     try {
+      setAuthenticated(false)
       await signOut(auth);
     } catch (error) {
       console.error('Error signing out:', error);
@@ -53,13 +53,17 @@ const App = () => {
           <Route
             path="/exercises"
             element={
-              <ExercisePage />
+              <PrivateRoute isAuthenticated={isAuthenticated}>
+                <ExercisePage />
+              </PrivateRoute>
             }
           />
           <Route
             path="/workouts"
             element={
-              <WorkoutList />
+              <PrivateRoute isAuthenticated={isAuthenticated}>
+                <WorkoutList />
+              </PrivateRoute>
             }
           />
           <Route

@@ -1,8 +1,8 @@
 .navbar {
   height: 5vh;
-  background: #3498db;
+  background-color: #2C3E50;
+  color: #ECF0F1;
   padding: 10px;
-  color: white;
   position: fixed;
   width: 100%;
   top: 0;

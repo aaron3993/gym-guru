@@ -1,8 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
 const Navbar = ({ onLogout }) => {
+  const navigate = useNavigate()
+
   return (
     <nav className="navbar">
       <div className="nav-links">
@@ -17,7 +19,10 @@ const Navbar = ({ onLogout }) => {
         </Link>
       </div>
       <div className="logout-btn-container">
-        <button className="logout-btn" onClick={onLogout}>
+        <button className="logout-btn" onClick={async () => {
+          await onLogout()
+          navigate('/login')
+          }}>
           Logout
         </button>
       </div>
