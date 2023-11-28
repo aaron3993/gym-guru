@@ -5,9 +5,8 @@ const ExerciseCard = ({ exercise, onClick }) => (
   <div className="exercise-card" onClick={onClick}>
     <img src={exercise.gifUrl} alt={exercise.name} />
     <div className="card-content">
-      <h3>{exercise.name}</h3>
-      <p>{exercise.bodyPart}</p>
-      {/* Add more properties as needed */}
+      {/* <h3>{exercise.name}</h3> */}
+      <h3>{exercise.updatedCategory}</h3>
     </div>
   </div>
 );

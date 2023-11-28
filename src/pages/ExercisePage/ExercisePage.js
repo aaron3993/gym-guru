@@ -15,6 +15,7 @@ const ExercisePage = () => {
 
   useEffect(() => {
     fetchExercises();
+    fetchCategories();
   }, []);
 
   const fetchExercises = async () => {
@@ -38,6 +39,7 @@ const ExercisePage = () => {
       const exercises = response.data;
 
       setAllExercises(exercises);
+      console.log({exercises})
       setExercises(exercises.slice(0, 8));
     } catch (error) {
       console.error(error);
@@ -45,6 +47,29 @@ const ExercisePage = () => {
       setLoading(false);
     }
   };
+
+  const fetchCategories = async () => {
+    const options = {
+      params: {
+        // limit: '15',
+        // name: searchQuery
+      },
+      headers: {
+        'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
+        'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com',
+      },
+    };
+    
+    try {
+      const response = await axios.get('https://exercisedb.p.rapidapi.com/exercises/bodyPartList', options);
+      const bodyparts = response.data;
+
+      setAllExercises(bodyparts);
+      console.log({bodyparts})
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   const applyFiltersAndLimit = (query) => {
     const filteredExercises = allExercises.filter((exercise) => {
