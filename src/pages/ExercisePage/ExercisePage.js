@@ -4,13 +4,15 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import CategoryList from '../../components/CategoryList/CategoryList';
 import ExerciseList from '../../components/ExerciseList/ExerciseList';
 import './ExercisePage.css'
+// import CircularProgress from '@mui/material/CircularProgress';
+import LoadingSpinner from '../../components/LoadingSpinner';
 
 const ExercisePage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [exercises, setExercises] = useState([])
   const [allExercises, setAllExercises] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchExercises();
@@ -18,7 +20,7 @@ const ExercisePage = () => {
   }, []);
 
   const fetchExercises = async () => {
-    if (loading) return;
+    // if (isLoading) return;
 
     setLoading(true);
 
@@ -95,6 +97,10 @@ const ExercisePage = () => {
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
+
+  if (isLoading) {
+    return <LoadingSpinner />
+  }
 
   return (
     <div className='exercise-container'>

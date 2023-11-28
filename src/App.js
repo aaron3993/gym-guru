@@ -9,6 +9,11 @@ import { auth } from './firebase';
 import Navbar from './components/Navbar/Navbar';
 import WorkoutList from './pages/WorkoutList/WorkoutList';
 import ExercisePage from './pages/ExercisePage/ExercisePage';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+import { CircularProgress } from '@mui/material';
+
+const theme = createTheme();
 
 const App = () => {
   const [isAuthenticated, setAuthenticated] = useState(false);
@@ -18,7 +23,6 @@ const App = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setAuthenticated(true);
-        console.log('hi')
       } else {
         setAuthenticated(false)
       }
@@ -36,10 +40,12 @@ const App = () => {
   };
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <CircularProgress />
   }
 
   return (
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
       <Router>
       {isAuthenticated && <Navbar onLogout={handleLogout} />}
         <Routes>
@@ -74,6 +80,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
         </Routes>
       </Router>
+      </ThemeProvider>
   );
 };
 
