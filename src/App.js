@@ -18,6 +18,7 @@ const App = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setAuthenticated(true);
+        console.log('hi')
       } else {
         setAuthenticated(false)
       }

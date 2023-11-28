@@ -11,7 +11,6 @@ const ExercisePage = () => {
   const [exercises, setExercises] = useState([])
   const [allExercises, setAllExercises] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [endOfData, setEndOfData] = useState(false);
 
   useEffect(() => {
     fetchExercises();
@@ -19,7 +18,7 @@ const ExercisePage = () => {
   }, []);
 
   const fetchExercises = async () => {
-    if (loading || endOfData) return;
+    if (loading) return;
 
     setLoading(true);
 
