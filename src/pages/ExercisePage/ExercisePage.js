@@ -9,6 +9,7 @@ const ExercisePage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [exercises, setExercises] = useState([])
+  const [allExercises, setAllExercises] = useState([]);
   const [loading, setLoading] = useState(false);
   const [endOfData, setEndOfData] = useState(false);
 
@@ -22,32 +23,53 @@ const ExercisePage = () => {
     setLoading(true);
 
     const options = {
-      method: 'GET',
-      url: 'https://exercisedb.p.rapidapi.com/exercises',
-      params: {limit: '8'},
+      params: {
+        limit: '1000',
+        name: searchQuery
+      },
       headers: {
         'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
-        'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com'
-      }
+        'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com',
+      },
     };
     
     try {
-      const response = await axios.request(options);
-      console.log(response.data);
-      setExercises(response.data)
+      const response = await axios.get('https://exercisedb.p.rapidapi.com/exercises', options);
+      const exercises = response.data;
+
+      setAllExercises(exercises);
+      setExercises(exercises.slice(0, 8));
     } catch (error) {
       console.error(error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleSearch = (query) => {
+  const applyFiltersAndLimit = (query) => {
+    const filteredExercises = allExercises.filter((exercise) => {
+      const lowerCaseQuery = query.toLowerCase();
+
+      return (
+        exercise.name.toLowerCase().includes(lowerCaseQuery) ||
+        exercise.target.toLowerCase().includes(lowerCaseQuery) ||
+        exercise.equipment.toLowerCase().includes(lowerCaseQuery) ||
+        exercise.bodyPart.toLowerCase().includes(lowerCaseQuery)
+      );
+    });
+
+    const displayedExercises = filteredExercises.slice(0, 8);
+    setExercises(displayedExercises)
+    return displayedExercises
+  };
+
+  const handleSearch = async (query) => {
     setSearchQuery(query);
-    // Perform search based on the query
+    applyFiltersAndLimit(query)
   };
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
-    // Perform search based on the selected category
   };
 
   return (
