@@ -11,7 +11,7 @@ import WorkoutList from './pages/WorkoutList/WorkoutList';
 import ExercisePage from './pages/ExercisePage/ExercisePage';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import { CircularProgress } from '@mui/material';
+import LoadingSpinner from './components/LoadingSpinner';
 
 const theme = createTheme();
 
@@ -40,7 +40,7 @@ const App = () => {
   };
 
   if (isLoading) {
-    return <CircularProgress />
+    return <LoadingSpinner />
   }
 
   return (

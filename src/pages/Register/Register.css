@@ -25,11 +25,11 @@
   text-align: center;
 }
 
-.signup-container h1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: #3498db;
-  margin-bottom: 20px;
+.signup-container label {
+  font-size: 1.2em;
+  color: #2c3e50;
+  display: block;
+  margin-bottom: 8px;
 }
 
 .signup-container input {
