@@ -2,7 +2,8 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './Navbar.css';
 
-const Navbar = ({ onLogout }) => {
+const Navbar = ({ onLogout, user }) => {
+  console.log({user})
   const navigate = useNavigate()
 
   return (
@@ -18,13 +19,16 @@ const Navbar = ({ onLogout }) => {
           Workouts
         </Link>
       </div>
-      <div className="logout-btn-container">
-        <button className="logout-btn" onClick={async () => {
-          await onLogout()
-          navigate('/login')
+      <div className="user-logout-container">
+        <div className='user-logout-sub-container'>
+          <span className="user-name">{user.displayName}</span>
+          <button className="logout-btn" onClick={async () => {
+            await onLogout()
+            navigate('/login')
           }}>
-          Logout
-        </button>
+            Logout
+          </button>
+        </div>
       </div>
     </nav>
   );

@@ -25,13 +25,16 @@
   text-decoration: none;
 }
 
-.logout-btn-container {
+.user-logout-container {
   width: 50%;
   padding-right: 10px;
 }
 
-.logout-btn {
+.user-logout-sub-container {
   float: right;
+}
+
+.logout-btn {
   background: transparent;
   border: none;
   color: white;

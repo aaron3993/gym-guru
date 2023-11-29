@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { collection, addDoc } from 'firebase/firestore';
-import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth, db } from '../../firebase';
 import './Register.css';
 
@@ -35,6 +35,8 @@ const Register = () => {
       // Proceed with registration if all validations pass
       const userCredential = await createUserWithEmailAndPassword(auth, email, password);
       const user = userCredential.user;
+
+      await updateProfile(user, { displayName: name });
 
       const docRef = await addDoc(collection(db, 'users'), {
         uid: user.uid,

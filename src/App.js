@@ -16,14 +16,17 @@ import LoadingSpinner from './components/LoadingSpinner';
 const theme = createTheme();
 
 const App = () => {
+  const [user, setUser] = useState(null);
   const [isAuthenticated, setAuthenticated] = useState(false);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
+        setUser(user);
         setAuthenticated(true);
       } else {
+        setUser(null);
         setAuthenticated(false)
       }
       setLoading(false);
@@ -33,6 +36,7 @@ const App = () => {
   const handleLogout = async () => {
     try {
       setAuthenticated(false)
+      setUser(null);
       await signOut(auth);
     } catch (error) {
       console.error('Error signing out:', error);
@@ -47,7 +51,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-      {isAuthenticated && <Navbar onLogout={handleLogout} />}
+      {isAuthenticated && <Navbar user={user} onLogout={handleLogout} />}
         <Routes>
           <Route
             path="/"
