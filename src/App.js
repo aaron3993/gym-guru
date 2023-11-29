@@ -8,10 +8,11 @@ import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from './firebase';
 import Navbar from './components/Navbar/Navbar';
 import WorkoutList from './pages/WorkoutList/WorkoutList';
-import ExercisePage from './pages/ExercisePage/ExercisePage';
+import ExercisesPage from './pages/ExercisesPage/ExercisesPage';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import LoadingSpinner from './components/LoadingSpinner';
+import WorkoutsPage from './pages/WorkoutsPage/WorkoutsPage';
 
 const theme = createTheme();
 
@@ -65,7 +66,7 @@ const App = () => {
             path="/exercises"
             element={
               <PrivateRoute isAuthenticated={isAuthenticated}>
-                <ExercisePage />
+                <ExercisesPage />
               </PrivateRoute>
             }
           />
@@ -73,7 +74,7 @@ const App = () => {
             path="/workouts"
             element={
               <PrivateRoute isAuthenticated={isAuthenticated}>
-                <WorkoutList />
+                <WorkoutsPage />
               </PrivateRoute>
             }
           />

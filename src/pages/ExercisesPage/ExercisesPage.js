@@ -3,11 +3,11 @@ import axios from 'axios';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import CategoryList from '../../components/CategoryList/CategoryList';
 import ExerciseList from '../../components/ExerciseList/ExerciseList';
-import './ExercisePage.css'
+import './ExercisesPage.css'
 // import CircularProgress from '@mui/material/CircularProgress';
 import LoadingSpinner from '../../components/LoadingSpinner';
 
-const ExercisePage = () => {
+const ExercisesPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [exercises, setExercises] = useState([])
@@ -123,4 +123,4 @@ const ExercisePage = () => {
   );
 };
 
-export default ExercisePage;
+export default ExercisesPage;
