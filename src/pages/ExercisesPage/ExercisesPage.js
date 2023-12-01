@@ -103,7 +103,7 @@ const ExercisesPage = () => {
   }
 
   return (
-    <div className='exercise-container'>
+    <div className='exercises-container'>
       <SearchBar onSearch={handleSearch} />
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <div style={{ flex: 1 }}>

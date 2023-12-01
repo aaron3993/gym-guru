@@ -1,0 +1,58 @@
+.create-workout-modal {
+    background-color: #ecf0f1;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+  }
+  
+  .create-workout-modal h1 {
+    font-size: 2em;
+    font-weight: bold;
+    color: #3498db;
+    margin-bottom: 20px;
+  }
+  
+  .create-workout-modal input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    box-sizing: border-box;
+  }
+  
+  .create-workout-modal button {
+    background-color: #3498db;
+    color: #ffffff;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 45%;
+    margin: 8px 5px;
+  }
+  
+  .create-workout-modal button:last-child {
+    margin-right: 0;
+  }
+  
+  /* Adjust modal size */
+  .ReactModal__Overlay {
+    opacity: 1;
+    transition: opacity 200ms ease-in-out;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .ReactModal__Content {
+    position: relative;
+    box-sizing: border-box;
+    outline: none;
+    width: 100%;
+    max-width: 400px; /* Adjusted max-width */
+    padding: 20px;
+    margin: 0 auto;
+    border-radius: 8px;
+  }
+  

@@ -7,7 +7,7 @@ import PrivateRoute from './components/PrivateRoute';
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from './firebase';
 import Navbar from './components/Navbar/Navbar';
-import WorkoutList from './pages/WorkoutList/WorkoutList';
+import WorkoutList from './pages/WorkoutsPage/WorkoutList/WorkoutList';
 import ExercisesPage from './pages/ExercisesPage/ExercisesPage';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
