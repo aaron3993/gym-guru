@@ -13,6 +13,7 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import LoadingSpinner from './components/LoadingSpinner';
 import WorkoutsPage from './pages/WorkoutsPage/WorkoutsPage';
+import WorkoutDetailPage from './pages/WorkoutsPage/WorkoutList/WorkoutCard/WorkoutDetail/WorkoutDetailPage';
 
 const theme = createTheme();
 
@@ -78,6 +79,13 @@ const App = () => {
               </PrivateRoute>
             }
           />
+          <Route
+            path="/workouts/:workoutId"
+            element={
+              <PrivateRoute isAuthenticated={isAuthenticated}>
+                <WorkoutDetailPage />
+              </PrivateRoute>
+            } />
           <Route
             path="/login"
             element={isAuthenticated ? <Navigate to="/" /> : <Login />}
