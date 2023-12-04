@@ -3,9 +3,9 @@ import axios from 'axios';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import CategoryList from '../../components/CategoryList/CategoryList';
 import ExerciseList from '../../components/ExerciseList/ExerciseList';
-import './ExercisesPage.css'
-// import CircularProgress from '@mui/material/CircularProgress';
+import { fetchAllExercises } from '../../utils/apiUtils';
 import LoadingSpinner from '../../components/LoadingSpinner';
+import './ExercisesPage.css'
 
 const ExercisesPage = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -15,46 +15,19 @@ const ExercisesPage = () => {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchExercises();
+    fetchAllExercisesData();
     fetchCategories();
   }, []);
 
-  const fetchExercises = async () => {
-    // if (isLoading) return;
-
-    setLoading(true);
-
-    const options = {
-      params: {
-        limit: '1000',
-        name: searchQuery
-      },
-      headers: {
-        'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
-        'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com',
-      },
-    };
-    
-    try {
-      const response = await axios.get('https://exercisedb.p.rapidapi.com/exercises', options);
-      const exercises = response.data;
-
-      setAllExercises(exercises);
-      console.log({exercises})
-      setExercises(exercises.slice(0, 8));
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
+  const fetchAllExercisesData = async () => {
+    const exercises = await fetchAllExercises();
+    setAllExercises(exercises);
+    setExercises(exercises.slice(0, 8)); // Initial display, you can customize this
+    setLoading(false)
   };
 
   const fetchCategories = async () => {
     const options = {
-      params: {
-        // limit: '15',
-        // name: searchQuery
-      },
       headers: {
         'X-RapidAPI-Key': process.env.REACT_APP_RAPID_API_KEY,
         'X-RapidAPI-Host': 'exercisedb.p.rapidapi.com',
