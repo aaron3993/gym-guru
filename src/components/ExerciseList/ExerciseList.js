@@ -8,7 +8,7 @@ import {
 import { addExerciseToWorkout } from '../../utils/firestoreUtils';
 import './ExerciseList.css';
 
-const ExerciseList = ({ exercises, workouts }) => {
+const ExerciseList = ({ exercises, workouts, isWorkoutDetailPage}) => {
   const [selectedWorkoutId, setSelectedWorkoutId] = useState(null);
 
   const handleAddToWorkoutClick = async (exercise) => {
@@ -44,21 +44,13 @@ const ExerciseList = ({ exercises, workouts }) => {
 
   return (
     <div className="exercise-list">
-      {/* Dropdown to select the workout */}
-      <select onChange={handleWorkoutChange}>
-        <option value={null}>Select Workout</option>
-        {workouts.map((workout) => (
-          <option key={workout.id} value={workout.id}>
-            {workout.name}
-          </option>
-        ))}
-      </select>
-
       {updatedExercises.map((exercise) => (
         <ExerciseCard
           key={exercise.id}
           exercise={exercise}
-          onAddToWorkoutClick={handleAddToWorkoutClick}
+          workouts={workouts}
+          isWorkoutDetailPage={isWorkoutDetailPage}
+          // onAddToWorkoutClick={handleAddToWorkoutClick}
         />
       ))}
     </div>

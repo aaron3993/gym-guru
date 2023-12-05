@@ -108,8 +108,7 @@ const WorkoutDetailPage = () => {
 
   return (
     <div className="workout-details">
-      <h1>Workout Details</h1>
-      <p>Workout Name: {name}</p>
+      <h1>Workout: {name}</h1>
 
       <h2>Exercises:</h2>
       <ul>
@@ -130,7 +129,7 @@ const WorkoutDetailPage = () => {
       </div>
 
       <SearchBar onSearch={handleSearch} />
-      <ExerciseList exercises={filteredExercises} workoutId={workoutId} workouts={workouts} />
+      <ExerciseList exercises={filteredExercises} workoutId={workoutId} workouts={workouts} isWorkoutDetailPage={true} />
     </div>
   );
 };

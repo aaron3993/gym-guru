@@ -4,6 +4,7 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import CategoryList from '../../components/CategoryList/CategoryList';
 import ExerciseList from '../../components/ExerciseList/ExerciseList';
 import { fetchAllExercises } from '../../utils/apiUtils';
+import { getAllWorkouts } from '../../utils/firestoreUtils';
 import { applyExerciseFiltersAndLimit } from '../../utils/dataUtils';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import './ExercisesPage.css'
@@ -13,19 +14,26 @@ const ExercisesPage = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [exercises, setExercises] = useState([])
   const [allExercises, setAllExercises] = useState([]);
+  const [allWorkouts, setAllWorkouts] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchAllExercisesData();
+    getAllWorkoutsData();
     fetchCategories();
+    setLoading(false)
   }, []);
 
   const fetchAllExercisesData = async () => {
     const exercises = await fetchAllExercises();
     setAllExercises(exercises);
     setExercises(exercises.slice(0, 8)); // Initial display, you can customize this
-    setLoading(false)
   };
+
+  const getAllWorkoutsData = async () => {
+    const workouts = await getAllWorkouts();
+    setAllWorkouts(workouts)
+  }
 
   const fetchCategories = async () => {
     const options = {
@@ -71,7 +79,7 @@ const ExercisesPage = () => {
           /> */}
         </div>
         <div style={{ flex: 2 }}>
-        <ExerciseList exercises={exercises} workouts={[]} />
+        <ExerciseList exercises={exercises} workouts={allWorkouts} isWorkoutDetailPage={false} />
         </div>
       </div>
     </div>
