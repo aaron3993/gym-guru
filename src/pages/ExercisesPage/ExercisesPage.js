@@ -88,7 +88,6 @@ const ExercisesPage = () => {
         <div style={{ flex: 2 }}>
           <ExerciseList
             exercises={exercises}
-            onItemClick={(exercise) => console.log(exercise)}
           />
         </div>
       </div>

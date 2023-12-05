@@ -1,12 +1,3 @@
-// WorkoutDetailPage.jsx
-// import React, { useState, useEffect } from 'react';
-// import { useParams } from 'react-router-dom';
-// import { doc, getDoc, addDoc, collection } from 'firebase/firestore';
-// import { db } from '../../../../../firebase';
-// import LoadingSpinner from '../../../../../components/LoadingSpinner';
-// import './WorkoutDetailPage.css';
-
-// WorkoutDetailPage.jsx
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { doc, getDoc, getDocs, addDoc, collection } from 'firebase/firestore';
@@ -34,7 +25,7 @@ const WorkoutDetailPage = () => {
   const fetchAllExercisesData = async () => {
     const exercises = await fetchAllExercises();
     setAllExercises(exercises);
-    setFilteredExercises(exercises.slice(0, 8)); // Initial display, you can customize this
+    setFilteredExercises(exercises.slice(0, 8));
   };
 
   const fetchWorkoutById = async () => {
@@ -47,7 +38,6 @@ const WorkoutDetailPage = () => {
       } else {
         console.error('Workout not found');
       }
-
       const allExercisesSnapshot = await getDocs(collection(db, 'exercises'));
       const allExercises = allExercisesSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
       setFilteredExercises(applyFiltersAndLimit(allExercises, searchQuery));
@@ -81,7 +71,6 @@ const WorkoutDetailPage = () => {
 
       const exerciseRef = await addDoc(collection(db, 'exercises'), { name: newExerciseName });
 
-      // Update the workout to include the new exercise
       const updatedWorkout = {
         ...selectedWorkout,
         exercises: [...(selectedWorkout.exercises || []), exerciseRef.id],
@@ -138,7 +127,7 @@ const WorkoutDetailPage = () => {
       <SearchBar onSearch={handleSearch} />
       <ExerciseList
         exercises={filteredExercises}
-        onItemClick={(exercise) => console.log(exercise)}
+        workoutId={workoutId}
       />
     </div>
   );

@@ -1,3 +1,5 @@
+import { addDoc, collection, doc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { db } from '../firebase';
 export const displayCategoryName = (categoryFromAPI) => {
   const excludedCategories = ['neck'];
 
@@ -25,4 +27,12 @@ export const capitalizeFirstLetter = (str) => {
     .split(' ')
     .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ');
+};
+
+export const addExerciseToWorkout = async (workoutId, exerciseId) => {
+  const workoutRef = doc(db, 'workouts', workoutId);
+
+  await updateDoc(workoutRef, {
+    exercises: arrayUnion(exerciseId),
+  });
 };
