@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { doc, getDoc, getDocs, addDoc, collection } from 'firebase/firestore';
+import { doc, addDoc, getDoc, getDocs, collection } from 'firebase/firestore';
 import { db } from '../../../../../firebase';
 import SearchBar from '../../../../../components/SearchBar/SearchBar';
 import ExerciseList from '../../../../../components/ExerciseList/ExerciseList';
@@ -16,19 +16,25 @@ const WorkoutDetailPage = () => {
   const [allExercises, setAllExercises] = useState([]);
   const [filteredExercises, setFilteredExercises] = useState([]);
   const [isLoading, setLoading] = useState(true);
+  const [workouts, setWorkouts] = useState([]);
 
   useEffect(() => {
-    fetchWorkoutById();
-    fetchAllExercisesData();
+    const fetchData = async () => {
+      try {
+        await fetchWorkoutDetails();
+        await fetchAllWorkouts();
+        await fetchAllExercisesData();
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
   }, [workoutId]);
 
-  const fetchAllExercisesData = async () => {
-    const exercises = await fetchAllExercises();
-    setAllExercises(exercises);
-    setFilteredExercises(exercises.slice(0, 8));
-  };
-
-  const fetchWorkoutById = async () => {
+  const fetchWorkoutDetails = async () => {
     try {
       const workoutDoc = doc(db, 'workouts', workoutId);
       const workoutSnapshot = await getDoc(workoutDoc);
@@ -38,13 +44,28 @@ const WorkoutDetailPage = () => {
       } else {
         console.error('Workout not found');
       }
-      const allExercisesSnapshot = await getDocs(collection(db, 'exercises'));
-      const allExercises = allExercisesSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
-      setFilteredExercises(applyFiltersAndLimit(allExercises, searchQuery));
     } catch (error) {
-      console.error('Error fetching workout:', error);
-    } finally {
-      setLoading(false);
+      console.error('Error fetching workout details:', error);
+    }
+  };
+
+  const fetchAllWorkouts = async () => {
+    try {
+      const allWorkoutsSnapshot = await getDocs(collection(db, 'workouts'));
+      const allWorkoutsData = allWorkoutsSnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+      setWorkouts(allWorkoutsData);
+    } catch (error) {
+      console.error('Error fetching all workouts:', error);
+    }
+  };
+
+  const fetchAllExercisesData = async () => {
+    try {
+      const exercises = await fetchAllExercises();
+      setAllExercises(exercises);
+      setFilteredExercises(applyFiltersAndLimit(exercises, searchQuery));
+    } catch (error) {
+      console.error('Error fetching all exercises:', error);
     }
   };
 
@@ -90,9 +111,7 @@ const WorkoutDetailPage = () => {
 
   const handleSearch = (query) => {
     setSearchQuery(query);
-
-    setFilteredExercises(applyFiltersAndLimit(filteredExercises, query));
-    console.log(applyFiltersAndLimit(filteredExercises, query))
+    setFilteredExercises(applyFiltersAndLimit(allExercises, query));
   };
 
   if (isLoading) {
@@ -125,10 +144,7 @@ const WorkoutDetailPage = () => {
       </div>
 
       <SearchBar onSearch={handleSearch} />
-      <ExerciseList
-        exercises={filteredExercises}
-        workoutId={workoutId}
-      />
+      <ExerciseList exercises={filteredExercises} workoutId={workoutId} workouts={workouts} />
     </div>
   );
 };

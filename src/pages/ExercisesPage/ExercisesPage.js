@@ -86,9 +86,7 @@ const ExercisesPage = () => {
           /> */}
         </div>
         <div style={{ flex: 2 }}>
-          <ExerciseList
-            exercises={exercises}
-          />
+        <ExerciseList exercises={exercises} workouts={[]} />
         </div>
       </div>
     </div>

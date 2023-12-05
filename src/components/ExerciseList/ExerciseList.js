@@ -1,19 +1,34 @@
 // ExerciseList.jsx
-import React from 'react';
+import React, { useState } from 'react';
 import ExerciseCard from './ExerciseCard/ExerciseCard';
-import { displayCategoryName, capitalizeFirstLetter, addExerciseToWorkout } from '../../utils/formattingUtils';
+import {
+  displayCategoryName,
+  capitalizeFirstLetter,
+  addExerciseToWorkout,
+} from '../../utils/formattingUtils';
 import './ExerciseList.css';
 
-const ExerciseList = ({ exercises, workoutId }) => {
+const ExerciseList = ({ exercises, workouts }) => {
+  const [selectedWorkoutId, setSelectedWorkoutId] = useState(null);
+
   const handleAddToWorkoutClick = async (exercise) => {
     try {
-      // Call the function to add the exercise to the workout
-      console.log(workoutId, exercise.id)
-      await addExerciseToWorkout(workoutId, exercise.id);
+      // Check if a workout is selected
+      if (!selectedWorkoutId) {
+        console.error('No workout selected.');
+        return;
+      }
+
+      // Call the function to add the exercise to the selected workout
+      await addExerciseToWorkout(selectedWorkoutId, exercise.id);
       console.log(`Exercise ${exercise.name} added to the workout!`);
     } catch (error) {
       console.error('Error adding exercise to workout:', error);
     }
+  };
+
+  const handleWorkoutChange = (event) => {
+    setSelectedWorkoutId(event.target.value);
   };
 
   const updatedExercises = exercises.map((exercise) => {
@@ -29,11 +44,21 @@ const ExerciseList = ({ exercises, workoutId }) => {
 
   return (
     <div className="exercise-list">
+      {/* Dropdown to select the workout */}
+      <select onChange={handleWorkoutChange}>
+        <option value={null}>Select Workout</option>
+        {workouts.map((workout) => (
+          <option key={workout.id} value={workout.id}>
+            {workout.name}
+          </option>
+        ))}
+      </select>
+
       {updatedExercises.map((exercise) => (
         <ExerciseCard
           key={exercise.id}
           exercise={exercise}
-          onAddToWorkoutClick={() => handleAddToWorkoutClick(exercise)}
+          onAddToWorkoutClick={handleAddToWorkoutClick}
         />
       ))}
     </div>
