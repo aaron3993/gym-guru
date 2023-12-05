@@ -1,7 +1,8 @@
 // firestoreUtils.js
-import { db, collection, getDocs } from 'firebase/firestore';
+import { arrayUnion, doc, updateDoc, collection, getDocs } from 'firebase/firestore';
+import { db } from '../firebase';
 
-const getAllWorkouts = async () => {
+export const getAllWorkouts = async () => {
   try {
     const workoutsCollection = collection(db, 'workouts');
     const workoutsSnapshot = await getDocs(workoutsCollection);
@@ -18,4 +19,10 @@ const getAllWorkouts = async () => {
   }
 };
 
-export { getAllWorkouts };
+export const addExerciseToWorkout = async (workoutId, exerciseId) => {
+  const workoutRef = doc(db, 'workouts', workoutId);
+
+  await updateDoc(workoutRef, {
+    exercises: arrayUnion(exerciseId),
+  });
+};

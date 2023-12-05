@@ -6,6 +6,7 @@ import SearchBar from '../../../../../components/SearchBar/SearchBar';
 import ExerciseList from '../../../../../components/ExerciseList/ExerciseList';
 import LoadingSpinner from '../../../../../components/LoadingSpinner';
 import { fetchAllExercises } from '../../../../../utils/apiUtils';
+import { applyExerciseFiltersAndLimit } from '../../../../../utils/dataUtils';
 import './WorkoutDetailPage.css';
 
 const WorkoutDetailPage = () => {
@@ -63,25 +64,10 @@ const WorkoutDetailPage = () => {
     try {
       const exercises = await fetchAllExercises();
       setAllExercises(exercises);
-      setFilteredExercises(applyFiltersAndLimit(exercises, searchQuery));
+      setFilteredExercises(applyExerciseFiltersAndLimit(exercises, searchQuery));
     } catch (error) {
       console.error('Error fetching all exercises:', error);
     }
-  };
-
-  const applyFiltersAndLimit = (exercises, query) => {
-    const filteredExercises = exercises.filter((exercise) => {
-      const lowerCaseQuery = query.toLowerCase();
-
-      return (
-        exercise.name.toLowerCase().includes(lowerCaseQuery) ||
-        exercise.target.toLowerCase().includes(lowerCaseQuery) ||
-        exercise.equipment.toLowerCase().includes(lowerCaseQuery) ||
-        exercise.bodyPart.toLowerCase().includes(lowerCaseQuery)
-      );
-    });
-
-    return filteredExercises.slice(0, 8);
   };
 
   const handleQuickAddExercise = async () => {
@@ -101,7 +87,7 @@ const WorkoutDetailPage = () => {
 
       setSelectedWorkout(updatedWorkout);
 
-      setFilteredExercises(applyFiltersAndLimit(filteredExercises, searchQuery));
+      setFilteredExercises(applyExerciseFiltersAndLimit(filteredExercises, searchQuery));
 
       setNewExerciseName('');
     } catch (error) {
@@ -111,7 +97,7 @@ const WorkoutDetailPage = () => {
 
   const handleSearch = (query) => {
     setSearchQuery(query);
-    setFilteredExercises(applyFiltersAndLimit(allExercises, query));
+    setFilteredExercises(applyExerciseFiltersAndLimit(allExercises, query));
   };
 
   if (isLoading) {

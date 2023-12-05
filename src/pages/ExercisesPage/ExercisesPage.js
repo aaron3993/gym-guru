@@ -4,6 +4,7 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import CategoryList from '../../components/CategoryList/CategoryList';
 import ExerciseList from '../../components/ExerciseList/ExerciseList';
 import { fetchAllExercises } from '../../utils/apiUtils';
+import { applyExerciseFiltersAndLimit } from '../../utils/dataUtils';
 import LoadingSpinner from '../../components/LoadingSpinner';
 import './ExercisesPage.css'
 
@@ -45,26 +46,10 @@ const ExercisesPage = () => {
     }
   }
 
-  const applyFiltersAndLimit = (query) => {
-    const filteredExercises = allExercises.filter((exercise) => {
-      const lowerCaseQuery = query.toLowerCase();
-
-      return (
-        exercise.name.toLowerCase().includes(lowerCaseQuery) ||
-        exercise.target.toLowerCase().includes(lowerCaseQuery) ||
-        exercise.equipment.toLowerCase().includes(lowerCaseQuery) ||
-        exercise.bodyPart.toLowerCase().includes(lowerCaseQuery)
-      );
-    });
-
-    const displayedExercises = filteredExercises.slice(0, 8);
-    setExercises(displayedExercises)
-    return displayedExercises
-  };
-
   const handleSearch = async (query) => {
     setSearchQuery(query);
-    applyFiltersAndLimit(query)
+    const displayedExercises = applyExerciseFiltersAndLimit(allExercises, query)
+    setExercises(displayedExercises)
   };
 
   const handleCategoryClick = (category) => {

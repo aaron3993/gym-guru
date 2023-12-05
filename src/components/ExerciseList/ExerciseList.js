@@ -4,8 +4,8 @@ import ExerciseCard from './ExerciseCard/ExerciseCard';
 import {
   displayCategoryName,
   capitalizeFirstLetter,
-  addExerciseToWorkout,
-} from '../../utils/formattingUtils';
+} from '../../utils/dataUtils';
+import { addExerciseToWorkout } from '../../utils/firestoreUtils';
 import './ExerciseList.css';
 
 const ExerciseList = ({ exercises, workouts }) => {

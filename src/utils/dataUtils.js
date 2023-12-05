@@ -1,5 +1,3 @@
-import { addDoc, collection, doc, updateDoc, arrayUnion } from 'firebase/firestore';
-import { db } from '../firebase';
 export const displayCategoryName = (categoryFromAPI) => {
   const excludedCategories = ['neck'];
 
@@ -29,10 +27,17 @@ export const capitalizeFirstLetter = (str) => {
     .join(' ');
 };
 
-export const addExerciseToWorkout = async (workoutId, exerciseId) => {
-  const workoutRef = doc(db, 'workouts', workoutId);
+export const applyExerciseFiltersAndLimit = (exercises, query) => {
+  const filteredExercises = exercises.filter((exercise) => {
+    const lowerCaseQuery = query.toLowerCase();
 
-  await updateDoc(workoutRef, {
-    exercises: arrayUnion(exerciseId),
+    return (
+      exercise.name.toLowerCase().includes(lowerCaseQuery) ||
+      exercise.target.toLowerCase().includes(lowerCaseQuery) ||
+      exercise.equipment.toLowerCase().includes(lowerCaseQuery) ||
+      exercise.bodyPart.toLowerCase().includes(lowerCaseQuery)
+    );
   });
+
+  return filteredExercises.slice(0, 8);
 };
