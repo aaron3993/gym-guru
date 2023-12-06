@@ -25,7 +25,9 @@ const ExercisesPage = () => {
   }, []);
 
   const fetchAllExercisesData = async () => {
-    const exercises = await fetchAllExercises();
+    const response = await fetch('/data/exercises.json');
+    const exercises = await response.json();
+    // const exercises = await fetchAllExercises();
     setAllExercises(exercises);
     setExercises(exercises.slice(0, 8)); // Initial display, you can customize this
   };

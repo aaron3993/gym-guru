@@ -62,7 +62,9 @@ const WorkoutDetailPage = () => {
 
   const fetchAllExercisesData = async () => {
     try {
-      const exercises = await fetchAllExercises();
+      const response = await fetch('/data/exercises.json');
+      const exercises = await response.json();
+      // const exercises = await fetchAllExercises();
       setAllExercises(exercises);
       setFilteredExercises(applyExerciseFiltersAndLimit(exercises, searchQuery));
     } catch (error) {
