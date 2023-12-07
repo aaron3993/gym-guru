@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { doc, addDoc, getDoc, getDocs, collection } from 'firebase/firestore';
+import { doc, updateDoc, getDoc, getDocs, collection } from 'firebase/firestore';
 import { db } from '../../../../../firebase';
 import SearchBar from '../../../../../components/SearchBar/SearchBar';
 import ExerciseList from '../../../../../components/ExerciseList/ExerciseList';
@@ -72,28 +72,35 @@ const WorkoutDetailPage = () => {
     }
   };
 
-  const handleQuickAddExercise = async () => {
+  const handleQuickAddExercise = async (selectedExercise) => {
+    console.log('hi')
     try {
-      if (newExerciseName.trim() === '') {
-        return;
+      
+      if (selectedWorkout.exercises.includes(selectedExercise.id)) {
+        console.log('Exercise is already in the workout');
+        alert('This exercise is already in the workout');
+        return
       }
 
-      const exerciseRef = await addDoc(collection(db, 'exercises'), { name: newExerciseName });
+      const updatedExercises = [...selectedWorkout.exercises, selectedExercise.id];
 
-      const updatedWorkout = {
-        ...selectedWorkout,
-        exercises: [...(selectedWorkout.exercises || []), exerciseRef.id],
-      };
+      await updateDoc(doc(db, 'workouts', workoutId), { exercises: updatedExercises });
+      // Update the state with the new exercises
+      setSelectedWorkout((prevWorkout) => ({ ...prevWorkout, exercises: updatedExercises }));
 
-      await doc(db, 'workouts', workoutId).set(updatedWorkout);
+      // Optionally, you can also update the state of all exercises and filtered exercises
+      setAllExercises((prevExercises) => {
+        const updatedExercises = prevExercises.map((exercise) =>
+          exercise.id === selectedExercise.id
+            ? { ...exercise, addedToWorkout: true } // Optional: Add a flag to indicate it's added to the workout
+            : exercise
+        );
+        return updatedExercises;
+      });
 
-      setSelectedWorkout(updatedWorkout);
-
-      setFilteredExercises(applyExerciseFiltersAndLimit(filteredExercises, searchQuery));
-
-      setNewExerciseName('');
+      setFilteredExercises(applyExerciseFiltersAndLimit(updatedExercises, searchQuery));
     } catch (error) {
-      console.error('Error creating exercise:', error);
+      console.error('Error adding exercise to workout:', error);
     }
   };
 
@@ -120,18 +127,14 @@ const WorkoutDetailPage = () => {
           ))}
       </ul>
 
-      <div>
-        <input
-          type="text"
-          placeholder="Enter exercise name"
-          value={newExerciseName}
-          onChange={(e) => setNewExerciseName(e.target.value)}
-        />
-        <button onClick={handleQuickAddExercise}>Quick Add Exercise</button>
-      </div>
-
       <SearchBar onSearch={handleSearch} />
-      <ExerciseList exercises={filteredExercises} workoutId={workoutId} workouts={workouts} isWorkoutDetailPage={true} />
+      <ExerciseList
+        exercises={filteredExercises}
+        workoutId={workoutId}
+        workouts={workouts}
+        isWorkoutDetailPage={true}
+        handleQuickAddExercise={handleQuickAddExercise}
+      />
     </div>
   );
 };
