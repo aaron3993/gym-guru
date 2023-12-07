@@ -8,24 +8,8 @@ import {
 import { addExerciseToWorkout } from '../../utils/firestoreUtils';
 import './ExerciseList.css';
 
-const ExerciseList = ({ exercises, workouts, isWorkoutDetailPage}) => {
+const ExerciseList = ({ exercises, workouts, isWorkoutDetailPage, onAddToWorkout }) => {
   const [selectedWorkoutId, setSelectedWorkoutId] = useState(null);
-
-  const handleAddToWorkoutClick = async (exercise) => {
-    try {
-      // Check if a workout is selected
-      if (!selectedWorkoutId) {
-        console.error('No workout selected.');
-        return;
-      }
-
-      // Call the function to add the exercise to the selected workout
-      await addExerciseToWorkout(selectedWorkoutId, exercise.id);
-      console.log(`Exercise ${exercise.name} added to the workout!`);
-    } catch (error) {
-      console.error('Error adding exercise to workout:', error);
-    }
-  };
 
   const handleWorkoutChange = (event) => {
     setSelectedWorkoutId(event.target.value);
@@ -50,7 +34,7 @@ const ExerciseList = ({ exercises, workouts, isWorkoutDetailPage}) => {
           exercise={exercise}
           workouts={workouts}
           isWorkoutDetailPage={isWorkoutDetailPage}
-          // onAddToWorkoutClick={handleAddToWorkoutClick}
+          onAddToWorkout={onAddToWorkout}
         />
       ))}
     </div>

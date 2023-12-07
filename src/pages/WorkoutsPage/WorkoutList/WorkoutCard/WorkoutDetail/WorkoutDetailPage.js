@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { doc, updateDoc, getDoc, getDocs, collection } from 'firebase/firestore';
+import { doc, updateDoc, getDoc, getDocs, collection, arrayUnion } from 'firebase/firestore';
 import { db } from '../../../../../firebase';
 import SearchBar from '../../../../../components/SearchBar/SearchBar';
 import ExerciseList from '../../../../../components/ExerciseList/ExerciseList';
@@ -72,33 +72,23 @@ const WorkoutDetailPage = () => {
     }
   };
 
-  const handleQuickAddExercise = async (selectedExercise) => {
-    console.log('hi')
+  const handleAddExerciseToWorkout = async (exerciseId) => {
     try {
-      
-      if (selectedWorkout.exercises.includes(selectedExercise.id)) {
-        console.log('Exercise is already in the workout');
-        alert('This exercise is already in the workout');
-        return
+      console.log({exerciseId})
+      // Check if the exercise is already in the workout
+      if (selectedWorkout.exercises && selectedWorkout.exercises.includes(exerciseId)) {
+        console.warn('Exercise is already in the workout.');
+        return;
       }
 
-      const updatedExercises = [...selectedWorkout.exercises, selectedExercise.id];
-
-      await updateDoc(doc(db, 'workouts', workoutId), { exercises: updatedExercises });
-      // Update the state with the new exercises
-      setSelectedWorkout((prevWorkout) => ({ ...prevWorkout, exercises: updatedExercises }));
-
-      // Optionally, you can also update the state of all exercises and filtered exercises
-      setAllExercises((prevExercises) => {
-        const updatedExercises = prevExercises.map((exercise) =>
-          exercise.id === selectedExercise.id
-            ? { ...exercise, addedToWorkout: true } // Optional: Add a flag to indicate it's added to the workout
-            : exercise
-        );
-        return updatedExercises;
+      // Update the workout in Firestore
+      const workoutRef = doc(db, 'workouts', workoutId);
+      await updateDoc(workoutRef, {
+        exercises: arrayUnion(exerciseId),
       });
 
-      setFilteredExercises(applyExerciseFiltersAndLimit(updatedExercises, searchQuery));
+      // Fetch the updated workout details
+      await fetchWorkoutDetails();
     } catch (error) {
       console.error('Error adding exercise to workout:', error);
     }
@@ -133,7 +123,7 @@ const WorkoutDetailPage = () => {
         workoutId={workoutId}
         workouts={workouts}
         isWorkoutDetailPage={true}
-        handleQuickAddExercise={handleQuickAddExercise}
+        onAddToWorkout={handleAddExerciseToWorkout}
       />
     </div>
   );
