@@ -8,6 +8,7 @@ import LoadingSpinner from '../../../../../components/LoadingSpinner';
 import { fetchAllExercises } from '../../../../../utils/apiUtils';
 import { applyExerciseFiltersAndLimit } from '../../../../../utils/dataUtils';
 import './WorkoutDetailPage.css';
+import { addExerciseToWorkout } from '../../../../../utils/firestoreUtils';
 
 const WorkoutDetailPage = () => {
   const { workoutId } = useParams();
@@ -74,20 +75,13 @@ const WorkoutDetailPage = () => {
 
   const handleAddExerciseToWorkout = async (exerciseId) => {
     try {
-      console.log({exerciseId})
-      // Check if the exercise is already in the workout
       if (selectedWorkout.exercises && selectedWorkout.exercises.includes(exerciseId)) {
         console.warn('Exercise is already in the workout.');
         return;
       }
 
-      // Update the workout in Firestore
-      const workoutRef = doc(db, 'workouts', workoutId);
-      await updateDoc(workoutRef, {
-        exercises: arrayUnion(exerciseId),
-      });
+      addExerciseToWorkout(workoutId, exerciseId)
 
-      // Fetch the updated workout details
       await fetchWorkoutDetails();
     } catch (error) {
       console.error('Error adding exercise to workout:', error);
