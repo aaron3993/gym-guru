@@ -5,7 +5,6 @@ import {
   displayCategoryName,
   capitalizeFirstLetter,
 } from '../../utils/dataUtils';
-import { addExerciseToWorkout } from '../../utils/firestoreUtils';
 import './ExerciseList.css';
 
 const ExerciseList = ({ exercises, workouts, isWorkoutDetailPage, onAddToWorkout }) => {

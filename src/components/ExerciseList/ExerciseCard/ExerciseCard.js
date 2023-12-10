@@ -14,7 +14,7 @@ const ExerciseCard = ({ exercise, workouts, isWorkoutDetailPage, onAddToWorkout 
         <h3>{exercise.updatedCategory}</h3>
         
         {isWorkoutDetailPage ? (
-          <button onClick={() => onAddToWorkout(exercise.id)}>Add to Workout</button>
+          <button onClick={() => onAddToWorkout(exercise)}>Add to Workout</button>
         ) : (
           <WorkoutDropdown workouts={workouts} />
         )}

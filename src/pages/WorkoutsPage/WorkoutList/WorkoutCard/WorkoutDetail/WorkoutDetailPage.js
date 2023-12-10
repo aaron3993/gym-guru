@@ -1,19 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { doc, updateDoc, getDoc, getDocs, collection, arrayUnion } from 'firebase/firestore';
+import { doc, getDoc, getDocs, collection } from 'firebase/firestore';
 import { db } from '../../../../../firebase';
 import SearchBar from '../../../../../components/SearchBar/SearchBar';
 import ExerciseList from '../../../../../components/ExerciseList/ExerciseList';
 import LoadingSpinner from '../../../../../components/LoadingSpinner';
-import { fetchAllExercises } from '../../../../../utils/apiUtils';
-import { applyExerciseFiltersAndLimit } from '../../../../../utils/dataUtils';
+import { capitalizeFirstLetter, applyExerciseFiltersAndLimit } from '../../../../../utils/dataUtils';
 import './WorkoutDetailPage.css';
+import { fetchAllExercises } from '../../../../../utils/apiUtils';
 import { addExerciseToWorkout } from '../../../../../utils/firestoreUtils';
 
 const WorkoutDetailPage = () => {
   const { workoutId } = useParams();
   const [selectedWorkout, setSelectedWorkout] = useState(null);
-  const [newExerciseName, setNewExerciseName] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [allExercises, setAllExercises] = useState([]);
   const [filteredExercises, setFilteredExercises] = useState([]);
@@ -73,15 +72,18 @@ const WorkoutDetailPage = () => {
     }
   };
 
-  const handleAddExerciseToWorkout = async (exerciseId) => {
+  const handleAddExerciseToWorkout = async (exercise) => {
     try {
+      const { id: exerciseId } = exercise;
+  
       if (selectedWorkout.exercises && selectedWorkout.exercises.includes(exerciseId)) {
         console.warn('Exercise is already in the workout.');
         return;
       }
-
-      addExerciseToWorkout(workoutId, exerciseId)
-
+  
+      await addExerciseToWorkout(workoutId, exercise);
+  
+      // Update the workout details after adding the exercise
       await fetchWorkoutDetails();
     } catch (error) {
       console.error('Error adding exercise to workout:', error);
@@ -103,13 +105,16 @@ const WorkoutDetailPage = () => {
     <div className="workout-details">
       <h1>Workout: {name}</h1>
 
-      <h2>Exercises:</h2>
-      <ul>
-        {exercises &&
-          exercises.map((exerciseId) => (
-            <li key={exerciseId}>Exercise ID: {exerciseId}</li>
-          ))}
-      </ul>
+      <div className="exercise-row-list">
+        {exercises.map((exercise) => (
+          <div key={exercise.exerciseId} className="exercise-row">
+            <img src={exercise.gifUrl} alt={exercise.name} />
+            <div className="card-content">
+              <h3>{capitalizeFirstLetter(exercise.name)}</h3>
+            </div>
+          </div>
+        ))}
+      </div>
 
       <SearchBar onSearch={handleSearch} />
       <ExerciseList
