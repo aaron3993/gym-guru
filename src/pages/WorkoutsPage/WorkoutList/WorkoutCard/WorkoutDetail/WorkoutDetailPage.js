@@ -8,7 +8,7 @@ import LoadingSpinner from '../../../../../components/LoadingSpinner';
 import { capitalizeFirstLetter, applyExerciseFiltersAndLimit } from '../../../../../utils/dataUtils';
 import './WorkoutDetailPage.css';
 import { fetchAllExercises } from '../../../../../utils/apiUtils';
-import { addExerciseToWorkout } from '../../../../../utils/firestoreUtils';
+import { addExerciseToWorkout, removeExerciseFromWorkout } from '../../../../../utils/firestoreUtils';
 import ExerciseRow from './ExerciseRow/ExerciseRow';
 
 const WorkoutDetailPage = () => {
@@ -91,14 +91,14 @@ const WorkoutDetailPage = () => {
     }
   };
 
-  const removeExerciseFromWorkout = async (exercise) => {
+  const handleRemoveExerciseFromWorkout = async (exerciseToRemove) => {
     try {
-      if (!selectedWorkout.exercises || !selectedWorkout.exercises.includes(exercise)) {
+      if (!selectedWorkout.exercises || !selectedWorkout.exercises.includes(exerciseToRemove)) {
         console.warn('Exercise is not in the workout.');
         return;
       }
   
-      await removeExerciseFromWorkout(workoutId, exercise);
+      await removeExerciseFromWorkout(workoutId, exerciseToRemove);
 
       await fetchWorkoutDetails();
     } catch (error) {
@@ -119,18 +119,16 @@ const WorkoutDetailPage = () => {
     return navigate("/workouts")
   }
 
-  const { name, exercises } = selectedWorkout;
-
   return (
     <div className="workout-details">
-      <h1>Workout: {name}</h1>
+      <h1>Workout: {selectedWorkout.name}</h1>
 
       <div className="exercise-row-list">
-        {exercises.length > 0 && exercises.map((exercise) => (
+        {selectedWorkout.exercises.length > 0 && selectedWorkout.exercises.map((exercise) => (
           <ExerciseRow
             key={exercise.id}
             exercise={exercise}
-            onRemoveExercise={removeExerciseFromWorkout}
+            onRemoveExercise={() => handleRemoveExerciseFromWorkout(exercise)}
           />
         ))}
       </div>
