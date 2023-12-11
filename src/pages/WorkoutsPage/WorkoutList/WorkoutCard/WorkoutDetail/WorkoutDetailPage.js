@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { doc, getDoc, getDocs, collection } from 'firebase/firestore';
 import { db } from '../../../../../firebase';
 import SearchBar from '../../../../../components/SearchBar/SearchBar';
@@ -9,8 +9,10 @@ import { capitalizeFirstLetter, applyExerciseFiltersAndLimit } from '../../../..
 import './WorkoutDetailPage.css';
 import { fetchAllExercises } from '../../../../../utils/apiUtils';
 import { addExerciseToWorkout } from '../../../../../utils/firestoreUtils';
+import ExerciseRow from './ExerciseRow/ExerciseRow';
 
 const WorkoutDetailPage = () => {
+  const navigate = useNavigate();
   const { workoutId } = useParams();
   const [selectedWorkout, setSelectedWorkout] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
@@ -82,11 +84,25 @@ const WorkoutDetailPage = () => {
       }
   
       await addExerciseToWorkout(workoutId, exercise);
-  
-      // Update the workout details after adding the exercise
+
       await fetchWorkoutDetails();
     } catch (error) {
       console.error('Error adding exercise to workout:', error);
+    }
+  };
+
+  const removeExerciseFromWorkout = async (exercise) => {
+    try {
+      if (!selectedWorkout.exercises || !selectedWorkout.exercises.includes(exercise)) {
+        console.warn('Exercise is not in the workout.');
+        return;
+      }
+  
+      await removeExerciseFromWorkout(workoutId, exercise);
+
+      await fetchWorkoutDetails();
+    } catch (error) {
+      console.error('Error removing exercise from workout:', error);
     }
   };
 
@@ -99,6 +115,10 @@ const WorkoutDetailPage = () => {
     return <LoadingSpinner />;
   }
 
+  if (!selectedWorkout) {
+    return navigate("/workouts")
+  }
+
   const { name, exercises } = selectedWorkout;
 
   return (
@@ -106,13 +126,12 @@ const WorkoutDetailPage = () => {
       <h1>Workout: {name}</h1>
 
       <div className="exercise-row-list">
-        {exercises.map((exercise) => (
-          <div key={exercise.exerciseId} className="exercise-row">
-            <img src={exercise.gifUrl} alt={exercise.name} />
-            <div className="card-content">
-              <h3>{capitalizeFirstLetter(exercise.name)}</h3>
-            </div>
-          </div>
+        {exercises.length > 0 && exercises.map((exercise) => (
+          <ExerciseRow
+            key={exercise.id}
+            exercise={exercise}
+            onRemoveExercise={removeExerciseFromWorkout}
+          />
         ))}
       </div>
 

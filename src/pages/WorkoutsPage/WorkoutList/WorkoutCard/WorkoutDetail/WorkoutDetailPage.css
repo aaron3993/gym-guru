@@ -2,20 +2,3 @@
     margin-top: 7vh;
     margin-left: 16px;
 }
-
-.exercise-row {
-    width: 50%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    height: 100px;
-    border: 1px solid #ccc; /* Add a border to each row */
-    margin-bottom: 10px; /* Add margin between rows */
-    padding: 10px; /* Add padding for a nicer look */
-}
-
-.exercise-row img {
-    width: 90px;
-    height: 90px;
-}
-

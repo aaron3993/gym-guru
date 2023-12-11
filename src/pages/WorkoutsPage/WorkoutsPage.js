@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import CreateWorkoutModal from '../../components/CreateWorkoutModal/CreateWorkoutModal';
 import WorkoutList from './WorkoutList/WorkoutList';
-import { collection, addDoc, getDocs } from 'firebase/firestore';
-import { auth, db } from '../../firebase';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../../firebase';
+import { createWorkout, getAllWorkouts } from '../../utils/firestoreUtils';
 import './WorkoutsPage.css';
 
 const WorkoutsPage = () => {
@@ -10,12 +11,9 @@ const WorkoutsPage = () => {
   const [workouts, setWorkouts] = useState([]);
 
   useEffect(() => {
-    // Fetch workouts from Firestore when the component mounts
     const fetchWorkouts = async () => {
       try {
-        const workoutsCollection = collection(db, 'workouts');
-        const querySnapshot = await getDocs(workoutsCollection);
-        const fetchedWorkouts = querySnapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() }));
+        const fetchedWorkouts = await getAllWorkouts()
         setWorkouts(fetchedWorkouts);
       } catch (error) {
         console.error('Error fetching workouts:', error);
@@ -35,14 +33,11 @@ const WorkoutsPage = () => {
 
   const handleCreateWorkout = async (workoutName) => {
     try {
-      // Add the new workout to Firestore
-      const docRef = await addDoc(collection(db, 'workouts'), { name: workoutName });
-      const newWorkout = { id: docRef.id, name: workoutName };
+      const newWorkout = await createWorkout(workoutName);
       setWorkouts((prevWorkouts) => [...prevWorkouts, newWorkout]);
     } catch (error) {
       console.error('Error creating workout:', error);
     } finally {
-      // Close the modal regardless of success or failure
       setModalOpen(false);
     }
   };
@@ -51,10 +46,7 @@ const WorkoutsPage = () => {
     <div className="workouts-container">
       <h1>Your Workouts</h1>
       <button onClick={handleOpenModal}>Create Workout</button>
-
-      {/* Render the list of workouts */}
       <WorkoutList workouts={workouts} />
-
       <CreateWorkoutModal
         isOpen={isModalOpen}
         onRequestClose={handleCloseModal}

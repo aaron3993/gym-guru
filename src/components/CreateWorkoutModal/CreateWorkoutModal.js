@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import { addDoc, collection, doc, setDoc  } from 'firebase/firestore';
-import { db, auth } from '../../firebase';
 import './CreateWorkoutModal.css';
 
 const CreateWorkoutModal = ({ isOpen, onRequestClose, onCreateWorkout }) => {
   const [workoutName, setWorkoutName] = useState('');
 
   const handleCreateWorkout = () => {
-    // Pass the workoutName to the parent component for further processing
     onCreateWorkout(workoutName);
-    // Close the modal
     onRequestClose();
   };
 
