@@ -3,12 +3,9 @@ import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import "firebase/firestore";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+const environment = process.env.NODE_ENV || 'production';
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
+const firebaseConfig = environment === 'production' ? {
   apiKey: "AIzaSyAS4_3SkAK1nz-x3RGeszlX-BxPZt_0BsQ",
   authDomain: "gymguru-37ed9.firebaseapp.com",
   projectId: "gymguru-37ed9",
@@ -16,14 +13,18 @@ const firebaseConfig = {
   messagingSenderId: "586710732433",
   appId: "1:586710732433:web:ee2bb9cef1d3af75fd3930",
   measurementId: "G-3QB6JVYJS5"
+} : {
+  apiKey: "AIzaSyCnwF_xUgPgfoyQ4lw46Q31OnnJOwN3p9U",
+  authDomain: "gym-guru-staging.firebaseapp.com",
+  projectId: "gym-guru-staging",
+  storageBucket: "gym-guru-staging.appspot.com",
+  messagingSenderId: "304940808094",
+  appId: "1:304940808094:web:72cf821435d2a304f1088f",
+  measurementId: "G-NLV7ZDK4X0"
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
 const db = getFirestore(app);
-
-// Initialize Firebase Authentication and get a reference to the service
 const auth = getAuth(app);
 
 export { app, db, auth };

@@ -1,5 +1,8 @@
 {
   "projects": {
-    "default": "gymguru-37ed9"
-  }
+    "default": "gymguru-37ed9",
+    "staging": "gym-guru-staging"
+  },
+  "targets": {},
+  "etags": {}
 }
