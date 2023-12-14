@@ -86,6 +86,15 @@ const WorkoutDetailPage = () => {
       await addExerciseToWorkout(workoutId, exercise);
 
       await fetchWorkoutDetails();
+
+      // await fetchAllExercisesData();
+      // console.log(selectedWorkout)
+      // console.log({allExercises})
+      // // console.log(applyExerciseFiltersAndLimit(allExercises, searchQuery))
+      // // setFilteredExercises(applyExerciseFiltersAndLimit(allExercises, searchQuery));
+      // const exercisesNotInWorkout = filterExercisesNotInWorkout(allExercises, selectedWorkout.exercises);
+      // console.log({exercisesNotInWorkout})
+      // setFilteredExercises(applyExerciseFiltersAndLimit(exercisesNotInWorkout, searchQuery));
     } catch (error) {
       console.error('Error adding exercise to workout:', error);
     }
@@ -101,14 +110,29 @@ const WorkoutDetailPage = () => {
       await removeExerciseFromWorkout(workoutId, exerciseToRemove);
 
       await fetchWorkoutDetails();
+      
+      // await fetchAllExercisesData();
+    
+      // const exercisesNotInWorkout = filterExercisesNotInWorkout(allExercises, selectedWorkout.exercises);
+      // console.log({exercisesNotInWorkout})
+      // setFilteredExercises(applyExerciseFiltersAndLimit(exercisesNotInWorkout, searchQuery));
     } catch (error) {
       console.error('Error removing exercise from workout:', error);
     }
   };
 
+  const filterExercisesNotInWorkout = (allExercises, workoutExercises) => {
+    const workoutExerciseIds = workoutExercises.map((exercise) => exercise.id);
+    return allExercises.filter((exercise) => !workoutExerciseIds.includes(exercise.id));
+  };
+
   const handleSearch = (query) => {
+    console.log(selectedWorkout.exercises)
+    console.log({allExercises})
     setSearchQuery(query);
-    setFilteredExercises(applyExerciseFiltersAndLimit(allExercises, query));
+    // setFilteredExercises(applyExerciseFiltersAndLimit(allExercises, query));
+    const exercisesNotInWorkout = filterExercisesNotInWorkout(allExercises, selectedWorkout.exercises);
+    setFilteredExercises(applyExerciseFiltersAndLimit(exercisesNotInWorkout, query));
   };
 
   if (isLoading) {
