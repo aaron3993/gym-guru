@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import Modal from 'react-modal';
-import './CreateWorkoutModal.css';
+import React, { useState } from "react";
+import Modal from "react-modal";
+import "./CreateWorkoutModal.css";
 
 const CreateWorkoutModal = ({ isOpen, onRequestClose, onCreateWorkout }) => {
-  const [workoutName, setWorkoutName] = useState('');
+  const [workoutName, setWorkoutName] = useState("");
 
   const handleCreateWorkout = () => {
     onCreateWorkout(workoutName);
@@ -14,7 +14,7 @@ const CreateWorkoutModal = ({ isOpen, onRequestClose, onCreateWorkout }) => {
     <Modal
       isOpen={isOpen}
       onRequestClose={onRequestClose}
-      className="create-workout-modal"
+      className="modal"
       overlayClassName="ReactModal__Overlay"
       contentLabel="Create Workout Modal"
       shouldCloseOnOverlayClick={true}

@@ -1,13 +1,18 @@
 // ExerciseList.jsx
-import React, { useState } from 'react';
-import ExerciseCard from './ExerciseCard/ExerciseCard';
+import React, { useState } from "react";
+import ExerciseCard from "./ExerciseCard/ExerciseCard";
 import {
   displayCategoryName,
   capitalizeFirstLetter,
-} from '../../utils/dataUtils';
-import './ExerciseList.css';
+} from "../../utils/dataUtils";
+import "./ExerciseList.css";
 
-const ExerciseList = ({ exercises, workouts, isWorkoutDetailPage, onAddToWorkout }) => {
+const ExerciseList = ({
+  exercises,
+  workouts,
+  isWorkoutDetailPage,
+  onOpenExerciseModal,
+}) => {
   const [selectedWorkoutId, setSelectedWorkoutId] = useState(null);
 
   const handleWorkoutChange = (event) => {
@@ -20,7 +25,8 @@ const ExerciseList = ({ exercises, workouts, isWorkoutDetailPage, onAddToWorkout
 
     return {
       ...exercise,
-      updatedCategory: displayedCategory !== null ? displayedCategory : exercise.bodyPart,
+      updatedCategory:
+        displayedCategory !== null ? displayedCategory : exercise.bodyPart,
       updatedName: capitalizedExerciseName,
     };
   });
@@ -33,7 +39,7 @@ const ExerciseList = ({ exercises, workouts, isWorkoutDetailPage, onAddToWorkout
           exercise={exercise}
           workouts={workouts}
           isWorkoutDetailPage={isWorkoutDetailPage}
-          onAddToWorkout={onAddToWorkout}
+          onOpenExerciseModal={onOpenExerciseModal}
         />
       ))}
     </div>

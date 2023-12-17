@@ -11,6 +11,7 @@ import SearchBar from "../../../../../components/SearchBar/SearchBar";
 import ExerciseList from "../../../../../components/ExerciseList/ExerciseList";
 import LoadingSpinner from "../../../../../components/LoadingSpinner";
 import ExerciseRow from "./ExerciseRow/ExerciseRow";
+import AddExerciseModal from "../../../../../components/AddExerciseModal/AddExerciseModal";
 import "./WorkoutDetailPage.css";
 
 const WorkoutDetailPage = () => {
@@ -22,6 +23,8 @@ const WorkoutDetailPage = () => {
   const [filteredExercises, setFilteredExercises] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [workouts, setWorkouts] = useState([]);
+  const [exerciseModalOpen, setExerciseModalOpen] = useState(false);
+  const [selectedExercise, setSelectedExercise] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -107,6 +110,16 @@ const WorkoutDetailPage = () => {
     }
   };
 
+  const openExerciseModal = (exercise) => {
+    setSelectedExercise(exercise);
+    setExerciseModalOpen(true);
+  };
+
+  const closeExerciseModal = () => {
+    setSelectedExercise(null);
+    setExerciseModalOpen(false);
+  };
+
   const handleRemoveExerciseFromWorkout = async (exerciseToRemove) => {
     try {
       if (
@@ -165,8 +178,17 @@ const WorkoutDetailPage = () => {
         workoutId={workoutId}
         workouts={workouts}
         isWorkoutDetailPage={true}
+        onOpenExerciseModal={openExerciseModal}
         onAddToWorkout={handleAddExerciseToWorkout}
       />
+      {selectedExercise && (
+        <AddExerciseModal
+          exercise={selectedExercise}
+          isOpen={exerciseModalOpen}
+          onRequestClose={closeExerciseModal}
+          onAddToWorkout={handleAddExerciseToWorkout}
+        />
+      )}
     </div>
   );
 };
