@@ -17,7 +17,7 @@ import "./WorkoutDetailPage.css";
 const WorkoutDetailPage = () => {
   const navigate = useNavigate();
   const { workoutId } = useParams();
-  const [selectedWorkout, setSelectedWorkout] = useState(null);
+  const [currentWorkout, setCurrentWorkout] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [allExercises, setAllExercises] = useState([]);
   const [filteredExercises, setFilteredExercises] = useState([]);
@@ -43,10 +43,10 @@ const WorkoutDetailPage = () => {
 
   useEffect(() => {
     const filterDisplayedExercises = () => {
-      if (selectedWorkout && selectedWorkout.exercises) {
+      if (currentWorkout && currentWorkout.exercises) {
         const exercisesNotInWorkout = filterExercisesNotInWorkout(
           allExercises,
-          selectedWorkout.exercises
+          currentWorkout.exercises
         );
 
         setFilteredExercises(
@@ -56,7 +56,7 @@ const WorkoutDetailPage = () => {
     };
 
     filterDisplayedExercises();
-  }, [allExercises, selectedWorkout, searchQuery]);
+  }, [allExercises, currentWorkout, searchQuery]);
 
   const fetchWorkoutDetails = async () => {
     try {
@@ -64,7 +64,7 @@ const WorkoutDetailPage = () => {
       const workoutSnapshot = await getDoc(workoutDoc);
 
       if (workoutSnapshot.exists()) {
-        setSelectedWorkout({
+        setCurrentWorkout({
           id: workoutSnapshot.id,
           ...workoutSnapshot.data(),
         });
@@ -95,8 +95,8 @@ const WorkoutDetailPage = () => {
       const { id: exerciseId } = exercise;
 
       if (
-        selectedWorkout.exercises &&
-        selectedWorkout.exercises.includes(exerciseId)
+        currentWorkout.exercises &&
+        currentWorkout.exercises.includes(exerciseId)
       ) {
         console.warn("Exercise is already in the workout.");
         return;
@@ -123,8 +123,8 @@ const WorkoutDetailPage = () => {
   const handleRemoveExerciseFromWorkout = async (exerciseToRemove) => {
     try {
       if (
-        !selectedWorkout.exercises ||
-        !selectedWorkout.exercises.includes(exerciseToRemove)
+        !currentWorkout.exercises ||
+        !currentWorkout.exercises.includes(exerciseToRemove)
       ) {
         console.warn("Exercise is not in the workout.");
         return;
@@ -153,17 +153,17 @@ const WorkoutDetailPage = () => {
     return <LoadingSpinner />;
   }
 
-  if (!selectedWorkout) {
+  if (!currentWorkout) {
     return navigate("/workouts");
   }
 
   return (
     <div className="workout-details">
-      <h1>Workout: {selectedWorkout.name}</h1>
+      <h1>Workout: {currentWorkout.name}</h1>
 
       <div className="exercise-row-list">
-        {selectedWorkout.exercises.length > 0 &&
-          selectedWorkout.exercises.map((exercise) => (
+        {currentWorkout.exercises.length > 0 &&
+          currentWorkout.exercises.map((exercise) => (
             <ExerciseRow
               key={exercise.id}
               exercise={exercise}
@@ -183,6 +183,7 @@ const WorkoutDetailPage = () => {
       />
       {selectedExercise && (
         <AddExerciseModal
+          currentWorkout={currentWorkout}
           exercise={selectedExercise}
           isOpen={exerciseModalOpen}
           onRequestClose={closeExerciseModal}

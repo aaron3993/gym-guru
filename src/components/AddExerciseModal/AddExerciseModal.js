@@ -1,7 +1,9 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
+import { addExerciseToWorkout } from "../../utils/firestoreUtils";
 
 const AddExerciseModal = ({
+  currentWorkout,
   exercise,
   isOpen,
   onRequestClose,
@@ -10,14 +12,41 @@ const AddExerciseModal = ({
   const [reps, setReps] = useState("");
   const [sets, setSets] = useState("");
 
-  const handleAddToWorkoutClick = () => {
-    if (reps && sets) {
-      onAddToWorkout(exercise, reps, sets);
+  const handleAddToWorkoutClick = async () => {
+    try {
+      if (!reps || !sets) {
+        return console.error("Reps and sets are required.");
+      }
+
+      const { id: exerciseId } = exercise;
+
+      if (
+        currentWorkout.exercises &&
+        currentWorkout.exercises.includes(exerciseId)
+      ) {
+        console.warn("Exercise is already in the workout.");
+        return;
+      }
+
+      await addExerciseToWorkout(currentWorkout.id, exercise, reps, sets);
+
+      // await fetchWorkoutDetails();
+
       onRequestClose();
-    } else {
-      console.error("Reps and sets are required.");
+    } catch (error) {
+      console.error("Error adding exercise to workout:", error);
     }
   };
+
+  // const handleAddToWorkoutClick = () => {
+  //   if (reps && sets) {
+  //     onAddToWorkout(exercise, reps, sets);
+  //     onRequestClose();
+  //     console.log(reps, sets);
+  //   } else {
+  //     console.error("Reps and sets are required.");
+  //   }
+  // };
 
   return (
     <Modal
@@ -47,6 +76,7 @@ const AddExerciseModal = ({
           />
         </label>
         <button onClick={handleAddToWorkoutClick}>Add to Workout</button>
+        <button onClick={onRequestClose}>Cancel</button>
       </div>
     </Modal>
   );

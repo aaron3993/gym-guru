@@ -1,9 +1,20 @@
-import { arrayUnion, doc, addDoc, updateDoc, arrayRemove, collection, getDocs } from 'firebase/firestore';
-import { db } from '../firebase';
+import {
+  arrayUnion,
+  doc,
+  addDoc,
+  updateDoc,
+  arrayRemove,
+  collection,
+  getDocs,
+} from "firebase/firestore";
+import { db } from "../firebase";
 
 export const createWorkout = async (workoutName) => {
   try {
-    const docRef = await addDoc(collection(db, 'workouts'), { name: workoutName, exercises: [] });
+    const docRef = await addDoc(collection(db, "workouts"), {
+      name: workoutName,
+      exercises: [],
+    });
 
     return {
       id: docRef.id,
@@ -11,14 +22,14 @@ export const createWorkout = async (workoutName) => {
       exercises: [],
     };
   } catch (error) {
-    console.error('Error creating workout in Firestore:', error);
+    console.error("Error creating workout in Firestore:", error);
     throw error;
   }
 };
 
 export const getAllWorkouts = async () => {
   try {
-    const workoutsCollection = collection(db, 'workouts');
+    const workoutsCollection = collection(db, "workouts");
     const workoutsSnapshot = await getDocs(workoutsCollection);
 
     const workouts = workoutsSnapshot.docs.map((doc) => ({
@@ -28,21 +39,23 @@ export const getAllWorkouts = async () => {
 
     return workouts;
   } catch (error) {
-    console.error('Error fetching workouts:', error);
+    console.error("Error fetching workouts:", error);
     return [];
   }
 };
 
-export const addExerciseToWorkout = async (workoutId, exercise) => {
-  const workoutRef = doc(db, 'workouts', workoutId);
+export const addExerciseToWorkout = async (workoutId, exercise, reps, sets) => {
+  const workoutRef = doc(db, "workouts", workoutId);
+
+  const exerciseObj = { ...exercise, reps, sets };
 
   await updateDoc(workoutRef, {
-    exercises: arrayUnion(exercise),
+    exercises: arrayUnion(exerciseObj),
   });
 };
 
 export const removeExerciseFromWorkout = async (workoutId, exercise) => {
-  const workoutRef = doc(db, 'workouts', workoutId);
+  const workoutRef = doc(db, "workouts", workoutId);
 
   await updateDoc(workoutRef, {
     exercises: arrayRemove(exercise),
