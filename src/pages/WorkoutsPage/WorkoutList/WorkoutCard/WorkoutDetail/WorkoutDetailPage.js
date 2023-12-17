@@ -3,10 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../../../firebase";
 import { applyExerciseFiltersAndLimit } from "../../../../../utils/dataUtils";
-import {
-  addExerciseToWorkout,
-  removeExerciseFromWorkout,
-} from "../../../../../utils/firestoreUtils";
+import { removeExerciseFromWorkout } from "../../../../../utils/firestoreUtils";
 import SearchBar from "../../../../../components/SearchBar/SearchBar";
 import ExerciseList from "../../../../../components/ExerciseList/ExerciseList";
 import LoadingSpinner from "../../../../../components/LoadingSpinner";
@@ -90,29 +87,13 @@ const WorkoutDetailPage = () => {
     }
   };
 
-  const handleAddExerciseToWorkout = async (exercise) => {
-    try {
-      const { id: exerciseId } = exercise;
-
-      if (
-        currentWorkout.exercises &&
-        currentWorkout.exercises.includes(exerciseId)
-      ) {
-        console.warn("Exercise is already in the workout.");
-        return;
-      }
-
-      await addExerciseToWorkout(workoutId, exercise);
-
-      await fetchWorkoutDetails();
-    } catch (error) {
-      console.error("Error adding exercise to workout:", error);
-    }
-  };
-
   const openExerciseModal = (exercise) => {
     setSelectedExercise(exercise);
     setExerciseModalOpen(true);
+  };
+
+  const handleAddExerciseToWorkout = async () => {
+    await fetchWorkoutDetails();
   };
 
   const closeExerciseModal = () => {

@@ -30,23 +30,13 @@ const AddExerciseModal = ({
 
       await addExerciseToWorkout(currentWorkout.id, exercise, reps, sets);
 
-      // await fetchWorkoutDetails();
+      onAddToWorkout();
 
       onRequestClose();
     } catch (error) {
       console.error("Error adding exercise to workout:", error);
     }
   };
-
-  // const handleAddToWorkoutClick = () => {
-  //   if (reps && sets) {
-  //     onAddToWorkout(exercise, reps, sets);
-  //     onRequestClose();
-  //     console.log(reps, sets);
-  //   } else {
-  //     console.error("Reps and sets are required.");
-  //   }
-  // };
 
   return (
     <Modal
