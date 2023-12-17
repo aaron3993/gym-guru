@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import "./CreateWorkoutModal.css";
+import "./SharedModal.css";
 
 const CreateWorkoutModal = ({ isOpen, onRequestClose, onCreateWorkout }) => {
   const [workoutName, setWorkoutName] = useState("");

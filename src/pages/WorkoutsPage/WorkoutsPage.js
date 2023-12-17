@@ -1,10 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import CreateWorkoutModal from '../../components/CreateWorkoutModal/CreateWorkoutModal';
-import WorkoutList from './WorkoutList/WorkoutList';
-import { collection, getDocs } from 'firebase/firestore';
-import { db } from '../../firebase';
-import { createWorkout, getAllWorkouts } from '../../utils/firestoreUtils';
-import './WorkoutsPage.css';
+import React, { useState, useEffect } from "react";
+import CreateWorkoutModal from "../../components/CreateWorkoutModal";
+import WorkoutList from "./WorkoutList/WorkoutList";
+import { createWorkout, getAllWorkouts } from "../../utils/firestoreUtils";
+import "./WorkoutsPage.css";
 
 const WorkoutsPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -13,10 +11,10 @@ const WorkoutsPage = () => {
   useEffect(() => {
     const fetchWorkouts = async () => {
       try {
-        const fetchedWorkouts = await getAllWorkouts()
+        const fetchedWorkouts = await getAllWorkouts();
         setWorkouts(fetchedWorkouts);
       } catch (error) {
-        console.error('Error fetching workouts:', error);
+        console.error("Error fetching workouts:", error);
       }
     };
 
@@ -36,7 +34,7 @@ const WorkoutsPage = () => {
       const newWorkout = await createWorkout(workoutName);
       setWorkouts((prevWorkouts) => [...prevWorkouts, newWorkout]);
     } catch (error) {
-      console.error('Error creating workout:', error);
+      console.error("Error creating workout:", error);
     } finally {
       setModalOpen(false);
     }

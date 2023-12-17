@@ -5,9 +5,6 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   width: 300px;
   text-align: center;
-  /* position: absolute;
-  top: 50%;
-  left: 50%; */
 }
 
 .modal h1 {
@@ -45,13 +42,16 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.3);
 }
 
 .ReactModal__Content {
   position: relative;
-  /* position: absolute;
-  top: 50%;
-  left: 50%; */
   box-sizing: border-box;
   outline: none;
   width: 100%;
@@ -59,4 +59,5 @@
   padding: 20px;
   margin: 0 auto;
   border-radius: 8px;
+  background-color: #fff;
 }

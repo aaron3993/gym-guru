@@ -8,7 +8,7 @@ import SearchBar from "../../../../../components/SearchBar/SearchBar";
 import ExerciseList from "../../../../../components/ExerciseList/ExerciseList";
 import LoadingSpinner from "../../../../../components/LoadingSpinner";
 import ExerciseRow from "./ExerciseRow/ExerciseRow";
-import AddExerciseModal from "../../../../../components/AddExerciseModal/AddExerciseModal";
+import AddExerciseModal from "../../../../../components/AddExerciseModal";
 import "./WorkoutDetailPage.css";
 
 const WorkoutDetailPage = () => {

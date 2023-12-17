@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Modal from "react-modal";
-import { addExerciseToWorkout } from "../../utils/firestoreUtils";
+import { addExerciseToWorkout } from "../utils/firestoreUtils";
+import "./SharedModal.css";
 
 const AddExerciseModal = ({
   currentWorkout,
@@ -48,7 +49,7 @@ const AddExerciseModal = ({
       shouldCloseOnOverlayClick={true}
     >
       <div>
-        <h3>{exercise.name}</h3>
+        <h1>{exercise.name}</h1>
         <label>
           Reps:
           <input
