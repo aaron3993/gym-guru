@@ -43,21 +43,27 @@ const ExerciseList = ({
 
   return (
     <div className="exercise-list">
-      {updatedExercises.map((exercise) => (
-        <ExerciseCard
-          key={exercise.id}
-          exercise={exercise}
-          workouts={workouts}
-          isWorkoutDetailPage={isWorkoutDetailPage}
-          onOpenExerciseModal={onOpenExerciseModal}
-        />
-      ))}
+      {updatedExercises.length > 0 ? (
+        updatedExercises.map((exercise) => (
+          <ExerciseCard
+            key={exercise.id}
+            exercise={exercise}
+            workouts={workouts}
+            isWorkoutDetailPage={isWorkoutDetailPage}
+            onOpenExerciseModal={onOpenExerciseModal}
+          />
+        ))
+      ) : (
+        <p>No exercises found.</p>
+      )}
 
-      <Pagination
-        currentPage={currentPage}
-        totalPages={Math.ceil(exercises.length / itemsPerPage)}
-        onPageChange={handlePageChange}
-      />
+      {updatedExercises.length > 0 && (
+        <Pagination
+          currentPage={currentPage}
+          totalPages={Math.ceil(exercises.length / itemsPerPage)}
+          onPageChange={handlePageChange}
+        />
+      )}
     </div>
   );
 };
