@@ -4,7 +4,7 @@ import {
   displayCategoryName,
   capitalizeFirstLetter,
 } from "../../utils/dataUtils";
-import Pagination from "../Pagination";
+import Pagination from "../Pagination/Pagination";
 import "./ExerciseList.css";
 
 const ExerciseList = ({
@@ -42,21 +42,22 @@ const ExerciseList = ({
   });
 
   return (
-    <div className="exercise-list">
-      {updatedExercises.length > 0 ? (
-        updatedExercises.map((exercise) => (
-          <ExerciseCard
-            key={exercise.id}
-            exercise={exercise}
-            workouts={workouts}
-            isWorkoutDetailPage={isWorkoutDetailPage}
-            onOpenExerciseModal={onOpenExerciseModal}
-          />
-        ))
-      ) : (
-        <p>No exercises found.</p>
-      )}
-
+    <div className="exercise-list-container">
+      <div className="exercise-list">
+        {updatedExercises.length > 0 ? (
+          updatedExercises.map((exercise) => (
+            <ExerciseCard
+              key={exercise.id}
+              exercise={exercise}
+              workouts={workouts}
+              isWorkoutDetailPage={isWorkoutDetailPage}
+              onOpenExerciseModal={onOpenExerciseModal}
+            />
+          ))
+        ) : (
+          <p>No exercises found.</p>
+        )}
+      </div>
       {updatedExercises.length > 0 && (
         <Pagination
           currentPage={currentPage}

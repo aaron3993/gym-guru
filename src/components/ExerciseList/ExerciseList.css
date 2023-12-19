@@ -1,9 +1,13 @@
-.exercise-list {
-    display: flex;
-    flex-wrap: wrap;
+exercise-list-container {
+  display: flex;
+  flex-direction: column;
 }
-  
+.exercise-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .exercise-card {
-    width: 20%;
-    margin: 10px;
-} 
+  width: 20%;
+  margin: 10px;
+}
