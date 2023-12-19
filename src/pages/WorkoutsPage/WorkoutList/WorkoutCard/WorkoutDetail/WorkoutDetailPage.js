@@ -45,7 +45,6 @@ const WorkoutDetailPage = () => {
           allExercises,
           currentWorkout.exercises
         );
-
         setFilteredExercises(
           applyExerciseFiltersAndLimit(exercisesNotInWorkout, searchQuery)
         );

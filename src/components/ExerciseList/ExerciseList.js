@@ -1,10 +1,10 @@
-// ExerciseList.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ExerciseCard from "./ExerciseCard/ExerciseCard";
 import {
   displayCategoryName,
   capitalizeFirstLetter,
 } from "../../utils/dataUtils";
+import Pagination from "../Pagination";
 import "./ExerciseList.css";
 
 const ExerciseList = ({
@@ -13,13 +13,23 @@ const ExerciseList = ({
   isWorkoutDetailPage,
   onOpenExerciseModal,
 }) => {
-  const [selectedWorkoutId, setSelectedWorkoutId] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(3);
 
-  const handleWorkoutChange = (event) => {
-    setSelectedWorkoutId(event.target.value);
+  useEffect(() => {
+    setItemsPerPage(3);
+    setCurrentPage(1);
+  }, [exercises]);
+
+  const handlePageChange = (newPage) => {
+    setCurrentPage(newPage);
   };
 
-  const updatedExercises = exercises.map((exercise) => {
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = exercises.slice(indexOfFirstItem, indexOfLastItem);
+
+  const updatedExercises = currentItems.map((exercise) => {
     const displayedCategory = displayCategoryName(exercise.bodyPart);
     const capitalizedExerciseName = capitalizeFirstLetter(exercise.name);
 
@@ -42,6 +52,12 @@ const ExerciseList = ({
           onOpenExerciseModal={onOpenExerciseModal}
         />
       ))}
+
+      <Pagination
+        currentPage={currentPage}
+        totalPages={Math.ceil(exercises.length / itemsPerPage)}
+        onPageChange={handlePageChange}
+      />
     </div>
   );
 };
