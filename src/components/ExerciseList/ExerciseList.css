@@ -11,3 +11,9 @@ exercise-list-container {
   width: 20%;
   margin: 10px;
 }
+
+.exercise-list p {
+  margin: 10px;
+  text-align: center;
+  color: #555;
+}

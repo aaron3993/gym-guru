@@ -55,7 +55,7 @@ const ExerciseList = ({
             />
           ))
         ) : (
-          <p>No exercises found.</p>
+          <p>No exercises found. Try adjusting your search criteria.</p>
         )}
       </div>
       {updatedExercises.length > 0 && (
