@@ -1,7 +1,13 @@
 import React, { useState } from "react";
+import { updateExerciseInWorkout } from "../../../../../../utils/firestoreUtils";
 import "./ExerciseRow.css";
 
-const ExerciseRow = ({ exercise, onRemoveExercise, onUpdateExercise }) => {
+const ExerciseRow = ({
+  exercise,
+  currentWorkout,
+  onRemoveExercise,
+  onUpdateExercise,
+}) => {
   const [editableReps, setEditableReps] = useState(exercise.reps);
   const [editableSets, setEditableSets] = useState(exercise.sets);
 
@@ -16,11 +22,12 @@ const ExerciseRow = ({ exercise, onRemoveExercise, onUpdateExercise }) => {
   };
 
   const handleUpdateExercise = () => {
-    onUpdateExercise({
-      ...exercise,
-      reps: editableReps,
-      sets: editableSets,
-    });
+    updateExerciseInWorkout(
+      currentWorkout.id,
+      exercise.id,
+      editableReps,
+      editableSets
+    );
   };
 
   return (

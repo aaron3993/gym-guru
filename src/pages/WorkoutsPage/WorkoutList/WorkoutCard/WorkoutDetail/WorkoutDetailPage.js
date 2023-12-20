@@ -91,10 +91,6 @@ const WorkoutDetailPage = () => {
     setExerciseModalOpen(true);
   };
 
-  const handleAddExerciseToWorkout = async () => {
-    await fetchWorkoutDetails();
-  };
-
   const closeExerciseModal = () => {
     setSelectedExercise(null);
     setExerciseModalOpen(false);
@@ -146,8 +142,10 @@ const WorkoutDetailPage = () => {
           currentWorkout.exercises.map((exercise) => (
             <ExerciseRow
               key={exercise.id}
+              currentWorkout={currentWorkout}
               exercise={exercise}
               onRemoveExercise={() => handleRemoveExerciseFromWorkout(exercise)}
+              onUpdateExercise={() => fetchWorkoutDetails()}
             />
           ))}
       </div>
@@ -159,7 +157,7 @@ const WorkoutDetailPage = () => {
         workouts={workouts}
         isWorkoutDetailPage={true}
         onOpenExerciseModal={openExerciseModal}
-        onAddToWorkout={handleAddExerciseToWorkout}
+        onAddToWorkout={() => fetchWorkoutDetails()}
       />
       {selectedExercise && (
         <AddExerciseModal
@@ -167,7 +165,7 @@ const WorkoutDetailPage = () => {
           exercise={selectedExercise}
           isOpen={exerciseModalOpen}
           onRequestClose={closeExerciseModal}
-          onAddToWorkout={handleAddExerciseToWorkout}
+          onAddToWorkout={() => fetchWorkoutDetails()}
         />
       )}
     </div>
