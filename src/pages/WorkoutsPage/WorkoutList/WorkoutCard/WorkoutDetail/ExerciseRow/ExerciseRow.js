@@ -30,6 +30,7 @@ const ExerciseRow = ({
       exercise.sets
     );
     setIsEditingReps(false);
+    onUpdateExercise();
   };
 
   const handleUpdateSets = () => {
@@ -40,6 +41,7 @@ const ExerciseRow = ({
       editableSets
     );
     setIsEditingSets(false);
+    onUpdateExercise();
   };
 
   return (

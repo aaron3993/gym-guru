@@ -13,7 +13,9 @@ import "./WorkoutDetailPage.css";
 
 const WorkoutDetailPage = () => {
   const navigate = useNavigate();
+
   const { workoutId } = useParams();
+
   const [currentWorkout, setCurrentWorkout] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [allExercises, setAllExercises] = useState([]);
@@ -22,7 +24,7 @@ const WorkoutDetailPage = () => {
   const [workouts, setWorkouts] = useState([]);
   const [exerciseModalOpen, setExerciseModalOpen] = useState(false);
   const [selectedExercise, setSelectedExercise] = useState(null);
-  console.log(currentWorkout);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
