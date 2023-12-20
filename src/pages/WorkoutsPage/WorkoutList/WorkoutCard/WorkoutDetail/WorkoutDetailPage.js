@@ -22,7 +22,7 @@ const WorkoutDetailPage = () => {
   const [workouts, setWorkouts] = useState([]);
   const [exerciseModalOpen, setExerciseModalOpen] = useState(false);
   const [selectedExercise, setSelectedExercise] = useState(null);
-
+  console.log(currentWorkout);
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -142,7 +142,7 @@ const WorkoutDetailPage = () => {
           currentWorkout.exercises.map((exercise) => (
             <ExerciseRow
               key={exercise.id}
-              currentWorkout={currentWorkout}
+              workoutId={workoutId}
               exercise={exercise}
               onRemoveExercise={() => handleRemoveExerciseFromWorkout(exercise)}
               onUpdateExercise={() => fetchWorkoutDetails()}
