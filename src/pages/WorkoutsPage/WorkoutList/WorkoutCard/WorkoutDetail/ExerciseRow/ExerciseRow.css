@@ -1,23 +1,49 @@
 .exercise-row {
-    width: 50%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    height: 100px;
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
-    padding: 20px;
+  width: 80%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  height: 100px;
+  border: 1px solid #ccc;
+  margin-bottom: 10px;
+  padding: 20px;
 }
 
 .exercise-row img {
-    width: 90px;
-    height: 90px;
-    margin-right: 20px;
+  width: 90px;
+  height: 90px;
+  margin-right: 20px;
 }
 
 .exercise-info {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.clickable-number {
+  cursor: pointer;
+  color: #007bff;
+  margin-left: 5px;
+}
+
+.clickable-number:hover {
+  color: #0056b3;
+}
+
+.editable-number {
+  margin-left: 72px;
+}
+.editable-number span {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.ant-input-number {
+  font-size: 16px;
+}
+
+.ant-alert-error {
+  margin-top: 5px;
 }
