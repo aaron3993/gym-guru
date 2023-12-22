@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { InputNumber } from "antd";
+import { InputNumber, Alert } from "antd";
 import "./ExerciseRow.css";
 import { updateExerciseInWorkout } from "../../../../../../utils/firestoreUtils";
 
@@ -13,6 +13,8 @@ const ExerciseRow = ({
   const [editableSets, setEditableSets] = useState(exercise.sets);
   const [isEditingReps, setIsEditingReps] = useState(false);
   const [isEditingSets, setIsEditingSets] = useState(false);
+  const [repsError, setRepsError] = useState(null);
+  const [setsError, setSetsError] = useState(null);
 
   const handleEditReps = () => {
     setIsEditingReps(true);
@@ -23,25 +25,39 @@ const ExerciseRow = ({
   };
 
   const handleUpdateReps = () => {
-    updateExerciseInWorkout(
-      workoutId,
-      exercise.id,
-      editableReps,
-      exercise.sets
-    );
-    setIsEditingReps(false);
-    onUpdateExercise();
+    const updatedReps = Math.min(Math.max(editableReps, 1), 100);
+
+    if (updatedReps !== editableReps) {
+      setRepsError("Reps must be between 1 and 100");
+    } else {
+      setRepsError(null);
+      updateExerciseInWorkout(
+        workoutId,
+        exercise.id,
+        updatedReps,
+        exercise.sets
+      );
+      setIsEditingReps(false);
+      onUpdateExercise();
+    }
   };
 
   const handleUpdateSets = () => {
-    updateExerciseInWorkout(
-      workoutId,
-      exercise.id,
-      exercise.reps,
-      editableSets
-    );
-    setIsEditingSets(false);
-    onUpdateExercise();
+    const updatedSets = Math.min(Math.max(editableSets, 1), 10);
+
+    if (updatedSets !== editableSets) {
+      setSetsError("Sets must be between 1 and 10");
+    } else {
+      setSetsError(null);
+      updateExerciseInWorkout(
+        workoutId,
+        exercise.id,
+        exercise.reps,
+        updatedSets
+      );
+      setIsEditingSets(false);
+      onUpdateExercise();
+    }
   };
 
   return (
@@ -61,6 +77,7 @@ const ExerciseRow = ({
             <span onClick={handleEditReps}>Reps: {editableReps}</span>
           )}
         </div>
+        {repsError && <Alert message={repsError} type="error" showIcon />}
         <div className="editable-number">
           {isEditingSets ? (
             <InputNumber
@@ -73,6 +90,7 @@ const ExerciseRow = ({
             <span onClick={handleEditSets}>Sets: {editableSets}</span>
           )}
         </div>
+        {setsError && <Alert message={setsError} type="error" showIcon />}
       </div>
       <button onClick={() => onRemoveExercise(exercise)}>Remove</button>
     </div>
