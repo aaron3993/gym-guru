@@ -69,7 +69,10 @@ const ExerciseRow = ({
               onBlur={handleUpdateReps}
             />
           ) : (
-            <span onClick={handleEditReps}>Reps: {editableReps}</span>
+            <div>
+              <span>Reps: </span>
+              <span onClick={handleEditReps}>{editableReps}</span>
+            </div>
           )}
         </div>
         {repsError && <Alert message={repsError} type="error" showIcon />}
@@ -82,7 +85,10 @@ const ExerciseRow = ({
               onBlur={handleUpdateSets}
             />
           ) : (
-            <span onClick={handleEditSets}>Sets: {editableSets}</span>
+            <div>
+              <span>Sets: </span>
+              <span onClick={handleEditSets}>{editableSets}</span>
+            </div>
           )}
         </div>
         {setsError && <Alert message={setsError} type="error" showIcon />}
