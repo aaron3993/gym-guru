@@ -25,27 +25,22 @@ const ExerciseRow = ({
   };
 
   const handleUpdateReps = () => {
-    const updatedReps = Math.min(Math.max(editableReps, 1), 100);
-
-    if (updatedReps !== editableReps) {
-      setRepsError("Reps must be between 1 and 100");
-    } else {
-      setRepsError(null);
-      updateExerciseInWorkout(
-        workoutId,
-        exercise.id,
-        updatedReps,
-        exercise.sets
-      );
-      setIsEditingReps(false);
-      onUpdateExercise();
+    if (editableReps < 1 || editableReps > 100) {
+      return setRepsError("Reps must be between 1 and 100");
     }
+    setRepsError(null);
+    updateExerciseInWorkout(
+      workoutId,
+      exercise.id,
+      editableReps,
+      exercise.sets
+    );
+    setIsEditingReps(false);
+    onUpdateExercise();
   };
 
   const handleUpdateSets = () => {
-    const updatedSets = Math.min(Math.max(editableSets, 1), 10);
-
-    if (updatedSets !== editableSets) {
+    if (editableSets < 1 || editableSets > 10) {
       setSetsError("Sets must be between 1 and 10");
     } else {
       setSetsError(null);
@@ -53,7 +48,7 @@ const ExerciseRow = ({
         workoutId,
         exercise.id,
         exercise.reps,
-        updatedSets
+        editableSets
       );
       setIsEditingSets(false);
       onUpdateExercise();
