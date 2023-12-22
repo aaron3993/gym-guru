@@ -28,8 +28,9 @@ const ExerciseRow = ({
     if (editableReps < 1 || editableReps > 100) {
       return setRepsError("Reps must be between 1 and 100");
     }
+    setIsEditingReps(false);
+    setRepsError(null);
     if (editableReps !== exercise.reps) {
-      setRepsError(null);
       updateExerciseInWorkout(
         workoutId,
         exercise.id,
@@ -45,8 +46,9 @@ const ExerciseRow = ({
     if (editableSets < 1 || editableSets > 10) {
       return setSetsError("Sets must be between 1 and 10");
     }
+    setIsEditingSets(false);
+    setSetsError(null);
     if (editableSets !== exercise.sets) {
-      setSetsError(null);
       updateExerciseInWorkout(
         workoutId,
         exercise.id,
@@ -58,45 +60,51 @@ const ExerciseRow = ({
     }
   };
 
+  const handleKeyDown = (e, updateFunction) => {
+    if (e.key === "Enter") {
+      updateFunction();
+    }
+  };
+
   return (
     <div className="exercise-row">
       <div className="exercise-info">
         <img src={exercise.gifUrl} alt={exercise.name} />
         <h3>{exercise.updatedName}</h3>
         <div className="editable-number">
-          <span>Reps: </span>
-          {isEditingReps ? (
-            <InputNumber
-              autoFocus
-              value={editableReps}
-              onChange={(value) => setEditableReps(value)}
-              onBlur={handleUpdateReps}
-              style={{ width: "60px" }}
-            />
-          ) : (
-            <span onClick={handleEditReps} className="clickable-number">
-              {editableReps}
-            </span>
-          )}
-        </div>
-        {repsError && <Alert message={repsError} type="error" showIcon />}
-        <div className="editable-number">
-          <span>Sets: </span>
+          <h3>Sets</h3>
           {isEditingSets ? (
             <InputNumber
               autoFocus
               value={editableSets}
               onChange={(value) => setEditableSets(value)}
               onBlur={handleUpdateSets}
-              style={{ width: "60px" }}
+              onKeyDown={(e) => handleKeyDown(e, handleUpdateSets)}
             />
           ) : (
-            <span onClick={handleEditSets} className="clickable-number">
+            <p onClick={handleEditSets} className="clickable-number">
               {editableSets}
-            </span>
+            </p>
           )}
         </div>
         {setsError && <Alert message={setsError} type="error" showIcon />}
+        <div className="editable-number">
+          <h3>Reps</h3>
+          {isEditingReps ? (
+            <InputNumber
+              autoFocus
+              value={editableReps}
+              onChange={(value) => setEditableReps(value)}
+              onBlur={handleUpdateReps}
+              onKeyDown={(e) => handleKeyDown(e, handleUpdateReps)}
+            />
+          ) : (
+            <p onClick={handleEditReps} className="clickable-number">
+              {editableReps}
+            </p>
+          )}
+        </div>
+        {repsError && <Alert message={repsError} type="error" showIcon />}
       </div>
       <button onClick={() => onRemoveExercise(exercise)}>Remove</button>
     </div>
