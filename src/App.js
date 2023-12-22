@@ -1,19 +1,24 @@
-import React, { useState, useEffect } from 'react';
-import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import Home from './pages/Home/Home';
-import Login from './pages/Login/Login';
-import Register from './pages/Register/Register';
-import PrivateRoute from './components/PrivateRoute';
+import React, { useState, useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
+import Home from "./pages/Home/Home";
+import Login from "./pages/Login/Login";
+import Register from "./pages/Register/Register";
+import PrivateRoute from "./components/PrivateRoute";
 import { signOut, onAuthStateChanged } from "firebase/auth";
-import { auth } from './firebase';
-import Navbar from './components/Navbar/Navbar';
-import WorkoutList from './pages/WorkoutsPage/WorkoutList/WorkoutList';
-import ExercisesPage from './pages/ExercisesPage/ExercisesPage';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
-import LoadingSpinner from './components/LoadingSpinner';
-import WorkoutsPage from './pages/WorkoutsPage/WorkoutsPage';
-import WorkoutDetailPage from './pages/WorkoutsPage/WorkoutList/WorkoutCard/WorkoutDetail/WorkoutDetailPage';
+import { auth } from "./firebase";
+import Navbar from "./components/Navbar/Navbar";
+import WorkoutList from "./pages/WorkoutsPage/WorkoutList/WorkoutList";
+import ExercisesPage from "./pages/ExercisesPage/ExercisesPage";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import LoadingSpinner from "./components/LoadingSpinner";
+import WorkoutsPage from "./pages/WorkoutsPage/WorkoutsPage";
+import WorkoutDetailPage from "./pages/WorkoutsPage/WorkoutList/WorkoutCard/WorkoutDetail/WorkoutDetailPage";
 
 const theme = createTheme();
 
@@ -29,7 +34,7 @@ const App = () => {
         setAuthenticated(true);
       } else {
         setUser(null);
-        setAuthenticated(false)
+        setAuthenticated(false);
       }
       setLoading(false);
     });
@@ -37,23 +42,23 @@ const App = () => {
 
   const handleLogout = async () => {
     try {
-      setAuthenticated(false)
+      setAuthenticated(false);
       setUser(null);
       await signOut(auth);
     } catch (error) {
-      console.error('Error signing out:', error);
+      console.error("Error signing out:", error);
     }
   };
 
   if (isLoading) {
-    return <LoadingSpinner />
+    return <LoadingSpinner />;
   }
 
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-      {isAuthenticated && <Navbar user={user} onLogout={handleLogout} />}
+        {isAuthenticated && <Navbar user={user} onLogout={handleLogout} />}
         <Routes>
           <Route
             path="/"
@@ -63,14 +68,14 @@ const App = () => {
               </PrivateRoute>
             }
           />
-          <Route
+          {/* <Route
             path="/exercises"
             element={
               <PrivateRoute isAuthenticated={isAuthenticated}>
                 <ExercisesPage />
               </PrivateRoute>
             }
-          />
+          /> */}
           <Route
             path="/workouts"
             element={
@@ -85,7 +90,8 @@ const App = () => {
               <PrivateRoute isAuthenticated={isAuthenticated}>
                 <WorkoutDetailPage />
               </PrivateRoute>
-            } />
+            }
+          />
           <Route
             path="/login"
             element={isAuthenticated ? <Navigate to="/" /> : <Login />}
@@ -93,7 +99,7 @@ const App = () => {
           <Route path="/register" element={<Register />} />
         </Routes>
       </Router>
-      </ThemeProvider>
+    </ThemeProvider>
   );
 };
 
