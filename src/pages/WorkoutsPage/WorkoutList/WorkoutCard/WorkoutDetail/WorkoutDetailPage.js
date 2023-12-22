@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../../../../firebase";
+import { fetchAllExercises } from "../../../../../utils/apiUtils";
 import { applyExerciseFiltersAndLimit } from "../../../../../utils/dataUtils";
 import { removeExerciseFromWorkout } from "../../../../../utils/firestoreUtils";
 import SearchBar from "../../../../../components/SearchBar/SearchBar";
@@ -18,10 +19,10 @@ const WorkoutDetailPage = () => {
 
   const [currentWorkout, setCurrentWorkout] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
+  const [workouts, setWorkouts] = useState([]);
   const [allExercises, setAllExercises] = useState([]);
   const [filteredExercises, setFilteredExercises] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const [workouts, setWorkouts] = useState([]);
   const [exerciseModalOpen, setExerciseModalOpen] = useState(false);
   const [selectedExercise, setSelectedExercise] = useState(null);
 
@@ -76,12 +77,21 @@ const WorkoutDetailPage = () => {
 
   const fetchAllExercisesData = async () => {
     try {
-      const response = await fetch("/data/exercises.json");
-      const exercises = await response.json();
-      // const exercises = await fetchAllExercises();
-      setAllExercises(exercises);
+      const cachedExercises = localStorage.getItem("allExercises");
+      if (cachedExercises) {
+        setAllExercises(JSON.parse(cachedExercises));
+      } else {
+        // const response = await fetch("/data/exercises.json");
+        const exercises = await fetchAllExercises();
+        // const exercises = await response.json();
+
+        localStorage.setItem("allExercises", JSON.stringify(exercises));
+
+        setAllExercises(exercises);
+      }
+
       setFilteredExercises(
-        applyExerciseFiltersAndLimit(exercises, searchQuery)
+        applyExerciseFiltersAndLimit(allExercises, searchQuery)
       );
     } catch (error) {
       console.error("Error fetching all exercises:", error);
