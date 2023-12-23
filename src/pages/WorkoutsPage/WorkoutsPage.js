@@ -4,7 +4,7 @@ import WorkoutList from "./WorkoutList/WorkoutList";
 import {
   createWorkout,
   getAllWorkoutsForUser,
-} from "../../utils/firestoreUtils"; // Update import
+} from "../../utils/firestoreUtils";
 import { useAuth } from "../../contexts/AuthContext";
 import "./WorkoutsPage.css";
 
@@ -18,7 +18,7 @@ const WorkoutsPage = () => {
     const fetchWorkouts = async () => {
       try {
         if (user) {
-          const fetchedWorkouts = await getAllWorkoutsForUser(user); // Call the method with the user
+          const fetchedWorkouts = await getAllWorkoutsForUser(user);
           setWorkouts(fetchedWorkouts);
         }
       } catch (error) {
