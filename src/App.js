@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -9,8 +9,6 @@ import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import PrivateRoute from "./components/PrivateRoute";
-import { signOut, onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebase";
 import Navbar from "./components/Navbar/Navbar";
 import WorkoutList from "./pages/WorkoutsPage/WorkoutList/WorkoutList";
 import ExercisesPage from "./pages/ExercisesPage/ExercisesPage";
@@ -19,36 +17,12 @@ import CssBaseline from "@mui/material/CssBaseline";
 import LoadingSpinner from "./components/LoadingSpinner";
 import WorkoutsPage from "./pages/WorkoutsPage/WorkoutsPage";
 import WorkoutDetailPage from "./pages/WorkoutsPage/WorkoutList/WorkoutCard/WorkoutDetail/WorkoutDetailPage";
+import { useAuth } from "./contexts/AuthContext";
 
 const theme = createTheme();
 
 const App = () => {
-  const [user, setUser] = useState(null);
-  const [isAuthenticated, setAuthenticated] = useState(false);
-  const [isLoading, setLoading] = useState(true);
-
-  useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-        setAuthenticated(true);
-      } else {
-        setUser(null);
-        setAuthenticated(false);
-      }
-      setLoading(false);
-    });
-  }, []);
-
-  const handleLogout = async () => {
-    try {
-      setAuthenticated(false);
-      setUser(null);
-      await signOut(auth);
-    } catch (error) {
-      console.error("Error signing out:", error);
-    }
-  };
+  const { user, isAuthenticated, isLoading, handleLogout } = useAuth();
 
   if (isLoading) {
     return <LoadingSpinner />;

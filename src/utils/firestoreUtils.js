@@ -3,19 +3,39 @@ import {
   doc,
   getDoc,
   addDoc,
+  setDoc,
   updateDoc,
   arrayRemove,
   collection,
+  query,
+  where,
   getDocs,
 } from "firebase/firestore";
 import { db } from "../firebase";
 
-export const createWorkout = async (workoutName) => {
+export const createWorkout = async (workoutName, user) => {
   try {
+    if (!user) {
+      console.error("User not available.");
+      return null;
+    }
+
     const docRef = await addDoc(collection(db, "workouts"), {
       name: workoutName,
       exercises: [],
+      userId: user.uid,
     });
+
+    const userWorkoutsDocRef = doc(db, "userWorkouts", user.uid);
+    await setDoc(
+      userWorkoutsDocRef,
+      {
+        [docRef.id]: {
+          workoutId: docRef.id,
+        },
+      },
+      { merge: true }
+    );
 
     return {
       id: docRef.id,
@@ -24,6 +44,32 @@ export const createWorkout = async (workoutName) => {
     };
   } catch (error) {
     console.error("Error creating workout in Firestore:", error);
+    throw error;
+  }
+};
+
+export const getAllWorkoutsForUser = async (user) => {
+  try {
+    if (!user) {
+      console.error("User not available.");
+      return null;
+    }
+
+    const workoutsQuery = query(
+      collection(db, "workouts"),
+      where("userId", "==", user.uid)
+    );
+
+    const workoutsSnapshot = await getDocs(workoutsQuery);
+
+    const workouts = workoutsSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+
+    return workouts;
+  } catch (error) {
+    console.error("Error fetching workouts from Firestore:", error);
     throw error;
   }
 };
