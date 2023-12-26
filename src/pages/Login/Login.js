@@ -2,15 +2,34 @@ import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import { NavLink, useNavigate } from "react-router-dom";
+import { Alert } from "antd";
 import "./Login.css";
 
 const Login = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertType, setAlertType] = useState("error");
+
+  const isValidEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
 
   const onLogin = (e) => {
     e.preventDefault();
+
+    if (!email || !password) {
+      setAlertMessage("Please fill in all required fields.");
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      setAlertMessage("Please enter a valid email address.");
+      return;
+    }
+
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         const user = userCredential.user;
@@ -19,8 +38,20 @@ const Login = () => {
       })
       .catch((error) => {
         const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode, errorMessage);
+        let errorMessage =
+          "Authentication failed. Please check your email and password.";
+
+        if (
+          errorCode === "auth/user-not-found" ||
+          errorCode === "auth/wrong-password"
+        ) {
+          errorMessage = "Invalid email or password. Please try again.";
+        }
+
+        console.error(errorCode, errorMessage);
+
+        setAlertMessage(errorMessage);
+        setAlertType("error");
       });
   };
 
@@ -30,6 +61,16 @@ const Login = () => {
         <section className="login-layout">
           <div className="login-container">
             <p className="title">Gym Guru</p>
+            {alertMessage && (
+              <Alert
+                message={alertMessage}
+                type={alertType}
+                showIcon
+                closable
+                onClose={() => setAlertMessage("")}
+                style={{ marginBottom: 16 }}
+              />
+            )}
             <form>
               <div>
                 <label htmlFor="email-address">Email address</label>
