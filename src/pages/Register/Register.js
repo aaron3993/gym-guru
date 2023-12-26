@@ -3,6 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { collection, addDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "../../firebase";
+import { Alert } from "antd";
 import "./Register.css";
 
 const Register = () => {
@@ -11,24 +12,25 @@ const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertType, setAlertType] = useState("error");
 
   const onSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      console.log("hi");
       if (!name || !email || !password) {
-        alert("Please fill in all required fields.");
+        setAlertMessage("Please fill in all required fields.");
         return;
       }
 
       if (!isValidEmail(email)) {
-        alert("Please enter a valid email address.");
+        setAlertMessage("Please enter a valid email address.");
         return;
       }
 
       if (password.length < 6) {
-        alert("Password must be at least 6 characters long.");
+        setAlertMessage("Password must be at least 6 characters long.");
         return;
       }
 
@@ -51,6 +53,9 @@ const Register = () => {
       const errorCode = error.code;
       const errorMessage = error.message;
       console.log(errorCode, errorMessage);
+
+      setAlertMessage(errorMessage);
+      setAlertType("error");
     }
   };
 
@@ -65,6 +70,16 @@ const Register = () => {
         <div className="signup-container">
           <div>
             <p className="title"> Gym Guru </p>
+            {alertMessage && (
+              <Alert
+                message={alertMessage}
+                type={alertType}
+                showIcon
+                closable
+                onClose={() => setAlertMessage("")}
+                style={{ marginBottom: 16 }}
+              />
+            )}
             <form>
               <div>
                 <label htmlFor="name" className="signup-container-label">
