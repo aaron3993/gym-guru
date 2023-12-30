@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { message } from "antd";
 import CreateWorkoutModal from "../../components/CreateWorkoutModal";
 import WorkoutList from "./WorkoutList/WorkoutList";
 import { getAllWorkoutsForUser } from "../../utils/firestoreUtils";
@@ -36,6 +37,7 @@ const WorkoutsPage = () => {
 
   const handleCreateWorkout = (workoutName) => {
     setWorkouts((prevWorkouts) => [...prevWorkouts, { name: workoutName }]);
+    message.success("Workout created successfully!");
   };
 
   return (
