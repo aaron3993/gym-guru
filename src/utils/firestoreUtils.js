@@ -48,6 +48,27 @@ export const createWorkout = async (workoutName, user) => {
   }
 };
 
+export const checkIfWorkoutExists = async (workoutName, userId) => {
+  try {
+    const workoutsQuery = query(
+      collection(db, "workouts"),
+      where("userId", "==", userId),
+      where("name", "==", workoutName)
+    );
+
+    const workoutsSnapshot = await getDocs(workoutsQuery);
+
+    if (workoutsSnapshot.docs.length > 0) {
+      return workoutsSnapshot.docs[0].data();
+    }
+
+    return null;
+  } catch (error) {
+    console.error("Error checking if workout exists in Firestore:", error);
+    throw error;
+  }
+};
+
 export const getAllWorkoutsForUser = async (user) => {
   try {
     if (!user) {

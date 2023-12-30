@@ -1,44 +1,59 @@
 import React, { useState } from "react";
 import Modal from "antd/lib/modal/Modal";
 import { Input, Button, Form, Typography } from "antd";
+import { createWorkout, checkIfWorkoutExists } from "../utils/firestoreUtils";
+import { useAuth } from "../contexts/AuthContext";
 import "./SharedModal.css";
 
 const { Text } = Typography;
 
 const CreateWorkoutModal = ({ isOpen, onRequestClose, onCreateWorkout }) => {
+  const { user } = useAuth();
+
   const [form] = Form.useForm();
   const [error, setError] = useState("");
 
-  const handleCreateWorkout = () => {
-    const workoutName = form.getFieldValue("workoutName");
+  const handleCreateWorkout = async () => {
+    try {
+      const values = await form.validateFields();
 
-    if (!workoutName || workoutName.trim().length === 0) {
-      return;
+      const validatedWorkoutName = values?.workoutName;
+
+      if (!validatedWorkoutName || validatedWorkoutName.trim().length === 0) {
+        setError("Workout name is required.");
+        return;
+      }
+
+      if (
+        validatedWorkoutName.length < 1 ||
+        validatedWorkoutName.length > 100
+      ) {
+        setError("Workout name must be between 1 and 100 characters.");
+        return;
+      }
+
+      const workoutExists = await checkIfWorkoutExists(
+        validatedWorkoutName,
+        user.uid
+      );
+
+      if (workoutExists) {
+        return setError("A workout with this name already exists");
+      }
+
+      await createWorkout(validatedWorkoutName, user);
+
+      onCreateWorkout(validatedWorkoutName);
+
+      form.resetFields();
+
+      onRequestClose();
+    } catch (error) {
+      console.error("Form validation error:", error);
+      setError(
+        "An error occurred while validating the form. Please try again."
+      );
     }
-
-    form
-      .validateFields()
-      .then((values) => {
-        const validatedWorkoutName = values?.workoutName;
-
-        if (
-          validatedWorkoutName.length < 1 ||
-          validatedWorkoutName.length > 100
-        ) {
-          setError("Workout name must be between 1 and 100 characters.");
-          return;
-        }
-
-        onCreateWorkout(validatedWorkoutName);
-        form.resetFields();
-        onRequestClose();
-      })
-      .catch((error) => {
-        console.error("Form validation error:", error);
-        setError(
-          "An error occurred while validating the form. Please try again."
-        );
-      });
   };
 
   const handleInputChange = (e) => {

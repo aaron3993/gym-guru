@@ -1,10 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CreateWorkoutModal from "../../components/CreateWorkoutModal";
 import WorkoutList from "./WorkoutList/WorkoutList";
-import {
-  createWorkout,
-  getAllWorkoutsForUser,
-} from "../../utils/firestoreUtils";
+import { getAllWorkoutsForUser } from "../../utils/firestoreUtils";
 import { useAuth } from "../../contexts/AuthContext";
 import "./WorkoutsPage.css";
 
@@ -37,15 +34,8 @@ const WorkoutsPage = () => {
     setModalOpen(false);
   };
 
-  const handleCreateWorkout = async (workoutName) => {
-    try {
-      const newWorkout = await createWorkout(workoutName, user);
-      setWorkouts((prevWorkouts) => [...prevWorkouts, newWorkout]);
-    } catch (error) {
-      console.error("Error creating workout:", error);
-    } finally {
-      setModalOpen(false);
-    }
+  const handleCreateWorkout = (workoutName) => {
+    setWorkouts((prevWorkouts) => [...prevWorkouts, { name: workoutName }]);
   };
 
   return (
