@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { message } from "antd";
+import { message, Form } from "antd";
 import CreateWorkoutModal from "../../components/CreateWorkoutModal";
 import WorkoutList from "./WorkoutList/WorkoutList";
 import { getAllWorkoutsForUser } from "../../utils/firestoreUtils";
@@ -11,6 +11,8 @@ const WorkoutsPage = () => {
 
   const [isModalOpen, setModalOpen] = useState(false);
   const [workouts, setWorkouts] = useState([]);
+  const [error, setError] = useState("");
+  const [form] = Form.useForm();
 
   useEffect(() => {
     const fetchWorkouts = async () => {
@@ -33,6 +35,8 @@ const WorkoutsPage = () => {
 
   const handleCloseModal = () => {
     setModalOpen(false);
+    setError("");
+    form.resetFields();
   };
 
   const handleCreateWorkout = (workoutName) => {
@@ -49,6 +53,9 @@ const WorkoutsPage = () => {
         isOpen={isModalOpen}
         onRequestClose={handleCloseModal}
         onCreateWorkout={handleCreateWorkout}
+        error={error}
+        setError={setError}
+        form={form}
       />
     </div>
   );

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Modal from "antd/lib/modal/Modal";
 import { Input, Button, Form, Typography } from "antd";
 import { createWorkout, checkIfWorkoutExists } from "../utils/firestoreUtils";
@@ -7,11 +7,15 @@ import "./SharedModal.css";
 
 const { Text } = Typography;
 
-const CreateWorkoutModal = ({ isOpen, onRequestClose, onCreateWorkout }) => {
+const CreateWorkoutModal = ({
+  isOpen,
+  onRequestClose,
+  onCreateWorkout,
+  form,
+  error,
+  setError,
+}) => {
   const { user } = useAuth();
-
-  const [form] = Form.useForm();
-  const [error, setError] = useState("");
 
   const handleCreateWorkout = async () => {
     try {
