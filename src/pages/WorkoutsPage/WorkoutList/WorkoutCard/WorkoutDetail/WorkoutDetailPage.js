@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
-import { Button, Modal } from "antd";
+import { message, Input, Button, Modal } from "antd";
 import { db } from "../../../../../firebase";
 import { fetchAllExercises } from "../../../../../utils/apiUtils";
 import { applyExerciseFiltersAndLimit } from "../../../../../utils/dataUtils";
 import {
+  updateWorkoutName,
   removeExerciseFromWorkout,
   deleteWorkout,
 } from "../../../../../utils/firestoreUtils";
@@ -22,6 +23,8 @@ const WorkoutDetailPage = () => {
   const { workoutId } = useParams();
 
   const [currentWorkout, setCurrentWorkout] = useState(null);
+  const [isEditingName, setIsEditingName] = useState(false);
+  const [editedName, setEditedName] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
   const [workouts, setWorkouts] = useState([]);
   const [allExercises, setAllExercises] = useState([]);
@@ -72,6 +75,7 @@ const WorkoutDetailPage = () => {
           id: workoutSnapshot.id,
           ...workoutSnapshot.data(),
         });
+        setEditedName(workoutSnapshot.data().name);
       } else {
         console.error("Workout not found");
       }
@@ -100,6 +104,29 @@ const WorkoutDetailPage = () => {
       );
     } catch (error) {
       console.error("Error fetching all exercises:", error);
+    }
+  };
+
+  const handleClickName = () => {
+    setIsEditingName(true);
+  };
+
+  const updateSaveName = async () => {
+    if (editedName === currentWorkout.name) return setIsEditingName(false);
+    try {
+      await updateWorkoutName(workoutId, editedName);
+      await fetchWorkoutDetails();
+    } catch (error) {
+      console.error("Error updating workout name:", error);
+    }
+
+    setIsEditingName(false);
+    message.success("Workout name changed");
+  };
+
+  const handleKeyDown = (e, updateFunction) => {
+    if (e.key === "Enter") {
+      updateFunction();
     }
   };
 
@@ -167,7 +194,17 @@ const WorkoutDetailPage = () => {
 
   return (
     <div className="workout-details">
-      <h1>Workout: {currentWorkout.name}</h1>
+      {isEditingName ? (
+        <Input
+          autoFocus
+          value={editedName}
+          onChange={(e) => setEditedName(e.target.value)}
+          onBlur={updateSaveName}
+          onKeyDown={(e) => handleKeyDown(e, updateSaveName)}
+        />
+      ) : (
+        <h1 onClick={handleClickName}>{editedName}</h1>
+      )}
 
       <div className="exercise-row-list">
         {currentWorkout.exercises.length > 0 &&

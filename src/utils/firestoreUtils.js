@@ -176,6 +176,16 @@ export const getAllWorkouts = async () => {
   }
 };
 
+export const updateWorkoutName = async (workoutId, newName) => {
+  try {
+    const workoutDoc = doc(db, "workouts", workoutId);
+    await updateDoc(workoutDoc, { name: newName });
+  } catch (error) {
+    console.error("Error updating workout name:", error);
+    throw error;
+  }
+};
+
 export const addExerciseToWorkout = async (workoutId, exercise, reps, sets) => {
   const workoutRef = doc(db, "workouts", workoutId);
 

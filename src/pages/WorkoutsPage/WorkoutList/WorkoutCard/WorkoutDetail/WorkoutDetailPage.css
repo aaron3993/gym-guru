@@ -1,4 +1,11 @@
 .workout-details {
-    margin-top: 7vh;
-    margin-left: 16px;
+  margin-top: 7vh;
+  margin-left: 16px;
+}
+
+.ant-input {
+  width: 50vw;
+  font-size: 24px;
+  margin-top: 12px;
+  margin-bottom: 24px;
 }
