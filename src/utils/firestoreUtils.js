@@ -11,7 +11,48 @@ import {
   where,
   getDocs,
 } from "firebase/firestore";
-import { db } from "../firebase";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth, db } from "../firebase";
+
+export const registerUser = async (name, email, password) => {
+  try {
+    if (!name || !email || !password) {
+      throw new Error("Please fill in all required fields.");
+    }
+
+    if (!isValidEmail(email)) {
+      throw new Error("Please enter a valid email address.");
+    }
+
+    if (password.length < 6) {
+      throw new Error("Password must be at least 6 characters long.");
+    }
+
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const user = userCredential.user;
+
+    await updateProfile(user, { displayName: name });
+
+    await addDoc(collection(db, "users"), {
+      uid: user.uid,
+      name: name,
+      email: user.email,
+    });
+
+    return { user };
+  } catch (error) {
+    return { error };
+  }
+};
+
+const isValidEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
 
 export const createWorkout = async (workoutName, user) => {
   try {

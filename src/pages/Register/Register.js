@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { collection, addDoc } from "firebase/firestore";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth, db } from "../../firebase";
+import { registerUser } from "../../utils/firestoreUtils";
 import { Alert } from "antd";
 import "./Register.css";
 
@@ -19,49 +17,19 @@ const Register = () => {
     e.preventDefault();
 
     try {
-      if (!name || !email || !password) {
-        setAlertMessage("Please fill in all required fields.");
-        return;
+      const { user, error } = await registerUser(name, email, password);
+      console.log(user, error);
+      if (user) {
+        navigate("/");
+      } else {
+        setAlertMessage(error.message);
+        setAlertType("error");
       }
-
-      if (!isValidEmail(email)) {
-        setAlertMessage("Please enter a valid email address.");
-        return;
-      }
-
-      if (password.length < 6) {
-        setAlertMessage("Password must be at least 6 characters long.");
-        return;
-      }
-
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      const user = userCredential.user;
-
-      await updateProfile(user, { displayName: name });
-
-      await addDoc(collection(db, "users"), {
-        uid: user.uid,
-        name: name,
-        email: user.email,
-      });
-      navigate("/");
     } catch (error) {
-      const errorCode = error.code;
-      const errorMessage = error.message;
-      console.log(errorCode, errorMessage);
-
-      setAlertMessage(errorMessage);
+      console.error("Error during registration:", error);
+      setAlertMessage("An unexpected error occurred. Please try again.");
       setAlertType("error");
     }
-  };
-
-  const isValidEmail = (email) => {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
   };
 
   return (
