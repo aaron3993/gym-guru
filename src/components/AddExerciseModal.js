@@ -23,7 +23,6 @@ const AddExerciseModal = ({
         return console.error("Reps and sets are required.");
       }
 
-      // Convert values to integers
       const parsedReps = parseInt(reps);
       const parsedSets = parseInt(sets);
 

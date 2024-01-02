@@ -2,14 +2,15 @@ import {
   arrayUnion,
   doc,
   getDoc,
+  getDocs,
   addDoc,
   setDoc,
   updateDoc,
+  deleteDoc,
   arrayRemove,
   collection,
   query,
   where,
-  getDocs,
 } from "firebase/firestore";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "../firebase";
@@ -220,4 +221,14 @@ export const removeExerciseFromWorkout = async (workoutId, exercise) => {
   await updateDoc(workoutRef, {
     exercises: arrayRemove(exercise),
   });
+};
+
+export const deleteWorkout = async (workoutId) => {
+  try {
+    const workoutDoc = doc(db, "workouts", workoutId);
+    await deleteDoc(workoutDoc);
+  } catch (error) {
+    console.error("Error deleting workout:", error);
+    throw error;
+  }
 };

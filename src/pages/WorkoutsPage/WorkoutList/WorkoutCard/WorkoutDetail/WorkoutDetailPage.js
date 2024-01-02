@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
+import { Button, Modal } from "antd";
 import { db } from "../../../../../firebase";
 import { fetchAllExercises } from "../../../../../utils/apiUtils";
 import { applyExerciseFiltersAndLimit } from "../../../../../utils/dataUtils";
-import { removeExerciseFromWorkout } from "../../../../../utils/firestoreUtils";
+import {
+  removeExerciseFromWorkout,
+  deleteWorkout,
+} from "../../../../../utils/firestoreUtils";
 import SearchBar from "../../../../../components/SearchBar/SearchBar";
 import ExerciseList from "../../../../../components/ExerciseList/ExerciseList";
 import LoadingSpinner from "../../../../../components/LoadingSpinner";
@@ -25,6 +29,7 @@ const WorkoutDetailPage = () => {
   const [isLoading, setLoading] = useState(true);
   const [exerciseModalOpen, setExerciseModalOpen] = useState(false);
   const [selectedExercise, setSelectedExercise] = useState(null);
+  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -137,6 +142,21 @@ const WorkoutDetailPage = () => {
     setSearchQuery(query);
   };
 
+  const handleDeleteWorkout = async () => {
+    setDeleteModalVisible(false);
+
+    try {
+      await deleteWorkout(workoutId);
+      navigate("/workouts");
+    } catch (error) {
+      console.error("Error deleting workout:", error);
+    }
+  };
+
+  const hideDeleteModal = () => {
+    setDeleteModalVisible(false);
+  };
+
   if (isLoading) {
     return <LoadingSpinner />;
   }
@@ -171,6 +191,12 @@ const WorkoutDetailPage = () => {
         onOpenExerciseModal={openExerciseModal}
         onAddToWorkout={() => fetchWorkoutDetails()}
       />
+      <Button
+        onClick={() => setDeleteModalVisible(true)}
+        style={{ background: "#ff4d4f", color: "#fff", marginTop: 16 }}
+      >
+        Delete Workout
+      </Button>
       {selectedExercise && (
         <AddExerciseModal
           currentWorkout={currentWorkout}
@@ -180,6 +206,16 @@ const WorkoutDetailPage = () => {
           onAddToWorkout={() => fetchWorkoutDetails()}
         />
       )}
+      <Modal
+        title="Delete Workout"
+        open={deleteModalVisible}
+        onOk={handleDeleteWorkout}
+        onCancel={hideDeleteModal}
+        okText="Delete"
+        cancelText="Cancel"
+      >
+        <p>Are you sure you want to delete this workout?</p>
+      </Modal>
     </div>
   );
 };
