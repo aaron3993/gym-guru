@@ -40,6 +40,12 @@ const Register = () => {
     }
   };
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      onSubmit();
+    }
+  };
+
   return (
     <main>
       <section className="register-layout">
@@ -56,7 +62,7 @@ const Register = () => {
                 style={{ marginBottom: 16 }}
               />
             )}
-            <Form>
+            <Form onKeyDown={handleKeyDown}>
               <div>
                 <label htmlFor="first-name" className="signup-container-label">
                   First Name
@@ -129,11 +135,7 @@ const Register = () => {
                 />
               </div>
 
-              <Button
-                type="primary"
-                onClick={onSubmit}
-                className="signup-container-button"
-              >
+              <Button type="primary" onClick={onSubmit}>
                 Sign up
               </Button>
             </Form>

@@ -39,15 +39,6 @@
   box-sizing: border-box;
 }
 
-.signup-container button {
-  background-color: #3498db;
-  color: #ffffff;
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
 .signup-container a {
   color: #2c3e50;
 }
