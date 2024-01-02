@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import { NavLink, useNavigate } from "react-router-dom";
-import { Alert } from "antd";
+import { Alert, Button, Form, Input } from "antd";
 import "./Login.css";
 
 const Login = () => {
@@ -17,8 +17,8 @@ const Login = () => {
     return emailRegex.test(email);
   };
 
-  const onLogin = (e) => {
-    e.preventDefault();
+  const onLogin = (values) => {
+    const { email, password } = values;
 
     if (!email || !password) {
       setAlertMessage("Please fill in all required fields.");
@@ -71,35 +71,41 @@ const Login = () => {
                 style={{ marginBottom: 16 }}
               />
             )}
-            <form>
-              <div>
-                <label htmlFor="email-address">Email address</label>
-                <input
-                  id="email-address"
-                  name="email"
-                  type="email"
-                  required
-                  placeholder="Email address"
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
+            <Form onFinish={onLogin}>
+              <Form.Item
+                label="Email address"
+                name="email"
+                rules={[
+                  {
+                    message: "Please enter your email address",
+                  },
+                  {
+                    type: "email",
+                    message: "Please enter a valid email address",
+                  },
+                ]}
+                labelCol={{ span: 24 }}
+                wrapperCol={{ span: 24 }}
+              >
+                <Input placeholder="Email address" />
+              </Form.Item>
 
-              <div>
-                <label htmlFor="password">Password</label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  required
-                  placeholder="Password"
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[{ message: "Please enter your password" }]}
+                labelCol={{ span: 24 }}
+                wrapperCol={{ span: 24 }}
+              >
+                <Input.Password placeholder="Password" />
+              </Form.Item>
 
-              <div>
-                <button onClick={onLogin}>Login</button>
-              </div>
-            </form>
+              <Form.Item>
+                <Button type="primary" htmlType="submit">
+                  Login
+                </Button>
+              </Form.Item>
+            </Form>
 
             <p className="text-sm text-white text-center">
               No account yet? <NavLink to="/register">Sign up</NavLink>

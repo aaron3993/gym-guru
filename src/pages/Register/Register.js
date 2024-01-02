@@ -1,4 +1,3 @@
-// Register.js
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Alert, Input, Button, Form, Typography } from "antd";
@@ -40,12 +39,6 @@ const Register = () => {
     }
   };
 
-  const handleKeyDown = (e) => {
-    if (e.key === "Enter") {
-      onSubmit();
-    }
-  };
-
   return (
     <main>
       <section className="register-layout">
@@ -62,80 +55,90 @@ const Register = () => {
                 style={{ marginBottom: 16 }}
               />
             )}
-            <Form onKeyDown={handleKeyDown}>
-              <div>
-                <label htmlFor="first-name" className="signup-container-label">
-                  First Name
-                </label>
+            <Form onFinish={onSubmit}>
+              <Form.Item
+                label="First Name"
+                name="firstName"
+                rules={[{ message: "Please enter your first name" }]}
+                labelCol={{ span: 24 }}
+                wrapperCol={{ span: 24 }}
+              >
                 <Input
                   type="text"
-                  className="signup-container-input"
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  required
                   placeholder="First name"
                 />
-              </div>
+              </Form.Item>
 
-              <div>
-                <label htmlFor="last-name" className="signup-container-label">
-                  Last Name
-                </label>
+              <Form.Item
+                label="Last Name"
+                name="lastName"
+                rules={[{ message: "Please enter your last name" }]}
+                labelCol={{ span: 24 }}
+                wrapperCol={{ span: 24 }}
+              >
                 <Input
                   type="text"
-                  className="signup-container-input"
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
-                  required
                   placeholder="Last name"
                 />
-              </div>
+              </Form.Item>
 
-              <div>
-                <label
-                  htmlFor="email-address"
-                  className="signup-container-label"
-                >
-                  Email address
-                </label>
+              <Form.Item
+                label="Email address"
+                name="email"
+                rules={[
+                  {
+                    message: "Please enter your email address",
+                  },
+                  {
+                    type: "email",
+                    message: "Please enter a valid email address",
+                  },
+                ]}
+                labelCol={{ span: 24 }}
+                wrapperCol={{ span: 24 }}
+              >
                 <Input
                   type="email"
-                  className="signup-container-input"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  required
                   placeholder="Email address"
                 />
-              </div>
+              </Form.Item>
 
-              <div>
-                <label htmlFor="password" className="signup-container-label">
-                  Password
-                </label>
+              <Form.Item
+                label="Password"
+                name="password"
+                rules={[{ message: "Please enter your password" }]}
+                labelCol={{ span: 24 }}
+                wrapperCol={{ span: 24 }}
+              >
                 <Input.Password
-                  className="signup-container-input"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  required
                   placeholder="Password"
                 />
-              </div>
+              </Form.Item>
 
-              <div>
-                <label htmlFor="username" className="signup-container-label">
-                  Username
-                </label>
+              <Form.Item
+                label="Username"
+                name="username"
+                rules={[{ message: "Please choose a username" }]}
+                labelCol={{ span: 24 }}
+                wrapperCol={{ span: 24 }}
+              >
                 <Input
                   type="text"
-                  className="signup-container-input"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  required
                   placeholder="Choose a username"
                 />
-              </div>
+              </Form.Item>
 
-              <Button type="primary" onClick={onSubmit}>
+              <Button type="primary" htmlType="submit">
                 Sign up
               </Button>
             </Form>

@@ -32,15 +32,6 @@
   box-sizing: border-box;
 }
 
-.login-container button {
-  background-color: #3498db;
-  color: #ffffff;
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
 .login-container a {
   color: #3498db;
 }
