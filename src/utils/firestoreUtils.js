@@ -14,9 +14,30 @@ import {
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "../firebase";
 
-export const registerUser = async (name, email, password) => {
+export const checkIfUsernameIsAvailable = async (username) => {
+  const usersCollection = collection(db, "users");
+  const usernameQuery = query(
+    usersCollection,
+    where("username", "==", username)
+  );
+  const usernameSnapshot = await getDocs(usernameQuery);
+  return usernameSnapshot.empty;
+};
+
+const isValidEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
+export const registerUser = async (
+  firstName,
+  lastName,
+  email,
+  password,
+  username
+) => {
   try {
-    if (!name || !email || !password) {
+    if (!firstName || !lastName || !email || !password || !username) {
       throw new Error("Please fill in all required fields.");
     }
 
@@ -28,6 +49,12 @@ export const registerUser = async (name, email, password) => {
       throw new Error("Password must be at least 6 characters long.");
     }
 
+    const isUsernameAvailable = await checkIfUsernameIsAvailable(username);
+
+    if (!isUsernameAvailable) {
+      throw new Error("The username is already taken.");
+    }
+
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
@@ -35,23 +62,18 @@ export const registerUser = async (name, email, password) => {
     );
     const user = userCredential.user;
 
-    await updateProfile(user, { displayName: name });
-
     await addDoc(collection(db, "users"), {
-      uid: user.uid,
-      name: name,
-      email: user.email,
+      userId: user.uid,
+      firstName,
+      lastName,
+      email,
+      username,
     });
 
-    return { user };
+    return { success: true, user };
   } catch (error) {
-    return { error };
+    return { success: false, error };
   }
-};
-
-const isValidEmail = (email) => {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
 };
 
 export const createWorkout = async (workoutName, user) => {

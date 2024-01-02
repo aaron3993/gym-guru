@@ -1,32 +1,40 @@
+// Register.js
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import { Alert, Input, Button, Form, Typography } from "antd";
 import { registerUser } from "../../utils/firestoreUtils";
-import { Alert } from "antd";
 import "./Register.css";
+
+const { Text } = Typography;
 
 const Register = () => {
   const navigate = useNavigate();
 
-  const [name, setName] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("error");
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-
+  const onSubmit = async () => {
     try {
-      const { user, error } = await registerUser(name, email, password);
-      console.log(user, error);
-      if (user) {
+      const result = await registerUser(
+        firstName,
+        lastName,
+        email,
+        password,
+        username
+      );
+
+      if (result.success) {
         navigate("/");
       } else {
-        setAlertMessage(error.message);
+        setAlertMessage(result.error.message || "Registration failed.");
         setAlertType("error");
       }
     } catch (error) {
-      console.error("Error during registration:", error);
       setAlertMessage("An unexpected error occurred. Please try again.");
       setAlertType("error");
     }
@@ -37,7 +45,7 @@ const Register = () => {
       <section className="register-layout">
         <div className="signup-container">
           <div>
-            <p className="title"> Gym Guru </p>
+            <p className="title">Gym Guru</p>
             {alertMessage && (
               <Alert
                 message={alertMessage}
@@ -48,18 +56,32 @@ const Register = () => {
                 style={{ marginBottom: 16 }}
               />
             )}
-            <form>
+            <Form>
               <div>
-                <label htmlFor="name" className="signup-container-label">
-                  Name
+                <label htmlFor="first-name" className="signup-container-label">
+                  First Name
                 </label>
-                <input
+                <Input
                   type="text"
                   className="signup-container-input"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
                   required
-                  placeholder="Your name"
+                  placeholder="First name"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="last-name" className="signup-container-label">
+                  Last Name
+                </label>
+                <Input
+                  type="text"
+                  className="signup-container-input"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  required
+                  placeholder="Last name"
                 />
               </div>
 
@@ -70,14 +92,13 @@ const Register = () => {
                 >
                   Email address
                 </label>
-                <input
+                <Input
                   type="email"
                   className="signup-container-input"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   placeholder="Email address"
-                  pattern="[^\s@]+@[^\s@]+\.[^\s@]+"
                 />
               </div>
 
@@ -85,25 +106,37 @@ const Register = () => {
                 <label htmlFor="password" className="signup-container-label">
                   Password
                 </label>
-                <input
-                  type="password"
+                <Input.Password
                   className="signup-container-input"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   required
                   placeholder="Password"
-                  minLength="6"
                 />
               </div>
 
-              <button
-                type="submit"
+              <div>
+                <label htmlFor="username" className="signup-container-label">
+                  Username
+                </label>
+                <Input
+                  type="text"
+                  className="signup-container-input"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                  placeholder="Choose a username"
+                />
+              </div>
+
+              <Button
+                type="primary"
                 onClick={onSubmit}
                 className="signup-container-button"
               >
                 Sign up
-              </button>
-            </form>
+              </Button>
+            </Form>
 
             <p>
               Already have an account? <NavLink to="/login">Sign in</NavLink>
