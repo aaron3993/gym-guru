@@ -87,7 +87,7 @@ const CreateWorkoutModal = ({
       ]}
     >
       <Form form={form}>
-        <div className="input-container">
+        <div>
           <Form.Item className="input-label" name="workoutName">
             <Input
               className="input-field"

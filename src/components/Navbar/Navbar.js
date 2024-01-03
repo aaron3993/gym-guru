@@ -4,7 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
 const Navbar = ({ onLogout, user }) => {
-  console.log({ user });
   const navigate = useNavigate();
 
   return (
@@ -24,7 +23,7 @@ const Navbar = ({ onLogout, user }) => {
         <div className="user-logout-sub-container">
           <span className="user-name">{user.displayName}</span>
           <Button
-            type="primary" // You can customize the button type (primary, secondary, etc.)
+            type="primary"
             className="logout-btn"
             onClick={async () => {
               await onLogout();

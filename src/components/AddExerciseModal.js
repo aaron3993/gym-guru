@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Modal from "react-modal";
-import { Alert } from "antd";
+import { Modal, InputNumber, Button, Alert } from "antd";
 import { addExerciseToWorkout } from "../utils/firestoreUtils";
+import { capitalizeFirstLetter } from "../utils/dataUtils";
 import "./SharedModal.css";
 
 const AddExerciseModal = ({
@@ -23,8 +23,8 @@ const AddExerciseModal = ({
         return console.error("Reps and sets are required.");
       }
 
-      const parsedReps = parseInt(reps);
-      const parsedSets = parseInt(sets);
+      const parsedReps = parseInt(reps, 10);
+      const parsedSets = parseInt(sets, 10);
 
       if (
         isNaN(parsedReps) ||
@@ -64,60 +64,67 @@ const AddExerciseModal = ({
 
   return (
     <Modal
-      isOpen={isOpen}
-      onRequestClose={onRequestClose}
+      title={
+        <div className="modal-title">
+          {capitalizeFirstLetter(exercise.name)}
+        </div>
+      }
+      open={isOpen}
+      onCancel={onRequestClose}
       className="modal"
-      overlayClassName="ReactModal__Overlay"
-      contentLabel="Create Exercise Modal"
-      shouldCloseOnOverlayClick={true}
+      footer={[
+        <Button key="cancel" onClick={onRequestClose}>
+          Cancel
+        </Button>,
+        <Button
+          key="addToWorkout"
+          type="primary"
+          onClick={handleAddToWorkoutClick}
+        >
+          Add to Workout
+        </Button>,
+      ]}
     >
-      <div>
-        <h1>{exercise.name}</h1>
-        <label>
-          Reps:
-          <input
-            type="number"
-            value={reps}
-            onChange={(e) => setReps(e.target.value)}
-            min={validRepsRange.min}
-            max={validRepsRange.max}
+      <label className="input-label">Reps: </label>
+      <InputNumber
+        className="input-field"
+        value={reps}
+        onChange={(value) => setReps(value)}
+        min={validRepsRange.min}
+        max={validRepsRange.max}
+      />
+
+      <label className="input-label">Sets:</label>
+      <InputNumber
+        className="input-field"
+        value={sets}
+        onChange={(value) => setSets(value)}
+        min={validSetsRange.min}
+        max={validSetsRange.max}
+      />
+
+      {reps &&
+        (isNaN(parseInt(reps, 10)) ||
+          parseInt(reps, 10) < validRepsRange.min ||
+          parseInt(reps, 10) > validRepsRange.max) && (
+          <Alert
+            message="Invalid range for reps. Reps should be between 1 and 100."
+            type="error"
+            showIcon
+            style={{ marginBottom: 10 }}
           />
-        </label>
-        <label>
-          Sets:
-          <input
-            type="number"
-            value={sets}
-            onChange={(e) => setSets(e.target.value)}
-            min={validSetsRange.min}
-            max={validSetsRange.max}
+        )}
+      {sets &&
+        (isNaN(parseInt(sets, 10)) ||
+          parseInt(sets, 10) < validSetsRange.min ||
+          parseInt(sets, 10) > validSetsRange.max) && (
+          <Alert
+            message="Invalid range for sets. Sets should be between 1 and 20."
+            type="error"
+            showIcon
+            style={{ marginBottom: 10 }}
           />
-        </label>
-        {reps &&
-          (isNaN(parseInt(reps)) ||
-            parseInt(reps, 10) < validRepsRange.min ||
-            parseInt(reps, 10) > validRepsRange.max) && (
-            <Alert
-              message="Invalid range for reps. Reps should be between 1 and 100."
-              type="error"
-              showIcon
-              style={{ marginBottom: 10 }}
-            />
-          )}
-        {sets &&
-          (isNaN(parseInt(sets)) ||
-            parseInt(sets, 10) < validSetsRange.min ||
-            parseInt(sets, 10) > validSetsRange.max) && (
-            <Alert
-              message="Invalid range for sets. Sets should be between 1 and 20."
-              type="error"
-              showIcon
-              style={{ marginBottom: 10 }}
-            />
-          )}
-        <button onClick={handleAddToWorkoutClick}>Add to Workout</button>
-        <button onClick={onRequestClose}>Cancel</button>
-      </div>
+        )}
     </Modal>
   );
 };

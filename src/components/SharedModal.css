@@ -2,8 +2,14 @@
   font-size: 1.5rem;
 }
 
+.ant-modal-body {
+  margin-bottom: 24px;
+}
+
 .input-label {
   font-size: 1.2rem;
+  margin-right: 8px;
+  margin-left: 16px;
 }
 
 .input-field {
@@ -15,66 +21,3 @@
   margin-top: 0;
   font-size: 1rem;
 }
-/* .modal {
-  background-color: #ecf0f1;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 300px;
-  text-align: center;
-}
-
-.modal h1 {
-  font-size: 2em;
-  font-weight: bold;
-  color: #3498db;
-  margin-bottom: 20px;
-}
-
-.modal input {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  box-sizing: border-box;
-}
-
-.modal button {
-  background-color: #3498db;
-  color: #ffffff;
-  padding: 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  width: 45%;
-  margin: 8px 5px;
-}
-
-.modal button:last-child {
-  margin-right: 0;
-}
-
-.ReactModal__Overlay {
-  opacity: 1;
-  transition: opacity 200ms ease-in-out;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: rgba(0, 0, 0, 0.3);
-}
-
-.ReactModal__Content {
-  position: relative;
-  box-sizing: border-box;
-  outline: none;
-  width: 100%;
-  max-width: 400px;
-  padding: 20px;
-  margin: 0 auto;
-  border-radius: 8px;
-  background-color: #fff;
-} */
