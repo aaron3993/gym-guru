@@ -13,54 +13,55 @@ body {
 .content-container {
   margin-top: 64px;
   display: flex;
-  flex: 1; /* This will make the content container take the remaining space */
+  flex: 1;
 }
 
 .cta-container {
-  flex: 1; /* Make sure the text content takes half of the remaining space */
-  padding: 2rem; /* Add padding for better spacing */
+  flex: 1;
+  padding: 2rem;
+  margin-left: 2rem;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Center vertically */
+  align-items: center;
   justify-content: center;
 }
 
 .image-container {
-  flex: 1; /* Make sure the image container takes half of the remaining space */
+  flex: 1;
   position: relative;
   overflow: hidden;
   padding-right: 64px;
   display: flex;
-  align-items: center; /* Center vertically */
-  justify-content: center; /* Center horizontally */
+  align-items: center;
+  justify-content: center;
 }
 
 .image-container img {
   width: 100%;
   height: auto;
   max-height: 100%;
-  object-fit: cover; /* Ensure the image covers the entire container */
+  object-fit: cover;
 }
 
 @media (max-width: 768px) {
   .content-container {
-    flex-direction: column; /* Stack content vertically on smaller screens */
+    flex-direction: column;
   }
 
   .cta-container,
   .image-container {
-    flex: none; /* Reset the flex values for smaller screens */
+    flex: none;
     width: 100%;
   }
 }
 
 h1 {
-  font-size: 64px;
+  font-size: 4rem;
   color: #3498db;
+  margin-bottom: 1rem;
 }
 
 p {
-  /* color: #27ae60; */
-  font-size: 36px;
-  margin-bottom: 1rem;
+  font-size: 3rem;
+  margin-bottom: 2rem;
 }

@@ -1,12 +1,5 @@
-/* WorkoutList.css */
-
 .workout-list {
   display: flex;
   flex-wrap: wrap;
-}
-
-.workout-card {
-  width: 20%;
-  margin: 10px;
-  /* Additional styling for your workout card if needed */
+  margin-top: 3rem;
 }

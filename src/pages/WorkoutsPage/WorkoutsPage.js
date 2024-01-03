@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { message, Form } from "antd";
+import { Button, message, Form } from "antd";
 import CreateWorkoutModal from "../../components/CreateWorkoutModal";
 import WorkoutList from "./WorkoutList/WorkoutList";
 import { getAllWorkoutsForUser } from "../../utils/firestoreUtils";
@@ -46,8 +46,10 @@ const WorkoutsPage = () => {
 
   return (
     <div className="workouts-container">
-      <h1>Your Workouts</h1>
-      <button onClick={handleOpenModal}>Create Workout</button>
+      <h1 className="my-workouts">My Workouts</h1>
+      <Button type="primary" onClick={handleOpenModal}>
+        Create Workout
+      </Button>
       <WorkoutList workouts={workouts} />
       <CreateWorkoutModal
         isOpen={isModalOpen}

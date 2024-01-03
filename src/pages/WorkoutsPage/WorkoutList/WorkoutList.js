@@ -1,6 +1,6 @@
-import React from 'react';
-import WorkoutCard from './WorkoutCard/WorkoutCard';
-import './WorkoutList.css';
+import React from "react";
+import WorkoutCard from "./WorkoutCard/WorkoutCard";
+import "./WorkoutList.css";
 
 const WorkoutList = ({ workouts }) => {
   return (
@@ -12,4 +12,4 @@ const WorkoutList = ({ workouts }) => {
   );
 };
 
-export default WorkoutList
+export default WorkoutList;

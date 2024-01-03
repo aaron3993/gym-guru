@@ -1,9 +1,10 @@
 .workouts-container {
-    margin-top: 7vh;
+  margin-top: 10vh;
+  padding: 1rem 5rem;
 }
 
-.workout-list {
-  margin-top: 20px;
+.my-workouts {
+  margin-bottom: 2rem;
 }
 
 .workout-item {
