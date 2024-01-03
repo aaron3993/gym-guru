@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
@@ -22,7 +23,8 @@ const Navbar = ({ onLogout, user }) => {
       <div className="user-logout-container">
         <div className="user-logout-sub-container">
           <span className="user-name">{user.displayName}</span>
-          <button
+          <Button
+            type="primary" // You can customize the button type (primary, secondary, etc.)
             className="logout-btn"
             onClick={async () => {
               await onLogout();
@@ -30,7 +32,7 @@ const Navbar = ({ onLogout, user }) => {
             }}
           >
             Logout
-          </button>
+          </Button>
         </div>
       </div>
     </nav>
