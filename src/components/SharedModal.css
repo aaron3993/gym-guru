@@ -1,4 +1,21 @@
-.modal {
+.modal-title {
+  font-size: 1.5rem;
+}
+
+.input-label {
+  font-size: 1.2rem;
+}
+
+.input-field {
+  width: 100%;
+  font-size: 1.2rem;
+}
+
+.error-text {
+  margin-top: 0;
+  font-size: 1rem;
+}
+/* .modal {
   background-color: #ecf0f1;
   padding: 20px;
   border-radius: 8px;
@@ -60,4 +77,4 @@
   margin: 0 auto;
   border-radius: 8px;
   background-color: #fff;
-}
+} */

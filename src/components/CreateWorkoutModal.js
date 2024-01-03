@@ -74,7 +74,7 @@ const CreateWorkoutModal = ({
 
   return (
     <Modal
-      title="Create a New Workout"
+      title={<div className="modal-title">Create a New Workout</div>}
       open={isOpen}
       onCancel={onRequestClose}
       footer={[
@@ -87,14 +87,21 @@ const CreateWorkoutModal = ({
       ]}
     >
       <Form form={form}>
-        <Form.Item label="Workout Name" name="workoutName">
-          <Input
-            placeholder="Workout Name"
-            onChange={handleInputChange}
-            onKeyDown={handleKeyDown}
-          />
-        </Form.Item>
-        {error && <Text type="danger">{error}</Text>}
+        <div className="input-container">
+          <Form.Item className="input-label" name="workoutName">
+            <Input
+              className="input-field"
+              placeholder="Workout Name"
+              onChange={handleInputChange}
+              onKeyDown={handleKeyDown}
+            />
+          </Form.Item>
+          {error && (
+            <Text className="error-text" type="danger">
+              {error}
+            </Text>
+          )}
+        </div>
       </Form>
     </Modal>
   );
