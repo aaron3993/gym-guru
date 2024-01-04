@@ -7,8 +7,8 @@ const Home = () => {
     <div className="home-page">
       <div className="content-container">
         <div className="cta-container">
-          <h1>Gym Guru</h1>
-          <p>Customize Your Journey, Sculpt Your Success.</p>
+          <h1 className="app-name">Gym Guru</h1>
+          <p className="slogan">Customize Your Journey, Sculpt Your Success.</p>
           <Button type="primary" className="cta-button">
             Create Workout
           </Button>

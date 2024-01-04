@@ -1,5 +1,4 @@
 .exercise-card {
-  /* width: 100%; */
   max-width: 200px;
   background-color: #ecf0f1;
   display: flex;
@@ -19,7 +18,7 @@
 
 .card-content {
   height: 100%;
-  padding: 15px;
+  padding-top: 15px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -30,7 +29,8 @@
 }
 
 .card-content p {
-  margin: 10px 0;
+  margin-bottom: 0;
+  /* margin: 10px 0; */
   font-size: 24px;
 }
 

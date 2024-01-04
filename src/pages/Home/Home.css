@@ -57,13 +57,13 @@ body {
   }
 }
 
-h1 {
+.app-name {
   font-size: 4rem;
   color: #3498db;
   margin-bottom: 1rem;
 }
 
-p {
+.slogan {
   font-size: 3rem;
   margin-bottom: 2rem;
 }
