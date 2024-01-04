@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { InputNumber, Button, Alert, message } from "antd";
+import { InputNumber, Button, message } from "antd";
 import "./ExerciseRow.css";
 import { updateExerciseInWorkout } from "../../../../../../utils/firestoreUtils";
 
@@ -113,7 +113,8 @@ const ExerciseRow = ({
           </div>
         </div>
         <Button
-          style={{ background: "#ff4d4f", color: "#fff" }}
+          className="remove-exercise-button"
+          danger
           onClick={() => onRemoveExercise(exercise)}
         >
           Remove

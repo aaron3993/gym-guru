@@ -65,7 +65,6 @@
   margin-bottom: 0;
 }
 
-.ant-alert-error {
-  height: 50px;
-  margin-left: 8px;
+.remove-exercise-button {
+  margin-left: 10px;
 }
