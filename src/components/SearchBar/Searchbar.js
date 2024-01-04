@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import './SearchBar.css';
+import React, { useState } from "react";
+import "./SearchBar.css";
 
 const SearchBar = ({ onSearch }) => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,7 +17,9 @@ const SearchBar = ({ onSearch }) => {
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search for exercises"
       />
-      <button type="submit">Search</button>
+      <button className="search-button" type="submit">
+        Search
+      </button>
     </form>
   );
 };

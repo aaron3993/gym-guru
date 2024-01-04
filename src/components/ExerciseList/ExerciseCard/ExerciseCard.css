@@ -18,7 +18,11 @@
 }
 
 .card-content {
+  height: 100%;
   padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .card-content h3 {
@@ -27,4 +31,9 @@
 
 .card-content p {
   margin: 10px 0;
+  font-size: 24px;
+}
+
+.add-to-workout-button {
+  margin: 10px;
 }
