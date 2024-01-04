@@ -46,12 +46,16 @@ body {
 @media (max-width: 768px) {
   .content-container {
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   .cta-container,
   .image-container {
     flex: none;
     width: 100%;
+    padding: 0;
+    margin-top: 16px;
   }
 }
 
