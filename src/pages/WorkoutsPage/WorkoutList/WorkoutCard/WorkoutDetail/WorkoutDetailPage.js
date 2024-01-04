@@ -201,6 +201,7 @@ const WorkoutDetailPage = () => {
           onChange={(e) => setEditedName(e.target.value)}
           onBlur={updateSaveName}
           onKeyDown={(e) => handleKeyDown(e, updateSaveName)}
+          className="workout-name-input"
         />
       ) : (
         <h1 onClick={handleClickName}>{editedName}</h1>
