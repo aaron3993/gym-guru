@@ -1,15 +1,14 @@
 .workout-card {
   width: 20%;
-  max-width: 400px;
-  /* height: 30%; */
-  max-height: auto;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: #ecf0f1;
   overflow: hidden;
   border: 1px solid #ddd;
   border-radius: 8px;
-  margin-right: 2rem;
-  margin-bottom: 2rem;
-  padding: 24px;
+  margin: 1rem;
   cursor: pointer;
 }
 
