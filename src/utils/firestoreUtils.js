@@ -203,7 +203,6 @@ export const updateExerciseInWorkout = async (
   newSets
 ) => {
   try {
-    console.log(workoutId, exerciseId, newReps, newSets);
     const workoutRef = doc(db, "workouts", workoutId);
     const workoutDoc = await getDoc(workoutRef);
 
