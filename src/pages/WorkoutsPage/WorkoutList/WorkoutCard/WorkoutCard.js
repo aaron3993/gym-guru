@@ -1,6 +1,6 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import './WorkoutCard.css';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import "./WorkoutCard.css";
 
 const WorkoutCard = ({ workout }) => {
   const navigate = useNavigate();
@@ -11,11 +11,9 @@ const WorkoutCard = ({ workout }) => {
 
   return (
     <div className="workout-card" onClick={handleCardClick}>
-      <div className="card-content">
-        <h3>{workout.name}</h3>
-      </div>
+      <h3>{workout.name}</h3>
     </div>
-    )
-  };
+  );
+};
 
 export default WorkoutCard;
