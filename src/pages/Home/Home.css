@@ -6,31 +6,38 @@ body {
 }
 
 .home-page {
-  display: flex;
-  height: 100vh;
-}
-
-.content-container {
-  margin-top: 64px;
-  display: flex;
-  flex: 1;
-}
-
-.cta-container {
-  flex: 1;
-  padding: 2rem;
-  margin-left: 2rem;
+  height: 92vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 }
 
+.content-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.cta-container {
+  padding: 2rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.cta-container p {
+  margin-top: 0;
+}
+
 .image-container {
-  flex: 1;
   position: relative;
   overflow: hidden;
-  padding-right: 64px;
+  margin-top: 16px;
+  margin-right: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -43,21 +50,32 @@ body {
   object-fit: cover;
 }
 
-@media (max-width: 768px) {
+@media (min-width: 769px) {
+  .home-page {
+    margin-top: 8vh;
+    flex-direction: row;
+  }
+
   .content-container {
-    flex-direction: column;
+    margin: 0;
+    flex-direction: row;
   }
 
   .cta-container,
   .image-container {
-    flex: none;
-    width: 100%;
-    padding: 0;
-    margin-top: 16px;
+    flex: 1;
+  }
+
+  .cta-container {
+    margin-right: 2rem;
+  }
+
+  .image-container {
+    margin-right: 2rem;
   }
 }
 
-.app-name {
+.app-title {
   font-size: 4rem;
   color: #3498db;
   margin-bottom: 1rem;
