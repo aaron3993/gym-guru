@@ -2,6 +2,7 @@ import React from "react";
 import WorkoutDropdown from "../../WorkoutDropdown";
 import "./ExerciseCard.css";
 import { Button } from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 
 const ExerciseCard = ({
   exercise,
@@ -20,10 +21,9 @@ const ExerciseCard = ({
         <Button
           className="add-to-workout-button"
           type="primary"
+          icon={<PlusOutlined />}
           onClick={() => onOpenExerciseModal(exercise)}
-        >
-          Add to Workout
-        </Button>
+        ></Button>
       ) : (
         <WorkoutDropdown workouts={workouts} />
       )}

@@ -194,41 +194,48 @@ const WorkoutDetailPage = () => {
 
   return (
     <div className="workout-details">
-      {isEditingName ? (
-        <Input
-          autoFocus
-          value={editedName}
-          onChange={(e) => setEditedName(e.target.value)}
-          onBlur={updateSaveName}
-          onKeyDown={(e) => handleKeyDown(e, updateSaveName)}
-          className="workout-name-input"
-        />
-      ) : (
-        <h1 onClick={handleClickName}>{editedName}</h1>
-      )}
-
-      <div className="exercise-row-list">
-        {currentWorkout.exercises.length > 0 &&
-          currentWorkout.exercises.map((exercise) => (
-            <ExerciseRow
-              key={exercise.id}
-              workoutId={workoutId}
-              exercise={exercise}
-              onRemoveExercise={() => handleRemoveExerciseFromWorkout(exercise)}
-              onUpdateExercise={() => fetchWorkoutDetails()}
-            />
-          ))}
+      <div className="workout-name">
+        {isEditingName ? (
+          <Input
+            autoFocus
+            value={editedName}
+            onChange={(e) => setEditedName(e.target.value)}
+            onBlur={updateSaveName}
+            onKeyDown={(e) => handleKeyDown(e, updateSaveName)}
+            className="workout-name-input"
+          />
+        ) : (
+          <h1 onClick={handleClickName}>{editedName}</h1>
+        )}
       </div>
-
-      <SearchBar onSearch={handleSearch} />
-      <ExerciseList
-        exercises={filteredExercises}
-        workoutId={workoutId}
-        workouts={workouts}
-        isWorkoutDetailPage={true}
-        onOpenExerciseModal={openExerciseModal}
-        onAddToWorkout={() => fetchWorkoutDetails()}
-      />
+      <div className="workout-exercises-container">
+        <div className="search-exercise-container">
+          <SearchBar onSearch={handleSearch} />
+          <ExerciseList
+            exercises={filteredExercises}
+            workoutId={workoutId}
+            workouts={workouts}
+            isWorkoutDetailPage={true}
+            onOpenExerciseModal={openExerciseModal}
+            onAddToWorkout={() => fetchWorkoutDetails()}
+          />
+        </div>
+        <div className="exercise-row-list">
+          <h3>Your Exercises</h3>
+          {currentWorkout.exercises.length > 0 &&
+            currentWorkout.exercises.map((exercise) => (
+              <ExerciseRow
+                key={exercise.id}
+                workoutId={workoutId}
+                exercise={exercise}
+                onRemoveExercise={() =>
+                  handleRemoveExerciseFromWorkout(exercise)
+                }
+                onUpdateExercise={() => fetchWorkoutDetails()}
+              />
+            ))}
+        </div>
+      </div>
       <Button
         onClick={() => setDeleteModalVisible(true)}
         style={{ background: "#ff4d4f", color: "#fff", marginTop: 16 }}

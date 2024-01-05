@@ -1,13 +1,9 @@
-exercise-list-container {
+.exercise-list-container {
   display: flex;
   flex-direction: column;
 }
+
 .exercise-list {
   display: flex;
   flex-wrap: wrap;
-}
-
-.exercise-card {
-  width: 20%;
-  margin: 10px;
 }
