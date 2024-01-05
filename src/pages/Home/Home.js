@@ -1,16 +1,27 @@
 import React from "react";
 import { Button } from "antd";
+import { useNavigate } from "react-router-dom";
 import "./Home.css";
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  const handleGetStarted = () => {
+    navigate("/workouts");
+  };
+
   return (
     <div className="home-page">
       <div className="content-container">
         <div className="cta-container">
           <h1 className="app-title">Gym Guru</h1>
           <p className="slogan">Customize Your Journey, Sculpt Your Success.</p>
-          <Button type="primary" className="cta-button">
-            Create Workout
+          <Button
+            type="primary"
+            className="cta-button"
+            onClick={handleGetStarted}
+          >
+            Get Started
           </Button>
         </div>
         <div className="image-container">
