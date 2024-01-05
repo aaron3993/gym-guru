@@ -1,12 +1,11 @@
 .search-bar {
   display: flex;
+  width: 80%;
   margin: 10px;
 }
 
 .search-input {
   font-size: 1rem;
-  width: 300px;
-  max-width: 300px;
   flex: 1;
   outline: none;
 }
