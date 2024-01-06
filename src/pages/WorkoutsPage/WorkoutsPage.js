@@ -15,19 +15,19 @@ const WorkoutsPage = () => {
   const [form] = Form.useForm();
 
   useEffect(() => {
-    const fetchWorkouts = async () => {
-      try {
-        if (user) {
-          const fetchedWorkouts = await getAllWorkoutsForUser(user);
-          setWorkouts(fetchedWorkouts);
-        }
-      } catch (error) {
-        console.error("Error fetching workouts:", error);
-      }
-    };
-
     fetchWorkouts();
   }, [user]);
+
+  const fetchWorkouts = async () => {
+    try {
+      if (user) {
+        const fetchedWorkouts = await getAllWorkoutsForUser(user);
+        setWorkouts(fetchedWorkouts);
+      }
+    } catch (error) {
+      console.error("Error fetching workouts:", error);
+    }
+  };
 
   const handleOpenModal = () => {
     setModalOpen(true);
@@ -39,9 +39,10 @@ const WorkoutsPage = () => {
     form.resetFields();
   };
 
-  const handleCreateWorkout = (workoutName) => {
+  const handleCreateWorkout = async (workoutName) => {
     setWorkouts((prevWorkouts) => [...prevWorkouts, { name: workoutName }]);
     message.success("Workout created successfully!");
+    await fetchWorkouts();
   };
 
   return (
