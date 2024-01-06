@@ -40,7 +40,6 @@ const WorkoutsPage = () => {
   };
 
   const handleCreateWorkout = async (workoutName) => {
-    setWorkouts((prevWorkouts) => [...prevWorkouts, { name: workoutName }]);
     message.success("Workout created successfully!");
     await fetchWorkouts();
   };
