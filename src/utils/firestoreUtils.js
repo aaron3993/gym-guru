@@ -11,7 +11,6 @@ import {
   collection,
   query,
   where,
-  orderBy,
 } from "firebase/firestore";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "../firebase";
@@ -144,7 +143,6 @@ export const getAllWorkoutsForUser = async (user) => {
     const workoutsQuery = query(
       collection(db, "workouts"),
       where("userId", "==", user.uid)
-      // orderBy("createdAt", "asc")
     );
 
     const workoutsSnapshot = await getDocs(workoutsQuery);
