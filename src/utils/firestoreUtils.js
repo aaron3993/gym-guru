@@ -11,8 +11,10 @@ import {
   collection,
   query,
   where,
+  orderBy,
+  serverTimestamp,
 } from "firebase/firestore";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../firebase";
 
 export const checkIfUsernameIsAvailable = async (username) => {
@@ -84,10 +86,13 @@ export const createWorkout = async (workoutName, user) => {
       return null;
     }
 
+    const currentTimeStamp = serverTimestamp();
+
     const docRef = await addDoc(collection(db, "workouts"), {
       name: workoutName,
       exercises: [],
       userId: user.uid,
+      createdAt: currentTimeStamp,
     });
 
     const userWorkoutsDocRef = doc(db, "userWorkouts", user.uid);
@@ -105,6 +110,7 @@ export const createWorkout = async (workoutName, user) => {
       id: docRef.id,
       name: workoutName,
       exercises: [],
+      createdAt: currentTimeStamp,
     };
   } catch (error) {
     console.error("Error creating workout in Firestore:", error);
@@ -142,7 +148,8 @@ export const getAllWorkoutsForUser = async (user) => {
 
     const workoutsQuery = query(
       collection(db, "workouts"),
-      where("userId", "==", user.uid)
+      where("userId", "==", user.uid),
+      orderBy("createdAt", "asc")
     );
 
     const workoutsSnapshot = await getDocs(workoutsQuery);

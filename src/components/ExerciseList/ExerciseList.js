@@ -9,7 +9,6 @@ import "./ExerciseList.css";
 
 const ExerciseList = ({
   exercises,
-  workouts,
   isWorkoutDetailPage,
   onOpenExerciseModal,
 }) => {
@@ -49,7 +48,6 @@ const ExerciseList = ({
             <ExerciseCard
               key={exercise.id}
               exercise={exercise}
-              workouts={workouts}
               isWorkoutDetailPage={isWorkoutDetailPage}
               onOpenExerciseModal={onOpenExerciseModal}
             />

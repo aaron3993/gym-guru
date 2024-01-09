@@ -14,12 +14,10 @@ const ExercisesPage = () => {
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [exercises, setExercises] = useState([]);
   const [allExercises, setAllExercises] = useState([]);
-  const [allWorkouts, setAllWorkouts] = useState([]);
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
     fetchAllExercisesData();
-    getAllWorkoutsData();
     fetchCategories();
     setLoading(false);
   }, []);
@@ -30,11 +28,6 @@ const ExercisesPage = () => {
     // const exercises = await fetchAllExercises();
     setAllExercises(exercises);
     setExercises(exercises.slice(0, 8));
-  };
-
-  const getAllWorkoutsData = async () => {
-    const workouts = await getAllWorkouts();
-    setAllWorkouts(workouts);
   };
 
   const fetchCategories = async () => {
@@ -87,11 +80,7 @@ const ExercisesPage = () => {
           /> */}
         </div>
         <div style={{ flex: 2 }}>
-          <ExerciseList
-            exercises={exercises}
-            workouts={allWorkouts}
-            isWorkoutDetailPage={false}
-          />
+          <ExerciseList exercises={exercises} isWorkoutDetailPage={false} />
         </div>
       </div>
     </div>
