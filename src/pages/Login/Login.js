@@ -73,7 +73,6 @@ const Login = () => {
             )}
             <Form onFinish={onLogin}>
               <Form.Item
-                label="Email address"
                 name="email"
                 rules={[
                   {
@@ -91,7 +90,6 @@ const Login = () => {
               </Form.Item>
 
               <Form.Item
-                label="Password"
                 name="password"
                 rules={[{ message: "Please enter your password" }]}
                 labelCol={{ span: 24 }}

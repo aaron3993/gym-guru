@@ -10,8 +10,6 @@ import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import PrivateRoute from "./components/PrivateRoute";
 import Navbar from "./components/Navbar/Navbar";
-import WorkoutList from "./pages/WorkoutsPage/WorkoutList/WorkoutList";
-import ExercisesPage from "./pages/ExercisesPage/ExercisesPage";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import LoadingSpinner from "./components/LoadingSpinner";

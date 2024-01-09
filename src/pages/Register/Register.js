@@ -57,7 +57,6 @@ const Register = () => {
             )}
             <Form onFinish={onSubmit}>
               <Form.Item
-                label="First Name"
                 name="firstName"
                 rules={[{ message: "Please enter your first name" }]}
                 labelCol={{ span: 24 }}
@@ -72,7 +71,6 @@ const Register = () => {
               </Form.Item>
 
               <Form.Item
-                label="Last Name"
                 name="lastName"
                 rules={[{ message: "Please enter your last name" }]}
                 labelCol={{ span: 24 }}
@@ -87,7 +85,20 @@ const Register = () => {
               </Form.Item>
 
               <Form.Item
-                label="Email address"
+                name="username"
+                rules={[{ message: "Please choose a username" }]}
+                labelCol={{ span: 24 }}
+                wrapperCol={{ span: 24 }}
+              >
+                <Input
+                  type="text"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  placeholder="Username"
+                />
+              </Form.Item>
+
+              <Form.Item
                 name="email"
                 rules={[
                   {
@@ -110,7 +121,6 @@ const Register = () => {
               </Form.Item>
 
               <Form.Item
-                label="Password"
                 name="password"
                 rules={[{ message: "Please enter your password" }]}
                 labelCol={{ span: 24 }}
@@ -120,21 +130,6 @@ const Register = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Password"
-                />
-              </Form.Item>
-
-              <Form.Item
-                label="Username"
-                name="username"
-                rules={[{ message: "Please choose a username" }]}
-                labelCol={{ span: 24 }}
-                wrapperCol={{ span: 24 }}
-              >
-                <Input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Choose a username"
                 />
               </Form.Item>
 
