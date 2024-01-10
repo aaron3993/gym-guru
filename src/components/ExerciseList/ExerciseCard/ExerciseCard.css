@@ -1,5 +1,5 @@
 .exercise-card {
-  max-width: 135px;
+  width: 135px;
   background-color: #ecf0f1;
   display: flex;
   flex-direction: column;
@@ -12,8 +12,7 @@
 }
 
 .exercise-card img {
-  width: 100%;
-  height: auto;
+  width: 133px;
   border-bottom: 1px solid #ddd;
 }
 
