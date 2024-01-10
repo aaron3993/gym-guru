@@ -31,6 +31,10 @@
 }
 
 @media (max-width: 768px) {
+  .workout-name {
+    width: 50%;
+  }
+
   .workout-exercises-container {
     flex-direction: column-reverse;
   }

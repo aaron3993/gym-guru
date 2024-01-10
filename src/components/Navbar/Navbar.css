@@ -83,6 +83,7 @@
 
   .logout-btn {
     font-size: 1rem;
-    margin: 0;
+    margin-right: 0;
+    margin-left: 8px;
   }
 }
