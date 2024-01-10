@@ -1,18 +1,23 @@
 .workout-details {
   margin-top: 10vh;
   margin-left: 16px;
+  margin-right: 16px;
 }
 
-.search-exercise-container {
-  width: 50%;
+.workout-name {
+  width: 20%;
 }
 
 .workout-exercises-container {
   display: flex;
 }
 
-.workout-name {
-  width: 20%;
+.search-exercise-container {
+  width: 50%;
+}
+
+.exercise-row-list {
+  width: 50%;
 }
 
 .workout-details h1 {
@@ -23,4 +28,18 @@
 .workout-name-input {
   font-size: 17px;
   margin-bottom: 16px;
+}
+
+@media (max-width: 768px) {
+  .workout-exercises-container {
+    flex-direction: column-reverse;
+  }
+
+  .search-exercise-container {
+    width: 100%;
+  }
+
+  .exercise-row-list {
+    width: 100%;
+  }
 }

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { InputNumber, Button, message } from "antd";
+import { DeleteOutlined } from "@ant-design/icons";
 import "./ExerciseRow.css";
 import { updateExerciseInWorkout } from "../../../../../../utils/firestoreUtils";
 
@@ -113,12 +114,12 @@ const ExerciseRow = ({
           </div>
         </div>
         <Button
-          className="remove-exercise-button"
+          className="remove-exercise-icon"
+          type="text"
           danger
-          onClick={() => onRemoveExercise(exercise)}
-        >
-          Remove
-        </Button>
+          icon={<DeleteOutlined />}
+          onClick={() => onRemoveExercise()}
+        />
       </div>
     </div>
   );
