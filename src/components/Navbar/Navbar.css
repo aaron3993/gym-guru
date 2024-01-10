@@ -54,3 +54,35 @@
   height: 3rem;
   margin: 0 1rem;
 }
+
+@media (max-width: 768px) {
+  .nav-links {
+    width: 50%;
+    display: flex;
+    margin-left: 1rem;
+  }
+
+  .nav-link {
+    font-size: 1rem;
+    margin-right: 1rem;
+  }
+
+  .user-logout-container {
+    padding-right: 10px;
+  }
+
+  .user-logout-sub-container {
+    display: flex;
+    align-items: center;
+  }
+
+  .user-name {
+    font-size: 1rem;
+    margin-right: 0;
+  }
+
+  .logout-btn {
+    font-size: 1rem;
+    margin: 0;
+  }
+}
