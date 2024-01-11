@@ -237,6 +237,7 @@ const WorkoutDetailPage = () => {
         </div>
       </div>
       <Button
+        className="delete-btn"
         onClick={() => setDeleteModalVisible(true)}
         style={{ background: "#ff4d4f", color: "#fff", marginTop: 16 }}
       >
