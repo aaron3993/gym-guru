@@ -18,7 +18,14 @@ Live website: https://gymguru-37ed9.web.app/
   npm start
   ```
 
-Getting Started
+## Technologies Used
+
+- **React:** Building a dynamic and responsive user interface.
+- **Firebase Auth:** Enabling user authentication for a secure login experience.
+- **Firestore:** Storing user profiles, workouts, and exercise data in a scalable NoSQL database.
+- **ExerciseDB (RapidAPI):** Leveraging the RapidAPI ExerciseDB for a comprehensive database of exercises.
+
+## Getting Started
 
 Clone the Repository:
 
