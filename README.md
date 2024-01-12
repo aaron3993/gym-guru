@@ -2,6 +2,8 @@
 
 Welcome to Gym Guru, your go-to workout app for creating and managing personalized fitness routines. Whether you're a seasoned gym enthusiast or just starting your fitness journey, Gym Guru empowers you to design and track workouts tailored to your goals.
 
+Live website: https://gymguru-37ed9.web.app/
+
 ## Features
 
 - **User Registration:** Create your account to unlock the full potential of Gym Guru. Your personalized profile allows you to save and revisit your workout routines seamlessly.
@@ -14,28 +16,33 @@ Welcome to Gym Guru, your go-to workout app for creating and managing personaliz
   ```bash
   npm install
   npm start
+  ```
 
 Getting Started
 
 Clone the Repository:
 
-```bash
-git clone https://github.com/aaron3993/gym-guru.git
+  ```bash
+  git clone https://github.com/aaron3993/gym-guru.git
+```
 
 Navigate to the Project Directory:
 
-```bash
-cd gym-guru
+  ```bash
+  cd gym-guru
+```
 
 Install Dependencies:
 
-```bash
-npm install
+  ```bash
+  npm install
+```
 
 Start the Application:
-
-```bash
-npm start
+  
+  ```bash
+  npm start
+```
 
 Access Gym Guru:
 Open your web browser and go to http://localhost:3000 to use Gym Guru.
