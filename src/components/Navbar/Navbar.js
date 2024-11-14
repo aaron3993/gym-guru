@@ -21,7 +21,9 @@ const Navbar = ({ onLogout, user }) => {
       </div>
       <div className="user-logout-container">
         <div className="user-logout-sub-container">
-          <span className="user-name">{user.displayName}</span>
+          <Link to="/user" className="nav-link">
+            <span className="user-name">{user.displayName}</span>
+          </Link>
           <Button
             type="primary"
             className="logout-btn"
