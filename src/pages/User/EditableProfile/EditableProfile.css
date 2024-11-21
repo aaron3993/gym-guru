@@ -1,0 +1,26 @@
+.editable-profile-container {
+  padding: 20px;
+  margin-top: 60px; /* Adjust based on navbar height */
+}
+
+.profile-field {
+  margin-bottom: 12px;
+}
+
+.profile-label {
+  display: inline-block;
+  min-width: 80px;
+}
+
+.profile-input {
+  width: 150px;
+}
+
+.profile-error {
+  color: red;
+  margin-left: 8px;
+}
+
+.profile-button-group {
+  margin-top: 16px;
+}
