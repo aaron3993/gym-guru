@@ -248,3 +248,34 @@ export const deleteWorkout = async (workoutId) => {
     throw error;
   }
 };
+
+export const fetchUserData = async (uid) => {
+  const userRef = doc(db, "users", uid);
+  try {
+    const docSnapshot = await getDoc(userRef);
+    if (docSnapshot.exists()) {
+      return docSnapshot.data();
+    } else {
+      console.error("User data not found.");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+    throw error;
+  }
+};
+
+export const updateUserProfile = async (uid, profileData) => {
+  const userRef = doc(db, "users", uid);
+  try {
+    const docSnapshot = await getDoc(userRef);
+    if (docSnapshot.exists()) {
+      await updateDoc(userRef, profileData);
+    } else {
+      await setDoc(userRef, profileData);
+    }
+  } catch (error) {
+    console.error("Error updating profile:", error);
+    throw error;
+  }
+};
