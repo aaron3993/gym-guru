@@ -1,19 +1,23 @@
 import React, { useState } from "react";
 import { Input, Select, Typography, message } from "antd";
 import { updateUserProfile } from "../../../utils/firestoreUtils";
+import { useAuth } from "../../../contexts/AuthContext";
 import "./EditableProfile.css";
 
 const { Text } = Typography;
 const { Option } = Select;
 
-const EditableProfile = ({ userData, userId }) => {
+const EditableProfile = ({ userData }) => {
+  const { user } = useAuth();
+
   const initialProfile = {
-    firstName: userData.firstName || "",
-    lastName: userData.lastName || "",
-    weight: userData.weight || "",
-    height: userData.height || "",
-    age: userData.age || "",
-    sex: userData.sex || "",
+    email: userData?.email || user?.email || "Not Set",
+    firstName: userData?.firstName || "",
+    lastName: userData?.lastName || "",
+    weight: userData?.weight || "",
+    height: userData?.height || "",
+    age: userData?.age || "",
+    sex: userData?.sex || "",
   };
 
   const [profile, setProfile] = useState(initialProfile);
@@ -31,11 +35,6 @@ const EditableProfile = ({ userData, userId }) => {
         return "Select a valid option.";
       }
     }
-    if (["firstName", "lastName"].includes(field)) {
-      if (!value.trim()) {
-        return "This field cannot be empty.";
-      }
-    }
     return null;
   };
 
@@ -49,7 +48,7 @@ const EditableProfile = ({ userData, userId }) => {
     if (errors[field]) return;
 
     try {
-      await updateUserProfile(userId, { [field]: profile[field] });
+      await updateUserProfile(user.uid, { [field]: profile[field] });
       message.success(
         `${
           field.charAt(0).toUpperCase() + field.slice(1)
@@ -76,7 +75,10 @@ const EditableProfile = ({ userData, userId }) => {
           <Text strong className="profile-label">
             {key.charAt(0).toUpperCase() + key.slice(1)}:{" "}
           </Text>
-          {editingField === key ? (
+          {key === "email" ? (
+            // Non-editable email field
+            <Text>{value}</Text>
+          ) : editingField === key ? (
             <>
               {key === "sex" ? (
                 <Select
@@ -114,7 +116,7 @@ const EditableProfile = ({ userData, userId }) => {
           ) : (
             <Text
               onClick={() => setEditingField(key)}
-              className="clickable-field"
+              className={key !== "email" ? "clickable-field" : ""}
             >
               {value || "Not Set"}
             </Text>
