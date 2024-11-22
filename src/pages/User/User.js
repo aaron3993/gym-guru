@@ -1,51 +1,32 @@
-import React, { useState, useEffect } from "react";
-import { fetchUserData, updateUserProfile } from "../../utils/firestoreUtils";
-import { useAuth } from "../../contexts/AuthContext";
-import ProfileOverview from "./ProfileOverview/ProfileOverview";
+import React, { useEffect, useState } from "react";
+import { fetchUserData } from "../../utils/firestoreUtils";
 import EditableProfile from "./EditableProfile/EditableProfile";
+import { useAuth } from "../../contexts/AuthContext";
 
 const User = () => {
   const { user } = useAuth();
-  const [profile, setProfile] = useState(null);
+  const [userData, setUserData] = useState(null);
 
   useEffect(() => {
-    const fetchUserProfile = async () => {
-      if (user) {
-        try {
-          const userProfile = await fetchUserData(user.uid);
-          if (userProfile) {
-            setProfile(userProfile);
-            console.log({ userProfile });
-          }
-        } catch (error) {
-          console.error("Error fetching user profile:", error);
+    const fetchData = async () => {
+      try {
+        if (user?.uid) {
+          const data = await fetchUserData(user.uid);
+          setUserData(data);
         }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
       }
     };
 
-    fetchUserProfile();
-  }, [user]);
+    fetchData();
+  }, [user?.uid]);
 
-  const handleSave = async (updatedProfile) => {
-    try {
-      await updateUserProfile(user.uid, updatedProfile);
-      setProfile(updatedProfile); // Update local state after successful save
-    } catch (error) {
-      console.error("Error updating profile:", error);
-      alert("An error occurred while updating your profile.");
-    }
-  };
+  if (!userData) {
+    return <div>Loading...</div>;
+  }
 
-  return (
-    <div className="user-container">
-      {profile && (
-        <>
-          <ProfileOverview profile={profile} />
-          <EditableProfile profile={profile} onSave={handleSave} />
-        </>
-      )}
-    </div>
-  );
+  return <EditableProfile userData={userData} userId={user?.uid} />;
 };
 
 export default User;
