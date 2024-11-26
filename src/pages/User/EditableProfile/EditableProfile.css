@@ -24,3 +24,47 @@
 .profile-button-group {
   margin-top: 16px;
 }
+
+.editable-profile-container {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.editable-profile-form {
+  max-width: 200px;
+  margin-left: 16px;
+}
+
+.non-editable-field {
+  margin-bottom: 16px;
+}
+
+.editable-input {
+  width: 100%;
+}
+
+.editable-select {
+  width: 100%;
+}
+
+.editable-profile-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.save-button {
+  margin-top: 16px;
+  background-color: #4caf50;
+  color: white;
+}
+
+.cancel-button {
+  margin-top: 16px;
+}
+
+.edit-button {
+  margin-top: 16px;
+}

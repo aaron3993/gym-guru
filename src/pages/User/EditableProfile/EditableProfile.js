@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Input, Select, Typography, message } from "antd";
+import { Form, Input, Select, Button, Typography, message } from "antd";
 import { updateUserProfile } from "../../../utils/firestoreUtils";
 import { useAuth } from "../../../contexts/AuthContext";
 import "./EditableProfile.css";
@@ -9,6 +9,8 @@ const { Option } = Select;
 
 const EditableProfile = ({ userData }) => {
   const { user } = useAuth();
+  const [form] = Form.useForm();
+  const [isEditing, setIsEditing] = useState(false);
 
   const initialProfile = {
     email: userData?.email || user?.email || "Not Set",
@@ -20,109 +22,156 @@ const EditableProfile = ({ userData }) => {
     sex: userData?.sex || "",
   };
 
-  const [profile, setProfile] = useState(initialProfile);
-  const [errors, setErrors] = useState({});
-  const [editingField, setEditingField] = useState(null);
-
-  const validateField = (field, value) => {
-    if (["weight", "height", "age"].includes(field)) {
-      if (!value || isNaN(value) || value <= 0) {
-        return "Enter a valid number.";
-      }
-    }
-    if (field === "sex") {
-      if (!["Male", "Female", "Other"].includes(value)) {
-        return "Select a valid option.";
-      }
-    }
-    return null;
-  };
-
-  const handleFieldChange = (field, value) => {
-    const error = validateField(field, value);
-    setProfile((prev) => ({ ...prev, [field]: value }));
-    setErrors((prev) => ({ ...prev, [field]: error }));
-  };
-
-  const handleFieldBlur = async (field) => {
-    if (errors[field]) return;
-
+  const handleSave = async () => {
     try {
-      await updateUserProfile(user.uid, { [field]: profile[field] });
-      message.success(
-        `${
-          field.charAt(0).toUpperCase() + field.slice(1)
-        } updated successfully!`
-      );
+      const values = await form.validateFields();
+      await updateUserProfile(user.uid, values);
+      message.success("Profile updated successfully!");
+      setIsEditing(false);
     } catch (error) {
-      message.error("Failed to update profile. Please try again.");
-      console.error(error);
-    } finally {
-      setEditingField(null);
+      if (error.name === "ValidationError") {
+        message.error("Please fix the errors before saving.");
+      } else {
+        message.error("Failed to update profile. Please try again.");
+        console.error(error);
+      }
     }
   };
 
-  const handleKeyDown = (e, field) => {
-    if (e.key === "Enter") {
-      handleFieldBlur(field);
-    }
+  const handleCancel = () => {
+    form.resetFields();
+    setIsEditing(false);
   };
 
   return (
     <div className="editable-profile-container">
-      {Object.entries(profile).map(([key, value]) => (
-        <div key={key} className="profile-field">
-          <Text strong className="profile-label">
-            {key.charAt(0).toUpperCase() + key.slice(1)}:{" "}
-          </Text>
-          {key === "email" ? (
-            // Non-editable email field
-            <Text>{value}</Text>
-          ) : editingField === key ? (
+      <Form
+        form={form}
+        layout="vertical"
+        initialValues={initialProfile}
+        className="editable-profile-form"
+      >
+        <Form.Item label="Email" name="email" className="non-editable-field">
+          <Text>{initialProfile.email}</Text>
+        </Form.Item>
+
+        <Form.Item
+          label="First Name"
+          name="firstName"
+          rules={[{ required: true, message: "First Name is required." }]}
+        >
+          <Input disabled={!isEditing} className="editable-input" />
+        </Form.Item>
+
+        <Form.Item
+          label="Last Name"
+          name="lastName"
+          rules={[{ required: true, message: "Last Name is required." }]}
+        >
+          <Input disabled={!isEditing} className="editable-input" />
+        </Form.Item>
+
+        <Form.Item
+          label="Weight (kg)"
+          name="weight"
+          rules={[
+            { required: true, message: "Weight is required." },
+            {
+              validator: (_, value) =>
+                value > 0
+                  ? Promise.resolve()
+                  : Promise.reject("Enter a valid weight."),
+            },
+          ]}
+        >
+          <Input
+            type="number"
+            disabled={!isEditing}
+            className="editable-input"
+          />
+        </Form.Item>
+
+        <Form.Item
+          label="Height (cm)"
+          name="height"
+          rules={[
+            { required: true, message: "Height is required." },
+            {
+              validator: (_, value) =>
+                value > 0
+                  ? Promise.resolve()
+                  : Promise.reject("Enter a valid height."),
+            },
+          ]}
+        >
+          <Input
+            type="number"
+            disabled={!isEditing}
+            className="editable-input"
+          />
+        </Form.Item>
+
+        <Form.Item
+          label="Age"
+          name="age"
+          rules={[
+            { required: true, message: "Age is required." },
+            {
+              validator: (_, value) =>
+                value > 0
+                  ? Promise.resolve()
+                  : Promise.reject("Enter a valid age."),
+            },
+          ]}
+        >
+          <Input
+            type="number"
+            disabled={!isEditing}
+            className="editable-input"
+          />
+        </Form.Item>
+
+        <Form.Item
+          label="Sex"
+          name="sex"
+          rules={[{ required: true, message: "Sex is required." }]}
+        >
+          <Select disabled={!isEditing} className="editable-select">
+            <Option value="Male">Male</Option>
+            <Option value="Female">Female</Option>
+            <Option value="Other">Other</Option>
+          </Select>
+        </Form.Item>
+
+        <div className="editable-profile-actions">
+          {isEditing ? (
             <>
-              {key === "sex" ? (
-                <Select
-                  value={value}
-                  onChange={(val) => handleFieldChange(key, val)}
-                  onBlur={() => handleFieldBlur(key)}
-                  style={{ width: 120 }}
-                  autoFocus
-                >
-                  <Option value="Male">Male</Option>
-                  <Option value="Female">Female</Option>
-                  <Option value="Other">Other</Option>
-                </Select>
-              ) : (
-                <Input
-                  type={
-                    ["weight", "height", "age"].includes(key)
-                      ? "number"
-                      : "text"
-                  }
-                  value={value}
-                  onChange={(e) => handleFieldChange(key, e.target.value)}
-                  onBlur={() => handleFieldBlur(key)}
-                  onKeyDown={(e) => handleKeyDown(e, key)}
-                  style={{ width: "100px" }}
-                  autoFocus
-                />
-              )}
-              {errors[key] && (
-                <Text type="danger" className="profile-error">
-                  {errors[key]}
-                </Text>
-              )}
+              <Button
+                type="default"
+                onClick={handleCancel}
+                className="cancel-button"
+              >
+                Cancel
+              </Button>
+              <Button
+                type="primary"
+                onClick={handleSave}
+                className="save-button"
+              >
+                Save
+              </Button>
             </>
           ) : (
-            <Text
-              onClick={() => setEditingField(key)}
-              className={key !== "email" ? "clickable-field" : ""}
+            <Button
+              type="default"
+              onClick={() => setIsEditing(true)}
+              className="edit-button"
             >
-              {value || "Not Set"}
-            </Text>
+              Edit
+            </Button>
           )}
         </div>
-      ))}
+      </Form>
     </div>
   );
 };
