@@ -65,16 +65,18 @@ export const registerUser = async (
     );
     const user = userCredential.user;
 
-    await addDoc(collection(db, "users"), {
+    await setDoc(doc(db, "users", user.uid), {
       userId: user.uid,
       firstName,
       lastName,
       email,
       username,
+      createdAt: new Date().toISOString(),
     });
 
     return { success: true, user };
   } catch (error) {
+    console.error("Error during registration:", error);
     return { success: false, error };
   }
 };

@@ -22,7 +22,7 @@ const Navbar = ({ onLogout, user }) => {
       <div className="user-logout-container">
         <div className="user-logout-sub-container">
           <Link to="/user" className="nav-link">
-            <span className="user-name">{user.displayName}</span>
+            <span className="user-name">Profile</span>
           </Link>
           <Button
             type="primary"
