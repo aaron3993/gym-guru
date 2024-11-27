@@ -13,19 +13,12 @@ const Register = () => {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("error");
 
   const onSubmit = async () => {
     try {
-      const result = await registerUser(
-        firstName,
-        lastName,
-        email,
-        password,
-        username
-      );
+      const result = await registerUser(firstName, lastName, email, password);
 
       if (result.success) {
         navigate("/");
@@ -81,20 +74,6 @@ const Register = () => {
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                   placeholder="Last name"
-                />
-              </Form.Item>
-
-              <Form.Item
-                name="username"
-                rules={[{ message: "Please choose a username" }]}
-                labelCol={{ span: 24 }}
-                wrapperCol={{ span: 24 }}
-              >
-                <Input
-                  type="text"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  placeholder="Username"
                 />
               </Form.Item>
 

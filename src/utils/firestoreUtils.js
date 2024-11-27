@@ -17,30 +17,14 @@ import {
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../firebase";
 
-export const checkIfUsernameIsAvailable = async (username) => {
-  const usersCollection = collection(db, "users");
-  const usernameQuery = query(
-    usersCollection,
-    where("username", "==", username)
-  );
-  const usernameSnapshot = await getDocs(usernameQuery);
-  return usernameSnapshot.empty;
-};
-
 const isValidEmail = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 };
 
-export const registerUser = async (
-  firstName,
-  lastName,
-  email,
-  password,
-  username
-) => {
+export const registerUser = async (firstName, lastName, email, password) => {
   try {
-    if (!firstName || !lastName || !email || !password || !username) {
+    if (!firstName || !lastName || !email || !password) {
       throw new Error("Please fill in all required fields.");
     }
 
@@ -50,12 +34,6 @@ export const registerUser = async (
 
     if (password.length < 6) {
       throw new Error("Password must be at least 6 characters long.");
-    }
-
-    const isUsernameAvailable = await checkIfUsernameIsAvailable(username);
-
-    if (!isUsernameAvailable) {
-      throw new Error("The username is already taken.");
     }
 
     const userCredential = await createUserWithEmailAndPassword(
@@ -70,7 +48,6 @@ export const registerUser = async (
       firstName,
       lastName,
       email,
-      username,
       createdAt: new Date().toISOString(),
     });
 
