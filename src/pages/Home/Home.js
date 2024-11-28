@@ -1,36 +1,40 @@
 import React from "react";
 import { Button } from "antd";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-scroll";
 import "./Home.css";
 
 const Home = () => {
-  const navigate = useNavigate();
-
-  const handleGetStarted = () => {
-    navigate("/workouts");
-  };
+  const navbarHeight = window.innerHeight * 0.08;
 
   return (
     <div className="home-page">
-      <div className="content-container">
-        <div className="cta-container">
+      <section id="landing-section" className="full-page-section">
+        <div className="content-container">
           <h1 className="app-title">Gym Guru</h1>
           <p className="slogan">Customize Your Journey, Sculpt Your Success.</p>
-          <Button
-            type="primary"
-            className="cta-button"
-            onClick={handleGetStarted}
+          <Link
+            to="form-section"
+            smooth={true}
+            duration={800}
+            offset={-navbarHeight}
           >
-            Get Started
-          </Button>
+            <Button type="primary" className="cta-button">
+              Get Started
+            </Button>
+          </Link>
         </div>
-        <div className="image-container">
-          <img
-            src="/images/watch-with-dumbbells-barbell-mat-sports-3d-rendering-illustration-retro-wave-style_499459-574-2.avif"
-            alt="AVIF Image"
-          />
+      </section>
+
+      <section id="form-section" className="full-page-section">
+        <div className="form-container">
+          <h2>Get Started with Your Goals</h2>
+          <form>
+            <input type="text" placeholder="Fitness Level" />
+            <input type="text" placeholder="Goals" />
+            <button type="submit">Submit</button>
+          </form>
         </div>
-      </div>
+      </section>
     </div>
   );
 };

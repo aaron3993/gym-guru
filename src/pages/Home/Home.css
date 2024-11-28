@@ -1,129 +1,58 @@
-body {
-  font-family: "Open Sans", sans-serif;
-  background-color: #f5f5f5;
-  color: #333333;
-  margin: 0;
+.home-page {
+  font-family: Arial, sans-serif;
+  overflow: hidden;
 }
 
-.home-page {
-  margin-top: 8vh;
-  height: 92vh;
+.full-page-section {
+  height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+}
+
+#landing-section {
+  background: linear-gradient(to bottom, #123456, #abcdef);
+  /* background-image: url("/public/images/watch-with-dumbbells-barbell-mat-sports-3d-rendering-illustration-retro-wave-style_499459-574-2.avif");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat; */
+  color: white;
+}
+
+#form-section {
+  height: 92vh;
+  background-color: #ffffff;
 }
 
 .content-container {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.cta-container {
-  padding: 2rem;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
+  max-width: 800px;
 }
 
 .app-title {
-  font-size: 3rem;
-  color: #3498db;
-  margin: 4rem 0;
+  font-size: 32px;
 }
 
 .slogan {
-  font-size: 2rem;
-  margin-top: 0;
+  font-size: 24px;
 }
 
 .cta-button {
-  font-size: 24px;
-  height: 50px;
-  width: 10rem;
+  margin-top: 20px;
 }
 
-.image-container {
-  position: relative;
-  overflow: hidden;
-  margin-top: 16px;
-  margin-right: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.form-container {
+  max-width: 600px;
 }
 
-.image-container img {
+form input {
+  display: block;
   width: 100%;
-  height: auto;
-  max-height: 100%;
-  object-fit: cover;
+  margin-bottom: 10px;
+  padding: 10px;
 }
 
-@media (min-width: 769px) {
-  .home-page {
-    margin-top: 8vh;
-    flex-direction: row;
-  }
-
-  .content-container {
-    margin: 0;
-    flex-direction: row;
-  }
-
-  .cta-container,
-  .image-container {
-    flex: 1;
-  }
-
-  .cta-container {
-    margin-right: 2rem;
-  }
-
-  .app-title {
-    font-size: 4rem;
-    color: #3498db;
-    margin-bottom: 1rem;
-  }
-
-  .slogan {
-    font-size: 3rem;
-    margin-bottom: 2rem;
-    margin-top: 0;
-  }
-
-  .image-container {
-    margin-right: 2rem;
-  }
-}
-
-@media (max-width: 768px) {
-  .content-container,
-  .image-container {
-    margin-right: 0;
-  }
-
-  .content-container {
-    justify-content: space-between;
-  }
-
-  .cta-container {
-    height: 60%;
-  }
-
-  .app-title {
-    font-size: 2.5rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .slogan {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-  }
+form button {
+  padding: 10px 20px;
 }
