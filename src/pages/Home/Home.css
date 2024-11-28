@@ -91,7 +91,7 @@
 }
 
 .ai-button {
-  background-color: #0c61b6;
+  background-color: #28a745;
   color: white;
   border: none;
 }
@@ -99,6 +99,7 @@
 .manual-button:hover,
 .ai-button:hover {
   opacity: 0.8;
+  background-color: #1e7d34;
 }
 
 @media (max-width: 768px) {

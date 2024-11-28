@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-scroll";
-import GenerateWorkoutModal from "../../components/GenerateWorkoutModal/GenerateWorkoutModal";
+import GenerateWorkoutModal from "../../components/GenerateWorkoutModal";
 import "./Home.css";
 
 const Home = () => {
