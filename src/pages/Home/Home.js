@@ -1,10 +1,11 @@
 import React from "react";
 import { Button } from "antd";
 import { Link } from "react-scroll";
+import GoalsForm from "../../components/GoalsForm/GoalsForm";
 import "./Home.css";
 
 const Home = () => {
-  const navbarHeight = window.innerHeight * 0.08;
+  const navbarHeight = window.innerHeight * 0.08; // Adjusting for the navbar height
 
   return (
     <div className="home-page">
@@ -25,15 +26,9 @@ const Home = () => {
         </div>
       </section>
 
+      {/* Render the form as a separate component */}
       <section id="form-section" className="full-page-section">
-        <div className="form-container">
-          <h2>Get Started with Your Goals</h2>
-          <form>
-            <input type="text" placeholder="Fitness Level" />
-            <input type="text" placeholder="Goals" />
-            <button type="submit">Submit</button>
-          </form>
-        </div>
+        <GoalsForm />
       </section>
     </div>
   );
