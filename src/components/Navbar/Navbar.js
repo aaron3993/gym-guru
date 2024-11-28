@@ -18,6 +18,9 @@ const Navbar = ({ onLogout, user }) => {
         <Link to="/workouts" className="nav-link">
           Workouts
         </Link>
+        <Link to="/programs" className="nav-link">
+          Programs
+        </Link>
       </div>
       <div className="user-logout-container">
         <div className="user-logout-sub-container">

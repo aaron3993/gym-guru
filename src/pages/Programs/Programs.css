@@ -1,0 +1,43 @@
+.programs-page {
+  margin-top: 8vh;
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.header h1 {
+  color: #123456;
+}
+
+.header p {
+  color: #555;
+  font-size: 1.2em;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.generate-button {
+  background-color: #123456;
+  color: #fff;
+  font-size: 1.2em;
+  padding: 0 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.generate-button:hover {
+  background-color: #0d2d72;
+}

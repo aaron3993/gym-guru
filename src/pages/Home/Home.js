@@ -1,15 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-scroll";
+import GenerateWorkoutModal from "../../components/GenerateWorkoutModal/GenerateWorkoutModal";
 import "./Home.css";
 
 const Home = () => {
   const navigate = useNavigate();
   const navbarHeight = window.innerHeight * 0.08;
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleManualWorkout = () => {
     navigate("/workouts");
+  };
+
+  const showModal = () => {
+    setIsModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setIsModalVisible(false);
   };
 
   return (
@@ -49,15 +59,7 @@ const Home = () => {
               </p>
             </div>
             <div className="option">
-              <Button
-                type="primary"
-                className="ai-button"
-                // onClick={() =>
-                //   document
-                //     .getElementById("ai-form")
-                //     .scrollIntoView({ behavior: "smooth" })
-                // }
-              >
+              <Button type="primary" className="ai-button" onClick={showModal}>
                 Generate with AI
               </Button>
               <p className="option-note">
@@ -68,6 +70,8 @@ const Home = () => {
           </div>
         </div>
       </section>
+
+      <GenerateWorkoutModal isVisible={isModalVisible} onClose={closeModal} />
     </div>
   );
 };
