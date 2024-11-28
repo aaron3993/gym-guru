@@ -28,15 +28,17 @@
 }
 
 .app-title {
-  font-size: 32px;
+  font-size: 48px;
 }
 
 .slogan {
-  font-size: 24px;
+  font-size: 32px;
 }
 
 .cta-button {
-  margin-top: 20px;
+  font-size: 20px;
+  padding: 10px 20px;
+  height: auto;
 }
 
 .options-container {
