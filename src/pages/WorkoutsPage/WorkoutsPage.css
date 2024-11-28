@@ -1,16 +1,52 @@
-.workouts-container {
-  margin-top: 10vh;
-  padding: 0 3rem;
+.workouts-page {
+  margin-top: 8vh;
+  font-family: Arial, sans-serif;
+  background-color: #f9f9f9;
+  padding: 40px 20px;
+  min-height: 100vh;
 }
 
-.my-workouts {
-  color: #3498db;
-  margin-bottom: 2rem;
+.header {
+  text-align: center;
+  margin-bottom: 30px;
 }
 
-.workout-item {
-  border: 1px solid #ddd;
-  border-radius: 8px;
-  padding: 10px;
-  margin-bottom: 10px;
+.header h1 {
+  color: #123456;
+}
+
+.header p {
+  color: #555;
+  font-size: 1.1em;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.create-workout-button {
+  font-size: 1.2em;
+  padding: 0 24px;
+  border-radius: 5px;
+  background-color: #1d72b8;
+  color: white;
+  border: none;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.create-workout-button:hover {
+  background-color: #125a8a;
+}
+
+.workout-list {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px;
 }

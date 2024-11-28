@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Button, message, Form } from "antd";
+import { Button, message, Form, Typography } from "antd";
 import CreateWorkoutModal from "../../components/CreateWorkoutModal";
 import WorkoutList from "./WorkoutList/WorkoutList";
 import { getAllWorkoutsForUser } from "../../utils/firestoreUtils";
 import { useAuth } from "../../contexts/AuthContext";
 import "./WorkoutsPage.css";
+
+const { Title } = Typography;
 
 const WorkoutsPage = () => {
   const { user } = useAuth();
@@ -45,12 +47,23 @@ const WorkoutsPage = () => {
   };
 
   return (
-    <div className="workouts-container">
-      <h1 className="my-workouts">My Workouts</h1>
-      <Button type="primary" onClick={handleOpenModal}>
-        Create Workout
-      </Button>
-      <WorkoutList workouts={workouts} />
+    <div className="workouts-page">
+      <div className="header">
+        <Title level={1}>My Workouts</Title>
+        <p>Create and manage your workout routines effortlessly.</p>
+      </div>
+
+      <div className="content">
+        <Button
+          type="primary"
+          className="create-workout-button"
+          onClick={handleOpenModal}
+        >
+          Create Workout
+        </Button>
+        <WorkoutList workouts={workouts} />
+      </div>
+
       <CreateWorkoutModal
         isOpen={isModalOpen}
         onRequestClose={handleCloseModal}
