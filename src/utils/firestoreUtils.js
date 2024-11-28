@@ -258,3 +258,21 @@ export const updateUserProfile = async (uid, profileData) => {
     throw error;
   }
 };
+
+export const addUserWorkoutInfo = async (uid, workoutInfo) => {
+  if (!uid) throw new Error("User ID is required");
+
+  const userRef = doc(db, "users", uid);
+  console.log(userRef);
+  try {
+    const docSnapshot = await getDoc(userRef);
+    if (docSnapshot.exists()) {
+      await updateDoc(userRef, workoutInfo);
+    } else {
+      await setDoc(userRef, workoutInfo);
+    }
+  } catch (error) {
+    console.error("Error adding workout info to Firestore:", error);
+    throw error;
+  }
+};
