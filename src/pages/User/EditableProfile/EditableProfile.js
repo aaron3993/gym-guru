@@ -69,7 +69,7 @@ const EditableProfile = ({ userData }) => {
         <Form.Item
           label="First Name"
           name="firstName"
-          rules={[{ required: true, message: "First Name is required." }]}
+          rules={[{ message: "First Name is required." }]}
         >
           <Input disabled={!isEditing} className="editable-input" />
         </Form.Item>
@@ -77,7 +77,7 @@ const EditableProfile = ({ userData }) => {
         <Form.Item
           label="Last Name"
           name="lastName"
-          rules={[{ required: true, message: "Last Name is required." }]}
+          rules={[{ message: "Last Name is required." }]}
         >
           <Input disabled={!isEditing} className="editable-input" />
         </Form.Item>
@@ -86,7 +86,7 @@ const EditableProfile = ({ userData }) => {
           label="Weight (kg)"
           name="weight"
           rules={[
-            { required: true, message: "Weight is required." },
+            { message: "Weight is required." },
             {
               validator: (_, value) =>
                 value > 0
@@ -106,7 +106,7 @@ const EditableProfile = ({ userData }) => {
           label="Height (cm)"
           name="height"
           rules={[
-            { required: true, message: "Height is required." },
+            { message: "Height is required." },
             {
               validator: (_, value) =>
                 value > 0
@@ -126,7 +126,7 @@ const EditableProfile = ({ userData }) => {
           label="Age"
           name="age"
           rules={[
-            { required: true, message: "Age is required." },
+            { message: "Age is required." },
             {
               validator: (_, value) =>
                 value > 0
@@ -145,7 +145,7 @@ const EditableProfile = ({ userData }) => {
         <Form.Item
           label="Sex"
           name="sex"
-          rules={[{ required: true, message: "Sex is required." }]}
+          rules={[{ message: "Sex is required." }]}
         >
           <Select disabled={!isEditing} className="editable-select">
             <Option value="Male">Male</Option>
@@ -157,7 +157,7 @@ const EditableProfile = ({ userData }) => {
         <Form.Item
           label="Fitness Level"
           name="fitnessLevel"
-          rules={[{ required: true, message: "Fitness Level is required." }]}
+          rules={[{ message: "Fitness Level is required." }]}
         >
           <Select disabled={!isEditing} className="editable-select">
             <Option value="beginner">Beginner</Option>
@@ -169,7 +169,7 @@ const EditableProfile = ({ userData }) => {
         <Form.Item
           label="Goals"
           name="goals"
-          rules={[{ required: true, message: "Please select your goals" }]}
+          rules={[{ message: "Please select your goals" }]}
         >
           <Select disabled={!isEditing} className="editable-select">
             <Option value="weightLoss">Weight Loss</Option>

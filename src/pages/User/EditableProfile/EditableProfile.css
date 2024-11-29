@@ -1,66 +1,85 @@
 .editable-profile-container {
   margin-top: 8vh;
-  padding: 20px;
-}
-
-.profile-field {
-  margin-bottom: 12px;
-}
-
-.profile-label {
-  display: inline-block;
-  min-width: 80px;
-}
-
-.profile-input {
-  width: 150px;
-}
-
-.profile-error {
-  color: red;
-  margin-left: 8px;
-}
-
-.profile-button-group {
-  margin-top: 16px;
-}
-
-.editable-profile-container {
-  padding: 20px;
-  background-color: #fff;
+  height: 92vh;
+  background-color: #f4f4f9;
   border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .editable-profile-form {
-  max-width: 200px;
-  margin-left: 16px;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .editable-input {
-  width: 100%;
+  border-radius: 4px;
+  padding: 8px 12px;
+  font-size: 14px;
+  border: 1px solid #d9d9d9;
+  transition: border-color 0.3s ease;
+}
+
+.editable-input:focus {
+  border-color: #1890ff;
+  outline: none;
 }
 
 .editable-select {
-  width: 100%;
+  border-radius: 4px;
+  font-size: 14px;
+  border: 1px solid #d9d9d9;
+  transition: border-color 0.3s ease;
 }
 
-.editable-profile-actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 8px;
+.editable-select:focus {
+  border-color: #1890ff;
+  outline: none;
 }
 
+.editable-input[disabled] {
+  background-color: #f9f9f9;
+  border-color: #d9d9d9;
+  color: #000;
+}
+
+.ant-select-disabled .ant-select-selector {
+  background-color: white !important;
+  color: #000 !important;
+  border-color: #d9d9d9 !important;
+}
+
+.edit-button,
+.cancel-button,
 .save-button {
-  margin-top: 16px;
+  margin: 10px 5px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+
+.edit-button {
   background-color: #4caf50;
   color: white;
 }
 
 .cancel-button {
-  margin-top: 16px;
+  background-color: #ff9800;
+  color: white;
 }
 
-.edit-button {
-  margin-top: 16px;
+.save-button {
+  background-color: #2196f3;
+  color: white;
+}
+
+.edit-button:hover,
+.cancel-button:hover,
+.save-button:hover {
+  opacity: 0.8;
+}
+
+.editable-profile-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
 }
