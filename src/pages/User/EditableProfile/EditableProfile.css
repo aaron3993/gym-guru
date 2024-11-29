@@ -1,6 +1,6 @@
 .editable-profile-container {
+  margin-top: 8vh;
   padding: 20px;
-  margin-top: 60px; /* Adjust based on navbar height */
 }
 
 .profile-field {
@@ -35,10 +35,6 @@
 .editable-profile-form {
   max-width: 200px;
   margin-left: 16px;
-}
-
-.non-editable-field {
-  margin-bottom: 16px;
 }
 
 .editable-input {

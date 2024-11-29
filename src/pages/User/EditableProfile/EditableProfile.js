@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Form, Input, Select, Button, Typography, message } from "antd";
 import { updateUserProfile } from "../../../utils/firestoreUtils";
+import { formatText } from "../../../utils/formatTextUtils";
 import { useAuth } from "../../../contexts/AuthContext";
 import "./EditableProfile.css";
 
@@ -12,7 +13,15 @@ const EditableProfile = ({ userData }) => {
   const [form] = Form.useForm();
   const [isEditing, setIsEditing] = useState(false);
 
-  const initialProfile = {
+  const formatUserProfile = (userData) => {
+    return {
+      ...userData,
+      fitnessLevel: formatText(userData.fitnessLevel),
+      goals: formatText(userData.goals),
+    };
+  };
+
+  const initialProfile = formatUserProfile({
     email: userData?.email || user?.email || "Not Set",
     firstName: userData?.firstName || "",
     lastName: userData?.lastName || "",
@@ -20,7 +29,9 @@ const EditableProfile = ({ userData }) => {
     height: userData?.height || "",
     age: userData?.age || "",
     sex: userData?.sex || "",
-  };
+    fitnessLevel: userData?.fitnessLevel || "",
+    goals: userData?.goals || "",
+  });
 
   const handleSave = async () => {
     try {
@@ -51,8 +62,8 @@ const EditableProfile = ({ userData }) => {
         initialValues={initialProfile}
         className="editable-profile-form"
       >
-        <Form.Item label="Email" name="email" className="non-editable-field">
-          <Text>{initialProfile.email}</Text>
+        <Form.Item>
+          <Text>Email: {initialProfile.email}</Text>
         </Form.Item>
 
         <Form.Item
@@ -140,6 +151,32 @@ const EditableProfile = ({ userData }) => {
             <Option value="Male">Male</Option>
             <Option value="Female">Female</Option>
             <Option value="Other">Other</Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item
+          label="Fitness Level"
+          name="fitnessLevel"
+          rules={[{ required: true, message: "Fitness Level is required." }]}
+        >
+          <Select disabled={!isEditing} className="editable-select">
+            <Option value="beginner">Beginner</Option>
+            <Option value="intermediate">Intermediate</Option>
+            <Option value="advanced">Advanced</Option>
+          </Select>
+        </Form.Item>
+
+        <Form.Item
+          label="Goals"
+          name="goals"
+          rules={[{ required: true, message: "Please select your goals" }]}
+        >
+          <Select disabled={!isEditing} className="editable-select">
+            <Option value="weightLoss">Weight Loss</Option>
+            <Option value="muscleGain">Muscle Gain</Option>
+            <Option value="endurance">Endurance</Option>
+            <Option value="strength">Strength</Option>
+            <Option value="generalFitness">General Fitness</Option>
           </Select>
         </Form.Item>
 
