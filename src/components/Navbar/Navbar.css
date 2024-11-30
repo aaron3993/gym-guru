@@ -88,9 +88,12 @@
 }
 
 .ant-drawer-body {
-  padding: 0;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
+
 .ant-drawer-mask {
   background-color: rgba(0, 0, 0, 0.5);
 }
