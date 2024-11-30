@@ -1,20 +1,29 @@
-import React from "react";
-import { Button } from "antd";
+import React, { useState } from "react";
+import { Drawer, Button } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
 const Navbar = ({ onLogout, user }) => {
+  const [drawerVisible, setDrawerVisible] = useState(false);
   const navigate = useNavigate();
+
+  const showDrawer = () => {
+    setDrawerVisible(true);
+  };
+
+  const closeDrawer = () => {
+    setDrawerVisible(false);
+  };
 
   return (
     <nav className="navbar">
-      <div className="nav-links">
+      <div className="nav-links desktop-nav">
         <Link to="/" className="nav-link">
           Home
         </Link>
-        {/* <Link to="/exercises" className="nav-link">
-          Exercises
-        </Link> */}
+        <Link to="/profile" className="nav-link">
+          Profile
+        </Link>
         <Link to="/workouts" className="nav-link">
           Workouts
         </Link>
@@ -22,23 +31,50 @@ const Navbar = ({ onLogout, user }) => {
           Programs
         </Link>
       </div>
-      <div className="user-logout-container">
-        <div className="user-logout-sub-container">
-          <Link to="/user" className="nav-link">
-            <span className="user-name">Profile</span>
-          </Link>
-          <Button
-            type="primary"
-            className="logout-btn"
-            onClick={async () => {
-              await onLogout();
-              navigate("/login");
-            }}
-          >
-            Logout
-          </Button>
-        </div>
+      <Button
+        type="primary"
+        className="logout-btn desktop-nav"
+        onClick={async () => {
+          await onLogout();
+          navigate("/login");
+        }}
+      >
+        Logout
+      </Button>
+
+      <div className="mobile-nav">
+        <Button onClick={showDrawer}>☰</Button>
       </div>
+      <Drawer
+        placement="left"
+        onClose={closeDrawer}
+        open={drawerVisible}
+        className="custom-drawer"
+        style={{ backgroundColor: "#333", color: "white", width: "50%" }}
+      >
+        <Link to="/" className="drawer-link" onClick={closeDrawer}>
+          Home
+        </Link>
+        <Link to="/profile" className="drawer-link" onClick={closeDrawer}>
+          Profile
+        </Link>
+        <Link to="/workouts" className="drawer-link" onClick={closeDrawer}>
+          Workouts
+        </Link>
+        <Link to="/programs" className="drawer-link" onClick={closeDrawer}>
+          Programs
+        </Link>
+        <Button
+          type="primary"
+          className="logout-btn"
+          onClick={async () => {
+            await onLogout();
+            navigate("/login");
+          }}
+        >
+          Logout
+        </Button>
+      </Drawer>
     </nav>
   );
 };
