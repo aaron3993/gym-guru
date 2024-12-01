@@ -55,6 +55,9 @@ const Navbar = ({ onLogout, user }) => {
           color: "#fff",
           width: "50%",
         }}
+        bodyStyle={{
+          padding: "0px", // Remove padding from the body content
+        }}
       >
         <div>
           <Link to="/" className="drawer-link" onClick={closeDrawer}>
