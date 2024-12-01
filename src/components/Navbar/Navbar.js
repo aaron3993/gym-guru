@@ -55,8 +55,10 @@ const Navbar = ({ onLogout, user }) => {
           color: "#fff",
           width: "50%",
         }}
-        bodyStyle={{
-          padding: "0px", // Remove padding from the body content
+        styles={{
+          body: {
+            padding: 0,
+          },
         }}
       >
         <div>
