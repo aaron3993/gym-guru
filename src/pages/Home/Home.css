@@ -4,7 +4,7 @@
 }
 
 .full-page-section {
-  height: 93vh;
+  height: 94vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,7 +18,7 @@
 }
 
 #options-section {
-  height: 93vh;
+  height: 94vh;
   background-color: #f7f7f7;
   padding: 40px 20px;
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { fetchUserData } from "../../utils/firestoreUtils";
 import EditableProfile from "./EditableProfile/EditableProfile";
 import { useAuth } from "../../contexts/AuthContext";
+import LoadingSpinner from "../../components/LoadingSpinner";
 
 const User = () => {
   const { user } = useAuth();
@@ -23,7 +24,7 @@ const User = () => {
   }, [user?.uid]);
 
   if (!userData) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner />;
   }
 
   return <EditableProfile userData={userData} userId={user?.uid} />;

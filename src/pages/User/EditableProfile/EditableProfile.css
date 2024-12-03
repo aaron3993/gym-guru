@@ -1,6 +1,4 @@
 .editable-profile-container {
-  margin-top: 8vh;
-  height: 92vh;
   background-color: #f4f4f9;
   border-radius: 8px;
   padding: 20px;
@@ -41,6 +39,11 @@
   background-color: #f9f9f9;
   border-color: #d9d9d9;
   color: #000;
+}
+
+.editable-profile-container .ant-input {
+  height: 28px;
+  font-size: 12px;
 }
 
 .ant-select-disabled .ant-select-selector {

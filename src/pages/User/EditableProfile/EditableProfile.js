@@ -63,7 +63,9 @@ const EditableProfile = ({ userData }) => {
         className="editable-profile-form"
       >
         <Form.Item>
-          <Text>Email: {initialProfile.email}</Text>
+          <Text>
+            <b>Email: {initialProfile.email}</b>
+          </Text>
         </Form.Item>
 
         <Form.Item
@@ -81,17 +83,19 @@ const EditableProfile = ({ userData }) => {
         >
           <Input disabled={!isEditing} className="editable-input" />
         </Form.Item>
-
         <Form.Item
           label="Weight (kg)"
           name="weight"
           rules={[
-            { message: "Weight is required." },
             {
-              validator: (_, value) =>
-                value > 0
+              validator: (_, value) => {
+                if (value === undefined || value === null || value === "") {
+                  return Promise.resolve(); // No error if empty
+                }
+                return value > 0
                   ? Promise.resolve()
-                  : Promise.reject("Enter a valid weight."),
+                  : Promise.reject("Enter a valid weight.");
+              },
             },
           ]}
         >
@@ -106,12 +110,15 @@ const EditableProfile = ({ userData }) => {
           label="Height (cm)"
           name="height"
           rules={[
-            { message: "Height is required." },
             {
-              validator: (_, value) =>
-                value > 0
+              validator: (_, value) => {
+                if (value === undefined || value === null || value === "") {
+                  return Promise.resolve(); // No error if empty
+                }
+                return value > 0
                   ? Promise.resolve()
-                  : Promise.reject("Enter a valid height."),
+                  : Promise.reject("Enter a valid height.");
+              },
             },
           ]}
         >
@@ -126,12 +133,15 @@ const EditableProfile = ({ userData }) => {
           label="Age"
           name="age"
           rules={[
-            { message: "Age is required." },
             {
-              validator: (_, value) =>
-                value > 0
+              validator: (_, value) => {
+                if (value === undefined || value === null || value === "") {
+                  return Promise.resolve(); // No error if empty
+                }
+                return value > 0
                   ? Promise.resolve()
-                  : Promise.reject("Enter a valid age."),
+                  : Promise.reject("Enter a valid age.");
+              },
             },
           ]}
         >

@@ -43,7 +43,7 @@ const App = () => {
             }
           />
           <Route
-            path="/user"
+            path="/profile"
             element={
               <PrivateRoute isAuthenticated={isAuthenticated}>
                 <User user={user} />
