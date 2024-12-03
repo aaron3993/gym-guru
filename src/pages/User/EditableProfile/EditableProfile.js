@@ -19,7 +19,7 @@ const EditableProfile = ({ userData }) => {
       goals: formatText(userData.goals),
     };
   };
-  console.log(userData);
+
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState(
     formatUserProfile({
