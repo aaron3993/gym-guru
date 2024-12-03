@@ -1,40 +1,25 @@
 .workout-card {
-  width: 25%;
-  text-align: center;
-  background: #f8f9fa;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  background-color: #ffffff;
+  border-radius: 10px;
   padding: 20px;
-  margin: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
   cursor: pointer;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  max-width: 300px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.workout-card h3 {
+  font-size: 1.5em;
+  color: #0a1d45;
+  margin: 0;
 }
 
 .workout-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
 }
 
-.card-content {
-  text-align: center;
-}
-
-.workout-title {
-  font-size: 1.4em;
-  color: #123456;
-  margin-bottom: 10px;
-}
-
-.workout-details {
-  font-size: 0.9em;
-  color: #555;
-}
-
-@media (max-width: 768px) {
-  .workout-card {
-    width: 90%;
-    margin: 10px auto;
-  }
+.workout-card:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
