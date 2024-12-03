@@ -19,11 +19,11 @@ const EditableProfile = ({ userData }) => {
       goals: formatText(userData.goals),
     };
   };
-
+  console.log(userData);
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState(
     formatUserProfile({
-      email: userData?.email || user?.email || "Not Set",
+      email: userData?.email || userData?.email || "Not Set",
       firstName: userData?.firstName || "",
       lastName: userData?.lastName || "",
       weight: userData?.weight || "",
