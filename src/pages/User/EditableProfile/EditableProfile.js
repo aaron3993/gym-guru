@@ -11,7 +11,6 @@ const { Option } = Select;
 const EditableProfile = ({ userData }) => {
   const { user } = useAuth();
   const [form] = Form.useForm();
-  const [isEditing, setIsEditing] = useState(false);
 
   const formatUserProfile = (userData) => {
     return {
@@ -21,23 +20,28 @@ const EditableProfile = ({ userData }) => {
     };
   };
 
-  const initialProfile = formatUserProfile({
-    email: userData?.email || user?.email || "Not Set",
-    firstName: userData?.firstName || "",
-    lastName: userData?.lastName || "",
-    weight: userData?.weight || "",
-    height: userData?.height || "",
-    age: userData?.age || "",
-    sex: userData?.sex || "",
-    fitnessLevel: userData?.fitnessLevel || "",
-    goals: userData?.goals || "",
-  });
+  const [isEditing, setIsEditing] = useState(false);
+  const [profileData, setProfileData] = useState(
+    formatUserProfile({
+      email: userData?.email || user?.email || "Not Set",
+      firstName: userData?.firstName || "",
+      lastName: userData?.lastName || "",
+      weight: userData?.weight || "",
+      height: userData?.height || "",
+      age: userData?.age || "",
+      sex: userData?.sex || "",
+      fitnessLevel: userData?.fitnessLevel || "",
+      goals: userData?.goals || "",
+    })
+  );
 
   const handleSave = async () => {
     try {
       const values = await form.validateFields();
       await updateUserProfile(user.uid, values);
       message.success("Profile updated successfully!");
+
+      setProfileData(values);
       setIsEditing(false);
     } catch (error) {
       if (error.name === "ValidationError") {
@@ -59,12 +63,12 @@ const EditableProfile = ({ userData }) => {
       <Form
         form={form}
         layout="vertical"
-        initialValues={initialProfile}
+        initialValues={profileData}
         className="editable-profile-form"
       >
         <Form.Item>
           <Text>
-            <b>Email: {initialProfile.email}</b>
+            <b>Email: {profileData.email}</b>
           </Text>
         </Form.Item>
 
@@ -90,7 +94,7 @@ const EditableProfile = ({ userData }) => {
             {
               validator: (_, value) => {
                 if (value === undefined || value === null || value === "") {
-                  return Promise.resolve(); // No error if empty
+                  return Promise.resolve();
                 }
                 return value > 0
                   ? Promise.resolve()
@@ -113,7 +117,7 @@ const EditableProfile = ({ userData }) => {
             {
               validator: (_, value) => {
                 if (value === undefined || value === null || value === "") {
-                  return Promise.resolve(); // No error if empty
+                  return Promise.resolve();
                 }
                 return value > 0
                   ? Promise.resolve()
@@ -136,7 +140,7 @@ const EditableProfile = ({ userData }) => {
             {
               validator: (_, value) => {
                 if (value === undefined || value === null || value === "") {
-                  return Promise.resolve(); // No error if empty
+                  return Promise.resolve();
                 }
                 return value > 0
                   ? Promise.resolve()
