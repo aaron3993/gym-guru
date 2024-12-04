@@ -54,12 +54,17 @@ const Home = () => {
               </p>
             </div>
             <div className="option">
-              <Button type="primary" className="ai-button" onClick={showModal}>
+              <Button
+                type="primary"
+                disabled
+                className="ai-button"
+                onClick={showModal}
+              >
                 Generate with AI
               </Button>
               <p className="option-note">
-                Use our AI tool to create a personalized program quickly. Just
-                fill out the form, and we'll handle the rest!
+                *Coming Soon! Use our AI tool to create a personalized program
+                quickly. Just fill out the form, and we'll handle the rest!
               </p>
             </div>
           </div>

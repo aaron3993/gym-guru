@@ -45,12 +45,17 @@ const Programs = () => {
         </div>
 
         <div className="option">
-          <Button type="primary" onClick={showModal} className="ai-button">
+          <Button
+            type="primary"
+            disabled
+            onClick={showModal}
+            className="ai-button"
+          >
             Generate with AI
           </Button>
           <p className="option-note">
-            Let our AI design a personalized program for you in seconds. Just
-            provide your goals, and we’ll handle the rest.
+            *Coming Soon! Let our AI design a personalized program for you in
+            seconds. Just provide your goals, and we’ll handle the rest.
           </p>
         </div>
       </div>
