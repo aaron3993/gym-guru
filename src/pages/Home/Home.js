@@ -7,7 +7,7 @@ import "./Home.css";
 
 const Home = () => {
   const navigate = useNavigate();
-  const navbarHeight = window.innerHeight * 0.08;
+
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleManualWorkout = () => {
@@ -28,12 +28,7 @@ const Home = () => {
         <div className="content-container">
           <h1 className="app-title">Gym Guru</h1>
           <p className="slogan">Customize Your Journey, Sculpt Your Success.</p>
-          <Link
-            to="options-section"
-            smooth={true}
-            duration={800}
-            offset={-navbarHeight}
-          >
+          <Link to="options-section" smooth={true} duration={800}>
             <Button type="primary" className="cta-button">
               Get Started
             </Button>
