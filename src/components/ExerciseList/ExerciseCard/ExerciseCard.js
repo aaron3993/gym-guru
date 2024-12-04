@@ -16,7 +16,7 @@ const ExerciseCard = ({ exercise, onOpenExerciseModal }) => {
         type="primary"
         icon={<PlusOutlined />}
         onClick={() => onOpenExerciseModal(exercise)}
-      ></Button>
+      />
     </div>
   );
 };

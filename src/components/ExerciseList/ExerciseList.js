@@ -16,7 +16,7 @@ const ExerciseList = ({
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
   useEffect(() => {
-    setItemsPerPage(10);
+    setItemsPerPage(6);
     setCurrentPage(1);
   }, [exercises]);
 
@@ -57,11 +57,13 @@ const ExerciseList = ({
         )}
       </div>
       {updatedExercises.length > 0 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={Math.ceil(exercises.length / itemsPerPage)}
-          onPageChange={handlePageChange}
-        />
+        <div className="pagination-container">
+          <Pagination
+            currentPage={currentPage}
+            totalPages={Math.ceil(exercises.length / itemsPerPage)}
+            onPageChange={handlePageChange}
+          />
+        </div>
       )}
     </div>
   );
