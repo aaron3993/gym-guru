@@ -29,16 +29,16 @@
   object-fit: cover;
 }
 
-.exercise-info h3 {
+.exercise-info h5 {
   margin: 0;
-  font-size: 16px;
+  font-size: 12px;
   color: #333;
 }
 
 .exercise-actions {
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 10px;
 }
 
 .exercise-sets-and-reps {
@@ -53,7 +53,7 @@
   gap: 5px;
 }
 
-.editable-number h3 {
+.editable-number h5 {
   margin: 0;
   font-size: 14px;
   color: #555;

@@ -72,12 +72,12 @@ const ExerciseRow = ({
     <div className="exercise-row">
       <div className="exercise-info">
         <img src={exercise.gifUrl} alt={exercise.name} />
-        <h3>{exercise.updatedName}</h3>
+        <h4>{exercise.updatedName}</h4>
       </div>
       <div className="exercise-actions">
         <div className="exercise-sets-and-reps">
           <div className="editable-number">
-            <h3>Sets</h3>
+            <h4>Sets</h4>
             {isEditingSets ? (
               <InputNumber
                 autoFocus
@@ -95,7 +95,7 @@ const ExerciseRow = ({
             )}
           </div>
           <div className="editable-number">
-            <h3>Reps</h3>
+            <h4>Reps</h4>
             {isEditingReps ? (
               <InputNumber
                 autoFocus
