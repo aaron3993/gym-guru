@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { message, Input, Button, Modal } from "antd";
 import { db } from "../../../../../firebase";
-import { fetchAllExercises } from "../../../../../utils/apiUtils";
+import { fetchAllExercises } from "../../../../../services/exerciseDBUtils";
 import { applyExerciseFiltersAndLimit } from "../../../../../utils/dataUtils";
 import {
   updateWorkoutName,
@@ -90,9 +90,7 @@ const WorkoutDetailPage = () => {
       if (cachedExercises) {
         setAllExercises(JSON.parse(cachedExercises));
       } else {
-        // const response = await fetch("/data/exercises.json");
         const exercises = await fetchAllExercises();
-        // const exercises = await response.json();
 
         localStorage.setItem("allExercises", JSON.stringify(exercises));
 
