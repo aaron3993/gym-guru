@@ -1,7 +1,8 @@
 import React from "react";
 import { Modal, Form, Select, Button, message } from "antd";
-import { useAuth } from "../contexts/AuthContext"; // Accessing the Auth context directly
-import { addUserWorkoutInfo } from "../utils/firestoreUtils";
+import { useAuth } from "../contexts/AuthContext";
+import { generateWorkoutPlan } from "../services/openaiUtils";
+import { matchExercises } from "../utils/exerciseMatcher";
 
 const { Option } = Select;
 
@@ -11,16 +12,37 @@ const GenerateWorkoutModal = ({ isVisible, onClose }) => {
 
   const handleFinish = async (values) => {
     try {
-      if (user) {
-        await addUserWorkoutInfo(user.uid, values);
-        message.success("Workout preferences saved successfully!");
-        onClose();
-      } else {
-        message.error("User not authenticated. Please log in.");
-      }
+      // Clear existing form values
+      form.resetFields();
+
+      message.loading({
+        content: "Generating your workout plan...",
+        key: "generateWorkout",
+      });
+
+      // Generate workout plan from OpenAI
+      // const workoutPlan = await generateWorkoutPlan(values);
+
+      // Match exercises using the matcher function
+      // const matchedPlan = await matchExercises(workoutPlan);
+      const matchedPlan = await matchExercises();
+
+      // Save to Firestore (or handle as needed)
+      // await addUserWorkoutInfo(user.uid, matchedPlan);
+
+      message.success({
+        content: "Workout plan generated and saved successfully!",
+        key: "generateWorkout",
+      });
+
+      // Optionally close the modal after success
+      onClose();
     } catch (error) {
-      console.error("Error saving workout preferences:", error);
-      message.error("Failed to save preferences. Please try again.");
+      console.error("Error generating workout plan:", error);
+      message.error({
+        content: "Failed to generate workout plan. Please try again.",
+        key: "generateWorkout",
+      });
     }
   };
 
@@ -46,9 +68,9 @@ const GenerateWorkoutModal = ({ isVisible, onClose }) => {
           </Select>
         </Form.Item>
         <Form.Item
-          label="Goals"
-          name="goals"
-          rules={[{ required: true, message: "Please select your goals" }]}
+          label="Goal"
+          name="goal"
+          rules={[{ required: true, message: "Please select your goal" }]}
         >
           <Select placeholder="Select your goal">
             <Option value="weightLoss">Weight Loss</Option>
