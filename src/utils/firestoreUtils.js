@@ -314,3 +314,34 @@ export const saveCompleteWorkoutInfo = async (
     throw new Error("Failed to save complete workout info.");
   }
 };
+
+export const getAllRoutinesForUser = async (userId) => {
+  if (!userId) {
+    throw new Error("User ID is required to fetch routines.");
+  }
+
+  try {
+    // Reference to the routines collection
+    const routinesCollection = collection(db, "routines");
+
+    // Query to filter routines by userId
+    const routinesQuery = query(
+      routinesCollection,
+      where("userId", "==", userId)
+    );
+
+    // Execute the query
+    const querySnapshot = await getDocs(routinesQuery);
+
+    // Map through the documents and extract data
+    const routines = querySnapshot.docs.map((doc) => ({
+      id: doc.id, // Include the document ID
+      ...doc.data(), // Spread the routine data
+    }));
+
+    return routines;
+  } catch (error) {
+    console.error("Error fetching routines from Firestore:", error);
+    throw new Error("Failed to fetch routines.");
+  }
+};

@@ -16,7 +16,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import LoadingSpinner from "./components/LoadingSpinner";
 import WorkoutsPage from "./pages/WorkoutsPage/WorkoutsPage";
 import WorkoutDetailPage from "./pages/WorkoutsPage/WorkoutList/WorkoutCard/WorkoutDetail/WorkoutDetailPage";
-import Routines from "./pages/Routines/Routines";
+import RoutinesPage from "./pages/RoutinesPage/RoutinesPage";
 import { useAuth } from "./contexts/AuthContext";
 
 const theme = createTheme();
@@ -78,7 +78,7 @@ const App = () => {
             path="/routines"
             element={
               <PrivateRoute isAuthenticated={isAuthenticated}>
-                <Routines />
+                <RoutinesPage />
               </PrivateRoute>
             }
           />
