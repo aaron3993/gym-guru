@@ -274,9 +274,11 @@ export const saveCompleteWorkoutInfo = async (
 
     const routineRef = doc(collection(db, "routines"));
     const routineData = {
+      title: workoutPlan.title,
       fitnessLevel: workoutPlan.fitnessLevel,
       goal: workoutPlan.goal,
       userId: uid,
+      createdAt: serverTimestamp(),
     };
     batch.set(routineRef, routineData);
 
@@ -290,6 +292,7 @@ export const saveCompleteWorkoutInfo = async (
               routineId: routineRef.id,
               userId: uid,
               exercises: [],
+              createdAt: serverTimestamp(),
             }
           : {
               name: day.name,
@@ -302,6 +305,7 @@ export const saveCompleteWorkoutInfo = async (
                 reps: exercise.reps,
                 rest: exercise.rest,
               })),
+              createdAt: serverTimestamp(),
             };
 
       batch.set(workoutRef, workoutData);
