@@ -1,0 +1,349 @@
+{
+  "title": "Weekly Muscle Gain Plan",
+  "fitnessLevel": "intermediate",
+  "goal": "muscleGain",
+  "days": [
+    {
+      "day": "Monday",
+      "name": "Upper Body Strength",
+      "exercises": [
+        {
+          "name": "barbell bench press",
+          "sets": 4,
+          "reps": "8-12",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "barbell bent over row",
+          "sets": 4,
+          "reps": "8-12",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "barbell incline bench press",
+          "sets": 3,
+          "reps": "8-10",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "barbell curl",
+          "sets": 3,
+          "reps": "10-15",
+          "rest": "60 seconds"
+        },
+        {
+          "name": "barbell reverse curl",
+          "sets": 3,
+          "reps": "10-15",
+          "rest": "60 seconds"
+        },
+        {
+          "name": "barbell preacher curl",
+          "sets": 3,
+          "reps": "8-12",
+          "rest": "60 seconds"
+        },
+        {
+          "name": "barbell overhead squat",
+          "sets": 3,
+          "reps": "8-10",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "barbell seated overhead press",
+          "sets": 4,
+          "reps": "8-12",
+          "rest": "90 seconds"
+        }
+      ]
+    },
+    {
+      "day": "Tuesday",
+      "name": "Leg Day",
+      "exercises": [
+        {
+          "name": "barbell front squat",
+          "sets": 4,
+          "reps": "8-12",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "barbell hack squat",
+          "sets": 4,
+          "reps": "8-12",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "barbell narrow stance squat",
+          "sets": 3,
+          "reps": "8-10",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "barbell lunge",
+          "sets": 3,
+          "reps": "10-12 (per leg)",
+          "rest": "60 seconds"
+        },
+        {
+          "name": "barbell one leg squat",
+          "sets": 3,
+          "reps": "8-10 (per leg)",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "barbell seated calf raise",
+          "sets": 4,
+          "reps": "12-15",
+          "rest": "60 seconds"
+        },
+        {
+          "name": "barbell good morning",
+          "sets": 3,
+          "reps": "10-12",
+          "rest": "90 seconds"
+        }
+      ]
+    },
+    {
+      "day": "Wednesday",
+      "name": "Core & Abs",
+      "exercises": [
+        {
+          "name": "3/4 sit-up",
+          "sets": 3,
+          "reps": "15-20",
+          "rest": "60 seconds"
+        },
+        {
+          "name": "air bike",
+          "sets": 3,
+          "reps": "30-45 seconds",
+          "rest": "30 seconds"
+        },
+        {
+          "name": "alternate heel touchers",
+          "sets": 3,
+          "reps": "20-30",
+          "rest": "60 seconds"
+        },
+        {
+          "name": "balance board",
+          "sets": 3,
+          "reps": "1 minute",
+          "rest": "30 seconds"
+        },
+        {
+          "name": "barbell press sit-up",
+          "sets": 3,
+          "reps": "12-15",
+          "rest": "60 seconds"
+        },
+        {
+          "name": "barbell standing ab rollerout",
+          "sets": 3,
+          "reps": "10-12",
+          "rest": "60 seconds"
+        },
+        {
+          "name": "barbell rollerout",
+          "sets": 3,
+          "reps": "8-12",
+          "rest": "60 seconds"
+        }
+      ]
+    },
+    {
+      "day": "Thursday",
+      "name": "Pull Day",
+      "exercises": [
+        {
+          "name": "assisted pull-up",
+          "sets": 4,
+          "reps": "8-12",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "barbell one arm bent over row",
+          "sets": 3,
+          "reps": "8-10 (per arm)",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "barbell rear delt row",
+          "sets": 3,
+          "reps": "10-12",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "barbell reverse wrist curl",
+          "sets": 3,
+          "reps": "10-15",
+          "rest": "60 seconds"
+        },
+        {
+          "name": "barbell rear lunge",
+          "sets": 3,
+          "reps": "8-12 (per leg)",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "barbell seated close-grip concentration curl",
+          "sets": 3,
+          "reps": "8-12",
+          "rest": "60 seconds"
+        },
+        {
+          "name": "barbell side split squat",
+          "sets": 3,
+          "reps": "10-12",
+          "rest": "90 seconds"
+        }
+      ]
+    },
+    {
+      "day": "Friday",
+      "name": "Push Day",
+      "exercises": [
+        {
+          "name": "barbell clean and press",
+          "sets": 4,
+          "reps": "6-10",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "barbell clean-grip front squat",
+          "sets": 3,
+          "reps": "8-12",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "barbell close-grip bench press",
+          "sets": 3,
+          "reps": "8-12",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "barbell standing bradford press",
+          "sets": 3,
+          "reps": "8-12",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "barbell incline reverse-grip press",
+          "sets": 3,
+          "reps": "8-12",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "barbell seated twist",
+          "sets": 3,
+          "reps": "15-20",
+          "rest": "60 seconds"
+        },
+        {
+          "name": "barbell seated bradford rocky press",
+          "sets": 3,
+          "reps": "8-12",
+          "rest": "90 seconds"
+        }
+      ]
+    },
+    {
+      "day": "Saturday",
+      "name": "Full Body",
+      "exercises": [
+        {
+          "name": "barbell squat (on knees)",
+          "sets": 4,
+          "reps": "8-12",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "barbell drag curl",
+          "sets": 3,
+          "reps": "10-12",
+          "rest": "60 seconds"
+        },
+        {
+          "name": "barbell speed squat",
+          "sets": 3,
+          "reps": "8-10",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "barbell reverse preacher curl",
+          "sets": 3,
+          "reps": "10-15",
+          "rest": "60 seconds"
+        },
+        {
+          "name": "barbell shrugs",
+          "sets": 3,
+          "reps": "15-20",
+          "rest": "60 seconds"
+        },
+        {
+          "name": "barbell single leg split squat",
+          "sets": 3,
+          "reps": "10-12",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "barbell seated behind head military press",
+          "sets": 3,
+          "reps": "8-12",
+          "rest": "90 seconds"
+        }
+      ]
+    },
+    {
+      "day": "Sunday",
+      "name": "Active Recovery",
+      "exercises": [
+        {
+          "name": "barbell rear delt raise",
+          "sets": 3,
+          "reps": "12-15",
+          "rest": "60 seconds"
+        },
+        {
+          "name": "barbell skier",
+          "sets": 3,
+          "reps": "10-12",
+          "rest": "60 seconds"
+        },
+        {
+          "name": "barbell triceps press",
+          "sets": 3,
+          "reps": "8-12",
+          "rest": "60 seconds"
+        },
+        {
+          "name": "barbell deadlift",
+          "sets": 3,
+          "reps": "8-10",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "barbell forward lunges",
+          "sets": 3,
+          "reps": "10-12",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "barbell overhead squat",
+          "sets": 3,
+          "reps": "8-10",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "barbell row",
+          "sets": 3,
+          "reps": "8-12",
+          "rest": "90 seconds"
+        }
+      ]
+    }
+  ]
+}

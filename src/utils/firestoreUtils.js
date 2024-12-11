@@ -13,6 +13,7 @@ import {
   where,
   orderBy,
   serverTimestamp,
+  writeBatch,
 } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../firebase";
@@ -259,20 +260,57 @@ export const updateUserProfile = async (uid, profileData) => {
   }
 };
 
-export const addUserWorkoutInfo = async (uid, workoutInfo) => {
-  if (!uid) throw new Error("User ID is required");
+export const saveCompleteWorkoutInfo = async (
+  uid,
+  workoutPlan,
+  workoutInfo
+) => {
+  const batch = writeBatch(db);
 
-  const userRef = doc(db, "users", uid);
-  console.log(userRef);
   try {
-    const docSnapshot = await getDoc(userRef);
-    if (docSnapshot.exists()) {
-      await updateDoc(userRef, workoutInfo);
-    } else {
-      await setDoc(userRef, workoutInfo);
-    }
+    const userRef = doc(db, "users", uid);
+    console.log(workoutInfo);
+    batch.set(userRef, workoutInfo);
+
+    const programRef = doc(collection(db, "programs"));
+    const programData = {
+      fitnessLevel: workoutPlan.fitnessLevel,
+      goal: workoutPlan.goal,
+      userId: uid,
+    };
+    batch.set(programRef, programData);
+
+    workoutPlan.days.forEach((day) => {
+      const workoutRef = doc(collection(db, "workouts"));
+      const workoutData =
+        day.name.toLowerCase() === "rest"
+          ? {
+              name: day.name,
+              day: day.day,
+              programId: programRef.id,
+              userId: uid,
+              exercises: [],
+            }
+          : {
+              name: day.name,
+              day: day.day,
+              programId: programRef.id,
+              userId: uid,
+              exercises: day.exercises.map((exercise) => ({
+                name: exercise.name,
+                sets: exercise.sets,
+                reps: exercise.reps,
+                rest: exercise.rest,
+              })),
+            };
+
+      batch.set(workoutRef, workoutData);
+    });
+
+    await batch.commit();
+    console.log("User workout info and workout plan saved successfully!");
   } catch (error) {
-    console.error("Error adding workout info to Firestore:", error);
-    throw error;
+    console.error("Error saving complete workout info:", error);
+    throw new Error("Failed to save complete workout info.");
   }
 };

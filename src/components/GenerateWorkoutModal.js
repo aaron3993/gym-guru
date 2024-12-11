@@ -1,18 +1,25 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Modal, Form, Select, Button, message } from "antd";
 import { useAuth } from "../contexts/AuthContext";
 import { generateWorkoutPlan } from "../services/openaiUtils";
-import { matchExercises } from "../utils/exerciseMatcher";
+import { saveCompleteWorkoutInfo } from "../utils/firestoreUtils";
 
 const { Option } = Select;
 
 const GenerateWorkoutModal = ({ isVisible, onClose }) => {
   const { user } = useAuth();
   const [form] = Form.useForm();
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    fetch("/data/mock-workout-plan.json")
+      .then((response) => response.json())
+      .then((data) => setData(data))
+      .catch((error) => console.error("Error fetching JSON:", error));
+  }, []);
 
   const handleFinish = async (values) => {
     try {
-      // Clear existing form values
       form.resetFields();
 
       message.loading({
@@ -20,22 +27,16 @@ const GenerateWorkoutModal = ({ isVisible, onClose }) => {
         key: "generateWorkout",
       });
 
-      // Generate workout plan from OpenAI
-      // const workoutPlan = await generateWorkoutPlan(values);
+      if (!data) {
+        throw new Error("Mock workout plan data not loaded.");
+      }
 
-      // Match exercises using the matcher function
-      // const matchedPlan = await matchExercises(workoutPlan);
-      const matchedPlan = await matchExercises();
-
-      // Save to Firestore (or handle as needed)
-      // await addUserWorkoutInfo(user.uid, matchedPlan);
-
+      await saveCompleteWorkoutInfo(user.uid, data, values);
       message.success({
         content: "Workout plan generated and saved successfully!",
         key: "generateWorkout",
       });
 
-      // Optionally close the modal after success
       onClose();
     } catch (error) {
       console.error("Error generating workout plan:", error);
