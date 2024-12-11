@@ -49,8 +49,9 @@ const Home = () => {
                 Create Workouts Manually
               </Button>
               <p className="option-note">
-                Customize your workouts by selecting exercises, reps, and sets.
-                Perfect for those who prefer a hands-on approach.
+                Browse and filter through our large library of exercises to
+                create your own workouts. Perfect for those who prefer a
+                hands-on approach.
               </p>
             </div>
             <div className="option">
@@ -58,7 +59,7 @@ const Home = () => {
                 Generate with AI
               </Button>
               <p className="option-note">
-                Use our AI tool to create a personalized program quickly. Just
+                Use our AI tool to create a personalized weekly routine. Just
                 fill out the form, and we'll handle the rest!
               </p>
             </div>

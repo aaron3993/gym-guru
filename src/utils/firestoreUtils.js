@@ -272,13 +272,13 @@ export const saveCompleteWorkoutInfo = async (
     console.log(workoutInfo);
     batch.set(userRef, workoutInfo);
 
-    const programRef = doc(collection(db, "programs"));
-    const programData = {
+    const routineRef = doc(collection(db, "routines"));
+    const routineData = {
       fitnessLevel: workoutPlan.fitnessLevel,
       goal: workoutPlan.goal,
       userId: uid,
     };
-    batch.set(programRef, programData);
+    batch.set(routineRef, routineData);
 
     workoutPlan.days.forEach((day) => {
       const workoutRef = doc(collection(db, "workouts"));
@@ -287,14 +287,14 @@ export const saveCompleteWorkoutInfo = async (
           ? {
               name: day.name,
               day: day.day,
-              programId: programRef.id,
+              routineId: routineRef.id,
               userId: uid,
               exercises: [],
             }
           : {
               name: day.name,
               day: day.day,
-              programId: programRef.id,
+              routineId: routineRef.id,
               userId: uid,
               exercises: day.exercises.map((exercise) => ({
                 name: exercise.name,

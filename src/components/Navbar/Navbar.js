@@ -27,8 +27,8 @@ const Navbar = ({ onLogout, user }) => {
         <Link to="/workouts" className="nav-link">
           Workouts
         </Link>
-        <Link to="/programs" className="nav-link">
-          Programs
+        <Link to="/routines" className="nav-link">
+          Routines
         </Link>
       </div>
       <Button
@@ -71,8 +71,8 @@ const Navbar = ({ onLogout, user }) => {
           <Link to="/workouts" className="drawer-link" onClick={closeDrawer}>
             Workouts
           </Link>
-          <Link to="/programs" className="drawer-link" onClick={closeDrawer}>
-            Programs
+          <Link to="/routines" className="drawer-link" onClick={closeDrawer}>
+            Routines
           </Link>
         </div>
         <Button

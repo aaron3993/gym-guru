@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { Button, Typography } from "antd";
 import GenerateWorkoutModal from "../../components/GenerateWorkoutModal";
 import { useNavigate } from "react-router-dom";
-import "./Programs.css";
+import "./Routines.css";
 
 const { Title } = Typography;
 
-const Programs = () => {
+const Routines = () => {
   const [isModalVisible, setIsModalVisible] = useState(false);
   const navigate = useNavigate();
 
@@ -18,28 +18,28 @@ const Programs = () => {
     setIsModalVisible(false);
   };
 
-  const handleManualProgram = () => {
+  const handleManualRoutine = () => {
     navigate("/workouts");
   };
 
   return (
-    <div className="programs-page">
+    <div className="routines-page">
       <div className="header">
-        <Title level={1}>Your Workout Programs</Title>
-        <p>Choose how you want to create your next workout program!</p>
+        <Title level={1}>Your Workout Routines</Title>
+        <p>Choose how you want to create your next workout routine!</p>
       </div>
 
       <div className="options">
         <div className="option">
           <Button
             type="primary"
-            onClick={handleManualProgram}
+            onClick={handleManualRoutine}
             className="manual-button"
           >
             Create Manually
           </Button>
           <p className="option-note">
-            Customize your program step by step. Select exercises, reps, and
+            Customize your routine step by step. Select exercises, reps, and
             sets tailored to your needs.
           </p>
         </div>
@@ -49,7 +49,7 @@ const Programs = () => {
             Generate with AI
           </Button>
           <p className="option-note">
-            Let our AI design a personalized program for you in seconds. Just
+            Let our AI design a personalized routine for you in seconds. Just
             provide your goals, and we’ll handle the rest.
           </p>
         </div>
@@ -60,4 +60,4 @@ const Programs = () => {
   );
 };
 
-export default Programs;
+export default Routines;
