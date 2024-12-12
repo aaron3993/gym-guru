@@ -317,6 +317,7 @@ export const saveCompleteWorkoutInfo = async (
               userId: uid,
               exercises: day.exercises.map((exercise) => ({
                 name: exercise.name,
+                gifUrl: exercise.gifUrl,
                 sets: exercise.sets,
                 reps: exercise.reps,
                 rest: exercise.rest,
