@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, message, Form, Typography } from "antd";
 import CreateWorkoutModal from "../../components/CreateWorkoutModal";
 import WorkoutList from "./WorkoutList/WorkoutList";
-import { getAllWorkoutsForUser } from "../../utils/firestoreUtils";
+import { getAllCustomWorkoutsForUser } from "../../utils/firestoreUtils";
 import { useAuth } from "../../contexts/AuthContext";
 import "./WorkoutsPage.css";
 
@@ -23,7 +23,7 @@ const WorkoutsPage = () => {
   const fetchWorkouts = async () => {
     try {
       if (user) {
-        const fetchedWorkouts = await getAllWorkoutsForUser(user);
+        const fetchedWorkouts = await getAllCustomWorkoutsForUser(user);
         setWorkouts(fetchedWorkouts);
       }
     } catch (error) {

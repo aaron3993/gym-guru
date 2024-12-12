@@ -72,6 +72,7 @@ export const createWorkout = async (workoutName, user) => {
       name: workoutName,
       exercises: [],
       userId: user.uid,
+      routineId: null,
       createdAt: currentTimeStamp,
     });
 
@@ -119,7 +120,7 @@ export const checkIfWorkoutExists = async (workoutName, userId) => {
   }
 };
 
-export const getAllWorkoutsForUser = async (user) => {
+export const getAllCustomWorkoutsForUser = async (user) => {
   try {
     if (!user) {
       console.error("User not available.");
@@ -129,6 +130,7 @@ export const getAllWorkoutsForUser = async (user) => {
     const workoutsQuery = query(
       collection(db, "workouts"),
       where("userId", "==", user.uid),
+      where("routineId", "==", null),
       orderBy("createdAt", "asc")
     );
 
