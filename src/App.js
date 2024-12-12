@@ -18,6 +18,7 @@ import WorkoutsPage from "./pages/WorkoutsPage/WorkoutsPage";
 import WorkoutDetailPage from "./pages/WorkoutsPage/WorkoutList/WorkoutCard/WorkoutDetail/WorkoutDetailPage";
 import RoutinesPage from "./pages/RoutinesPage/RoutinesPage";
 import { useAuth } from "./contexts/AuthContext";
+import RoutineDetailPage from "./pages/RoutinesPage/RoutineList/RoutineCard/RoutineDetailPage/RoutineDetailPage";
 
 const theme = createTheme();
 
@@ -79,6 +80,14 @@ const App = () => {
             element={
               <PrivateRoute isAuthenticated={isAuthenticated}>
                 <RoutinesPage />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/routines/:routineId"
+            element={
+              <PrivateRoute isAuthenticated={isAuthenticated}>
+                <RoutineDetailPage />
               </PrivateRoute>
             }
           />

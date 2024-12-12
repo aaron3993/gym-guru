@@ -207,17 +207,6 @@ const WorkoutDetailPage = () => {
         )}
       </div>
       <div className="workout-exercises-container">
-        <div className="search-exercise-container">
-          <SearchBar onSearch={handleSearch} />
-          <ExerciseList
-            exercises={filteredExercises}
-            workoutId={workoutId}
-            workouts={workouts}
-            isWorkoutDetailPage={true}
-            onOpenExerciseModal={openExerciseModal}
-            onAddToWorkout={() => fetchWorkoutDetails()}
-          />
-        </div>
         <div className="exercise-row-list">
           <h3>Your Exercises</h3>
           {currentWorkout.exercises.length > 0 &&
@@ -232,6 +221,17 @@ const WorkoutDetailPage = () => {
                 onUpdateExercise={() => fetchWorkoutDetails()}
               />
             ))}
+        </div>
+        <div className="search-exercise-container">
+          <SearchBar onSearch={handleSearch} />
+          <ExerciseList
+            exercises={filteredExercises}
+            workoutId={workoutId}
+            workouts={workouts}
+            isWorkoutDetailPage={true}
+            onOpenExerciseModal={openExerciseModal}
+            onAddToWorkout={() => fetchWorkoutDetails()}
+          />
         </div>
       </div>
       <Button

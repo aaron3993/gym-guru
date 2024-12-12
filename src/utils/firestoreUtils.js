@@ -163,6 +163,22 @@ export const getAllWorkouts = async () => {
   }
 };
 
+export const fetchWorkoutsByRoutineId = async (routineId) => {
+  try {
+    const workoutsRef = collection(db, "workouts");
+    const q = query(workoutsRef, where("routineId", "==", routineId));
+    const querySnapshot = await getDocs(q);
+
+    return querySnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+  } catch (error) {
+    console.error("Error fetching workouts:", error);
+    throw error;
+  }
+};
+
 export const updateWorkoutName = async (workoutId, newName) => {
   try {
     const workoutDoc = doc(db, "workouts", workoutId);
