@@ -3,6 +3,7 @@ import RoutineList from "./RoutineList/RoutineList";
 import { getAllRoutinesForUser } from "../../utils/firestoreUtils";
 import { useAuth } from "../../contexts/AuthContext";
 import LoadingSpinner from "../../components/LoadingSpinner";
+import "./RoutinesPage.css";
 
 const RoutinesPage = () => {
   const { user } = useAuth();
@@ -27,14 +28,19 @@ const RoutinesPage = () => {
 
   return (
     <div className="routines-page">
-      <h1>Your Routines</h1>
-      {loading ? (
-        <LoadingSpinner />
-      ) : routines.length > 0 ? (
-        <RoutineList routines={routines} />
-      ) : (
-        <p>No routines found. Start creating one!</p>
-      )}
+      <div className="header">
+        <h1>Your Routines</h1>
+        <p>View your AI-generated routines.</p>
+      </div>
+      <div className="content">
+        {loading ? (
+          <LoadingSpinner />
+        ) : routines.length > 0 ? (
+          <RoutineList routines={routines} />
+        ) : (
+          <p>No routines found. Start creating one!</p>
+        )}
+      </div>
     </div>
   );
 };
