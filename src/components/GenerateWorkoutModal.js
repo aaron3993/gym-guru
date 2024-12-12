@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Modal, Form, Select, Button, message } from "antd";
 import { useAuth } from "../contexts/AuthContext";
 import { generateWorkoutPlan } from "../services/openaiUtils";
@@ -7,6 +8,7 @@ import { saveCompleteWorkoutInfo } from "../utils/firestoreUtils";
 const { Option } = Select;
 
 const GenerateWorkoutModal = ({ isVisible, onClose }) => {
+  const navigate = useNavigate();
   const { user } = useAuth();
   const [form] = Form.useForm();
   const [data, setData] = useState(null);
@@ -31,7 +33,8 @@ const GenerateWorkoutModal = ({ isVisible, onClose }) => {
         throw new Error("Mock workout plan data not loaded.");
       }
 
-      await saveCompleteWorkoutInfo(user.uid, data, values);
+      const routineId = await saveCompleteWorkoutInfo(user.uid, data, values);
+      navigate(`/routines/${routineId}`);
       message.success({
         content: "Workout plan generated and saved successfully!",
         key: "generateWorkout",

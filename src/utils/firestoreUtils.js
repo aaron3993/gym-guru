@@ -329,7 +329,7 @@ export const saveCompleteWorkoutInfo = async (
     });
 
     await batch.commit();
-    console.log("User workout info and workout plan saved successfully!");
+    return routineRef.id;
   } catch (error) {
     console.error("Error saving complete workout info:", error);
     throw new Error("Failed to save complete workout info.");
@@ -342,22 +342,18 @@ export const getAllRoutinesForUser = async (userId) => {
   }
 
   try {
-    // Reference to the routines collection
     const routinesCollection = collection(db, "routines");
 
-    // Query to filter routines by userId
     const routinesQuery = query(
       routinesCollection,
       where("userId", "==", userId)
     );
 
-    // Execute the query
     const querySnapshot = await getDocs(routinesQuery);
 
-    // Map through the documents and extract data
     const routines = querySnapshot.docs.map((doc) => ({
-      id: doc.id, // Include the document ID
-      ...doc.data(), // Spread the routine data
+      id: doc.id,
+      ...doc.data(),
     }));
 
     return routines;
