@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ExerciseCard from "./ExerciseCard/ExerciseCard";
-import {
-  displayCategoryName,
-  capitalizeFirstLetter,
-} from "../../utils/dataUtils";
+import { displayCategoryName } from "../../utils/dataUtils";
 import Pagination from "../Pagination/Pagination";
 import "./ExerciseList.css";
 
@@ -30,13 +27,12 @@ const ExerciseList = ({
 
   const updatedExercises = currentItems.map((exercise) => {
     const displayedCategory = displayCategoryName(exercise.bodyPart);
-    const capitalizedExerciseName = capitalizeFirstLetter(exercise.name);
 
     return {
       ...exercise,
       updatedCategory:
         displayedCategory !== null ? displayedCategory : exercise.bodyPart,
-      updatedName: capitalizedExerciseName,
+      name: exercise.name,
     };
   });
 

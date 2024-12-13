@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Form, Input, Select, Button, Typography, message } from "antd";
 import { updateUserProfile } from "../../../utils/firestoreUtils";
-import { formatText } from "../../../utils/formatTextUtils";
+import { formatGoalsAndFitnessLevelsText } from "../../../utils/dataUtils";
 import { useAuth } from "../../../contexts/AuthContext";
 import "./EditableProfile.css";
 
@@ -15,8 +15,8 @@ const EditableProfile = ({ userData }) => {
   const formatUserProfile = (userData) => {
     return {
       ...userData,
-      fitnessLevel: formatText(userData.fitnessLevel),
-      goals: formatText(userData.goals),
+      fitnessLevel: formatGoalsAndFitnessLevelsText(userData.fitnessLevel),
+      goals: formatGoalsAndFitnessLevelsText(userData.goals),
     };
   };
 

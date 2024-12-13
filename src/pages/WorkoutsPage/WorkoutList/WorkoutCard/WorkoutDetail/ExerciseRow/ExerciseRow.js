@@ -3,6 +3,7 @@ import { InputNumber, Button, message } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import "./ExerciseRow.css";
 import { updateExerciseInWorkout } from "../../../../../../utils/firestoreUtils";
+import { capitalizeFirstLetter } from "../../../../../../utils/dataUtils";
 
 const ExerciseRow = ({
   workoutId,
@@ -72,7 +73,7 @@ const ExerciseRow = ({
     <div className="exercise-row">
       <div className="exercise-info">
         <img src={exercise.gifUrl} alt={exercise.name} />
-        <h4>{exercise.updatedName}</h4>
+        <h4>{capitalizeFirstLetter(exercise.name)}</h4>
       </div>
       <div className="exercise-actions">
         <div className="exercise-sets-and-reps">

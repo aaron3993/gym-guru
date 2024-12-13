@@ -41,3 +41,17 @@ export const applyExerciseFiltersAndLimit = (exercises, query) => {
 
   return filteredExercises;
 };
+
+export const formatGoalsAndFitnessLevelsText = (text) => {
+  const goalMapping = {
+    weightLoss: "Weight Loss",
+    muscleGain: "Muscle Gain",
+    generalFitness: "General Fitness",
+  };
+
+  if (!text) return text;
+  if (goalMapping[text]) return goalMapping[text];
+  return text
+    .toLowerCase()
+    .replace(/(?:^|\s)\w/g, (match) => match.toUpperCase());
+};
