@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Button, message, Form, Typography } from "antd";
 import CreateWorkoutModal from "../../components/CreateWorkoutModal";
 import WorkoutList from "./WorkoutList/WorkoutList";
+import LoadingSpinner from "../../components/LoadingSpinner";
 import { getAllCustomWorkoutsForUser } from "../../utils/firestoreUtils";
 import { useAuth } from "../../contexts/AuthContext";
 import "./WorkoutsPage.css";
@@ -14,6 +15,7 @@ const WorkoutsPage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [workouts, setWorkouts] = useState([]);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
   const [form] = Form.useForm();
 
   useEffect(() => {
@@ -28,6 +30,8 @@ const WorkoutsPage = () => {
       }
     } catch (error) {
       console.error("Error fetching workouts:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -61,7 +65,13 @@ const WorkoutsPage = () => {
         >
           Create Workout
         </Button>
-        <WorkoutList workouts={workouts} />
+        {loading ? (
+          <LoadingSpinner />
+        ) : workouts.length > 0 ? (
+          <WorkoutList workouts={workouts} />
+        ) : (
+          <p>No workouts found. Start creating one!</p>
+        )}
       </div>
 
       <CreateWorkoutModal
