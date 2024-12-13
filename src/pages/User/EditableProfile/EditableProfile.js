@@ -12,28 +12,19 @@ const EditableProfile = ({ userData }) => {
   const { user } = useAuth();
   const [form] = Form.useForm();
 
-  const formatUserProfile = (userData) => {
-    return {
-      ...userData,
-      fitnessLevel: formatGoalsAndFitnessLevelsText(userData.fitnessLevel),
-      goals: formatGoalsAndFitnessLevelsText(userData.goals),
-    };
-  };
+  const formatUserProfile = (userData) => ({
+    firstName: userData?.firstName || "",
+    lastName: userData?.lastName || "",
+    weight: userData?.weight || "",
+    height: userData?.height || "",
+    age: userData?.age || "",
+    sex: userData?.sex || "",
+    fitnessLevel: formatGoalsAndFitnessLevelsText(userData?.fitnessLevel) || "",
+    goals: formatGoalsAndFitnessLevelsText(userData?.goals) || "",
+  });
 
   const [isEditing, setIsEditing] = useState(false);
-  const [profileData, setProfileData] = useState(
-    formatUserProfile({
-      email: userData?.email || userData?.email || "Not Set",
-      firstName: userData?.firstName || "",
-      lastName: userData?.lastName || "",
-      weight: userData?.weight || "",
-      height: userData?.height || "",
-      age: userData?.age || "",
-      sex: userData?.sex || "",
-      fitnessLevel: userData?.fitnessLevel || "",
-      goals: userData?.goals || "",
-    })
-  );
+  const [profileData, setProfileData] = useState(formatUserProfile(userData));
 
   const handleSave = async () => {
     try {
@@ -66,11 +57,11 @@ const EditableProfile = ({ userData }) => {
         initialValues={profileData}
         className="editable-profile-form"
       >
-        <Form.Item>
+        <div className="email-display">
           <Text>
-            <b>Email: {profileData.email}</b>
+            <b>Email: {userData?.email || "Not Set"}</b>
           </Text>
-        </Form.Item>
+        </div>
 
         <Form.Item
           label="First Name"
@@ -87,6 +78,7 @@ const EditableProfile = ({ userData }) => {
         >
           <Input disabled={!isEditing} className="editable-input" />
         </Form.Item>
+
         <Form.Item
           label="Weight (kg)"
           name="weight"

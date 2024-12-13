@@ -10,6 +10,10 @@
   margin: 0 auto;
 }
 
+.email-display {
+  margin-bottom: 24px;
+}
+
 .editable-input {
   border-radius: 4px;
   padding: 8px 12px;
