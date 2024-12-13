@@ -17,3 +17,16 @@
   color: #555;
   font-size: 1.1em;
 }
+
+.ai-button {
+  max-width: 300px;
+  width: 100%;
+  background-color: #28a745;
+  color: white;
+  border: none;
+}
+
+.ai-button:hover {
+  opacity: 0.8;
+  background-color: #1e7d34;
+}
