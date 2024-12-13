@@ -40,7 +40,7 @@ const RoutinesPage = () => {
     <div className="routines-page">
       <div className="header">
         <h1>Your Routines</h1>
-        <p>View your AI-generated routines.</p>
+        <p>Generate routines using AI based on your criteria.</p>
         <Button type="primary" className="ai-button" onClick={showModal}>
           Generate Routine with AI
         </Button>
