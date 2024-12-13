@@ -86,16 +86,16 @@ const WorkoutDetailPage = () => {
 
   const fetchAllExercisesData = async () => {
     try {
+      let exercises = [];
       const cachedExercises = localStorage.getItem("allExercises");
       if (cachedExercises) {
-        setAllExercises(JSON.parse(cachedExercises));
+        exercises = JSON.parse(cachedExercises);
       } else {
-        const exercises = await fetchAllExercises();
+        exercises = await fetchAllExercises();
 
         localStorage.setItem("allExercises", JSON.stringify(exercises));
-
-        setAllExercises(exercises);
       }
+      setAllExercises(exercises);
 
       setFilteredExercises(
         applyExerciseFiltersAndLimit(allExercises, searchQuery)
