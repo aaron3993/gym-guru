@@ -168,7 +168,11 @@ export const getAllWorkouts = async () => {
 export const fetchWorkoutsByRoutineId = async (routineId) => {
   try {
     const workoutsRef = collection(db, "workouts");
-    const q = query(workoutsRef, where("routineId", "==", routineId));
+    const q = query(
+      workoutsRef,
+      where("routineId", "==", routineId),
+      orderBy("dayOfWeek")
+    );
     const querySnapshot = await getDocs(q);
 
     return querySnapshot.docs.map((doc) => ({
@@ -307,6 +311,7 @@ export const saveCompleteWorkoutInfo = async (
           ? {
               name: day.name,
               day: day.day,
+              dayOfWeek: day.dayOfWeek,
               routineId: routineRef.id,
               userId: uid,
               exercises: [],
@@ -315,6 +320,7 @@ export const saveCompleteWorkoutInfo = async (
           : {
               name: day.name,
               day: day.day,
+              dayOfWeek: day.dayOfWeek,
               routineId: routineRef.id,
               userId: uid,
               exercises: day.exercises.map((exercise) => ({

@@ -5,6 +5,7 @@
   "days": [
     {
       "day": "Monday",
+      "dayOfWeek": 1,
       "name": "Upper Body Strength",
       "exercises": [
         {
@@ -68,6 +69,7 @@
 
     {
       "day": "Tuesday",
+      "dayOfWeek": 2,
       "name": "Leg Day",
       "exercises": [
         {
@@ -123,6 +125,7 @@
     },
     {
       "day": "Wednesday",
+      "dayOfWeek": 3,
       "name": "Core & Abs",
       "exercises": [
         {
@@ -178,6 +181,7 @@
     },
     {
       "day": "Thursday",
+      "dayOfWeek": 4,
       "name": "Pull Day",
       "exercises": [
         {
@@ -233,6 +237,7 @@
     },
     {
       "day": "Friday",
+      "dayOfWeek": 5,
       "name": "Push Day",
       "exercises": [
         {
@@ -288,10 +293,12 @@
     },
     {
       "day": "Saturday",
+      "dayOfWeek": 6,
       "name": "Rest"
     },
     {
       "day": "Sunday",
+      "dayOfWeek": 7,
       "name": "Rest"
     }
   ]
