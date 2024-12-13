@@ -209,7 +209,7 @@ const WorkoutDetailPage = () => {
       <div className="workout-exercises-container">
         <div className="exercise-row-list">
           <h3>Your Exercises</h3>
-          {currentWorkout.exercises.length > 0 &&
+          {currentWorkout.exercises.length > 0 ? (
             currentWorkout.exercises.map((exercise) => (
               <ExerciseRow
                 key={exercise.id}
@@ -220,7 +220,10 @@ const WorkoutDetailPage = () => {
                 }
                 onUpdateExercise={() => fetchWorkoutDetails()}
               />
-            ))}
+            ))
+          ) : (
+            <p>No exercises to show</p>
+          )}
         </div>
         <div className="search-exercise-container">
           <SearchBar onSearch={handleSearch} />
