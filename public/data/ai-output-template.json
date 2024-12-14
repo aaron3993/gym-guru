@@ -1,0 +1,33 @@
+{
+  "title": "Sculpt and Strengthen",
+  "fitnessLevel": "${criteria.fitnessLevel}",
+  "goal": "${criteria.goal}",
+  "days": [
+    {
+      "day": "Monday",
+      "dayOfWeek": 1,
+      "name": "Chest",
+      "exercises": [
+        {
+          "name": "barbell narrow stance squat",
+          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
+          "sets": 3,
+          "reps": "8-10",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "barbell lunge",
+          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
+          "sets": 3,
+          "reps": "10-12 (per leg)",
+          "rest": "60 seconds"
+        }
+      ]
+    },
+    {
+      "day": "Tuesday",
+      "dayOfWeek": 2,
+      "name": "Rest"
+    }
+  ]
+}

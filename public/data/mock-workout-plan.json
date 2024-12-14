@@ -1,124 +1,74 @@
 {
-  "title": "Weekly Muscle Gain Plan",
-  "fitnessLevel": "intermediate",
-  "goal": "muscleGain",
+  "title": "Beginner Fat Loss Routine",
+  "fitnessLevel": "Beginner",
+  "goal": "Fat Loss",
   "days": [
     {
       "day": "Monday",
       "dayOfWeek": 1,
-      "name": "Upper Body Strength",
+      "name": "Chest & Triceps",
       "exercises": [
         {
-          "name": "barbell bench press",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 4,
+          "name": "Dumbbell Incline Alternate Press",
+          "gifUrl": "https://v2.exercisedb.io/image/Wq0azecF5qYQaK",
+          "sets": 3,
+          "reps": "8-12",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "Dumbbell One Arm Decline Chest Press",
+          "gifUrl": "https://v2.exercisedb.io/image/tqkjjsR0jqXQxW",
+          "sets": 3,
           "reps": "8-12",
           "rest": "90 seconds"
         },
         {
-          "name": "barbell bent over row",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 4,
-          "reps": "8-12",
-          "rest": "90 seconds"
-        },
-        {
-          "name": "barbell incline bench press",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 3,
-          "reps": "8-10",
-          "rest": "90 seconds"
-        },
-        {
-          "name": "barbell curl",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 3,
-          "reps": "10-15",
-          "rest": "60 seconds"
-        },
-        {
-          "name": "barbell reverse curl",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 3,
-          "reps": "10-15",
-          "rest": "60 seconds"
-        },
-        {
-          "name": "barbell preacher curl",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
+          "name": "Push-Up Plus",
+          "gifUrl": "https://v2.exercisedb.io/image/N4PqXB-4NwY6oo",
           "sets": 3,
           "reps": "8-12",
-          "rest": "60 seconds"
-        },
-        {
-          "name": "barbell overhead squat",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 3,
-          "reps": "8-10",
           "rest": "90 seconds"
         },
         {
-          "name": "barbell seated overhead press",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 4,
+          "name": "Dumbbell Lying One Arm Press",
+          "gifUrl": "https://v2.exercisedb.io/image/jbgpBCyR34IOj1",
+          "sets": 3,
           "reps": "8-12",
           "rest": "90 seconds"
         }
       ]
     },
-
     {
       "day": "Tuesday",
       "dayOfWeek": 2,
-      "name": "Leg Day",
+      "name": "Back & Biceps",
       "exercises": [
         {
-          "name": "barbell front squat",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 4,
+          "name": "Lever Reverse T-Bar Row",
+          "gifUrl": "https://v2.exercisedb.io/image/ugkijFul63NMER",
+          "sets": 3,
           "reps": "8-12",
           "rest": "90 seconds"
         },
         {
-          "name": "barbell hack squat",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 4,
+          "name": "Barbell Bent Over Row",
+          "gifUrl": "https://v2.exercisedb.io/image/k4G5cJbOFQKqvZ",
+          "sets": 3,
           "reps": "8-12",
           "rest": "90 seconds"
         },
         {
-          "name": "barbell narrow stance squat",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
+          "name": "Dumbbell Reverse Grip Row",
+          "gifUrl": "https://v2.exercisedb.io/image/8u4u51ERPAynyx",
           "sets": 3,
-          "reps": "8-10",
+          "reps": "8-12",
           "rest": "90 seconds"
         },
         {
-          "name": "barbell lunge",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
+          "name": "Assisted Standing Pull-Up",
+          "gifUrl": "https://v2.exercisedb.io/image/0WwhkwT7zrHtC5",
           "sets": 3,
-          "reps": "10-12 (per leg)",
-          "rest": "60 seconds"
-        },
-        {
-          "name": "barbell one leg squat",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 3,
-          "reps": "8-10 (per leg)",
-          "rest": "90 seconds"
-        },
-        {
-          "name": "barbell seated calf raise",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 4,
-          "reps": "12-15",
-          "rest": "60 seconds"
-        },
-        {
-          "name": "barbell good morning",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 3,
-          "reps": "10-12",
+          "reps": "8-12",
           "rest": "90 seconds"
         }
       ]
@@ -126,111 +76,69 @@
     {
       "day": "Wednesday",
       "dayOfWeek": 3,
-      "name": "Core & Abs",
+      "name": "Legs & Core",
       "exercises": [
         {
-          "name": "3/4 sit-up",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
+          "name": "Kettlebell Goblet Squat",
+          "gifUrl": "https://v2.exercisedb.io/image/z8Q97pr39EpVNI",
           "sets": 3,
-          "reps": "15-20",
-          "rest": "60 seconds"
+          "reps": "10-15",
+          "rest": "90 seconds"
         },
         {
-          "name": "air bike",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
+          "name": "Smith Full Squat",
+          "gifUrl": "https://v2.exercisedb.io/image/8yNNJafi4q-KNQ",
           "sets": 3,
-          "reps": "30-45 seconds",
-          "rest": "30 seconds"
+          "reps": "10-15",
+          "rest": "90 seconds"
         },
         {
-          "name": "alternate heel touchers",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
+          "name": "Lever Seated Leg Curl",
+          "gifUrl": "https://v2.exercisedb.io/image/3qc0VkcmJ3OJVo",
           "sets": 3,
-          "reps": "20-30",
-          "rest": "60 seconds"
+          "reps": "10-15",
+          "rest": "90 seconds"
         },
         {
-          "name": "balance board",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
+          "name": "Squat to Overhead Reach",
+          "gifUrl": "https://v2.exercisedb.io/image/Ox2P3oIdrciDLf",
           "sets": 3,
-          "reps": "1 minute",
-          "rest": "30 seconds"
-        },
-        {
-          "name": "barbell press sit-up",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 3,
-          "reps": "12-15",
-          "rest": "60 seconds"
-        },
-        {
-          "name": "barbell standing ab rollerout",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 3,
-          "reps": "10-12",
-          "rest": "60 seconds"
-        },
-        {
-          "name": "barbell rollerout",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 3,
-          "reps": "8-12",
-          "rest": "60 seconds"
+          "reps": "10-15",
+          "rest": "90 seconds"
         }
       ]
     },
     {
       "day": "Thursday",
       "dayOfWeek": 4,
-      "name": "Pull Day",
+      "name": "Shoulders & Abs",
       "exercises": [
         {
-          "name": "assisted pull-up",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 4,
+          "name": "Dumbbell Seated One Leg Calf Raise",
+          "gifUrl": "https://v2.exercisedb.io/image/emLO4V8MA4GMFd",
+          "sets": 3,
+          "reps": "12-15",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "Power Clean",
+          "gifUrl": "https://v2.exercisedb.io/image/79Kc34dqZqw66g",
+          "sets": 3,
+          "reps": "8-10",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "Dumbbell Biceps Curl",
+          "gifUrl": "https://v2.exercisedb.io/image/vKIvJv-xtpWbHl",
+          "sets": 3,
           "reps": "8-12",
           "rest": "90 seconds"
         },
         {
-          "name": "barbell one arm bent over row",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 3,
-          "reps": "8-10 (per arm)",
-          "rest": "90 seconds"
-        },
-        {
-          "name": "barbell rear delt row",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 3,
-          "reps": "10-12",
-          "rest": "90 seconds"
-        },
-        {
-          "name": "barbell reverse wrist curl",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 3,
-          "reps": "10-15",
-          "rest": "60 seconds"
-        },
-        {
-          "name": "barbell rear lunge",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 3,
-          "reps": "8-12 (per leg)",
-          "rest": "90 seconds"
-        },
-        {
-          "name": "barbell seated close-grip concentration curl",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
+          "name": "Dumbbell Zottman Curl",
+          "gifUrl": "https://v2.exercisedb.io/image/Sm2CioRc7HKmA0",
           "sets": 3,
           "reps": "8-12",
-          "rest": "60 seconds"
-        },
-        {
-          "name": "barbell side split squat",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 3,
-          "reps": "10-12",
           "rest": "90 seconds"
         }
       ]
@@ -238,68 +146,57 @@
     {
       "day": "Friday",
       "dayOfWeek": 5,
-      "name": "Push Day",
+      "name": "Chest & Triceps",
       "exercises": [
         {
-          "name": "barbell clean and press",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 4,
-          "reps": "6-10",
-          "rest": "90 seconds"
-        },
-        {
-          "name": "barbell clean-grip front squat",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
+          "name": "Dumbbell Pullover",
+          "gifUrl": "https://v2.exercisedb.io/image/7wrxNdt31Q5QVD",
           "sets": 3,
           "reps": "8-12",
           "rest": "90 seconds"
         },
         {
-          "name": "barbell close-grip bench press",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
+          "name": "Incline Push-Up",
+          "gifUrl": "https://v2.exercisedb.io/image/Tb4XcI3Wq2dh-Q",
+          "sets": 3,
+          "reps": "10-15",
+          "rest": "90 seconds"
+        },
+        {
+          "name": "Dumbbell Lying Triceps Extension",
+          "gifUrl": "https://v2.exercisedb.io/image/ZmBfkYNE01RONW",
           "sets": 3,
           "reps": "8-12",
           "rest": "90 seconds"
         },
         {
-          "name": "barbell standing bradford press",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 3,
-          "reps": "8-12",
-          "rest": "90 seconds"
-        },
-        {
-          "name": "barbell incline reverse-grip press",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 3,
-          "reps": "8-12",
-          "rest": "90 seconds"
-        },
-        {
-          "name": "barbell seated twist",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 3,
-          "reps": "15-20",
-          "rest": "60 seconds"
-        },
-        {
-          "name": "barbell seated bradford rocky press",
-          "gifUrl": "https://v2.exercisedb.io/image/liGe07L-IJAXJ7",
-          "sets": 3,
-          "reps": "8-12",
-          "rest": "90 seconds"
+          "name": "Chest Stretch with Exercise Ball",
+          "gifUrl": "https://v2.exercisedb.io/image/8-1UyWSeOP26vD",
+          "sets": 1,
+          "reps": "Hold 30 seconds",
+          "rest": "N/A"
         }
       ]
     },
     {
       "day": "Saturday",
       "dayOfWeek": 6,
-      "name": "Rest"
+      "name": "Rest Day",
+      "exercises": []
     },
     {
       "day": "Sunday",
       "dayOfWeek": 7,
-      "name": "Rest"
+      "name": "Cardio",
+      "exercises": [
+        {
+          "name": "Light Jogging",
+          "gifUrl": "https://v2.exercisedb.io/image/8VxP9lG4VUJqgJ",
+          "sets": 1,
+          "reps": "20 minutes",
+          "rest": "N/A"
+        }
+      ]
     }
   ]
 }
