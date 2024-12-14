@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Modal, Form, Select, Button, message } from "antd";
 import { useAuth } from "../contexts/AuthContext";
@@ -11,85 +11,91 @@ const GenerateWorkoutModal = ({ isVisible, onClose }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [form] = Form.useForm();
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    fetch("/data/mock-workout-plan.json")
-      .then((response) => response.json())
-      .then((data) => setData(data))
-      .catch((error) => console.error("Error fetching JSON:", error));
-  }, []);
+  const [loading, setLoading] = useState(false);
 
   const handleFinish = async (values) => {
     try {
       form.resetFields();
+      setLoading(true);
 
-      message.loading({
-        content: "Generating your workout plan...",
-        key: "generateWorkout",
-      });
+      try {
+        const workoutPlan = await generateWorkoutPlan(values);
+        if (!workoutPlan) {
+          throw new Error("Failed to generate a valid workout plan.");
+        }
+        const routineId = await saveCompleteWorkoutInfo(
+          user.uid,
+          workoutPlan,
+          values
+        );
+        if (!routineId) {
+          throw new Error("Failed to save workout information.");
+        }
 
-      if (!data) {
-        throw new Error("Mock workout plan data not loaded.");
+        message.success({
+          content: "Workout plan generated successfully!",
+          key: "generateWorkout",
+        });
+
+        navigate(`/routines/${routineId}`);
+      } catch (error) {
+        message.error({
+          content: `Error: ${error.message}`,
+          key: "generateWorkout",
+        });
       }
-
-      const routineId = await saveCompleteWorkoutInfo(user.uid, data, values);
-      navigate(`/routines/${routineId}`);
-      message.success({
-        content: "Workout plan generated and saved successfully!",
-        key: "generateWorkout",
-      });
-
+    } finally {
       onClose();
-    } catch (error) {
-      console.error("Error generating workout plan:", error);
-      message.error({
-        content: "Failed to generate workout plan. Please try again.",
-        key: "generateWorkout",
-      });
+      setLoading(false);
     }
   };
 
   return (
     <Modal
       title="Generate Your Personalized Workout"
-      visible={isVisible}
-      onCancel={onClose}
+      open={isVisible}
+      onCancel={!loading ? onClose : () => {}}
       footer={null}
     >
-      <Form form={form} layout="vertical" onFinish={handleFinish}>
-        <Form.Item
-          label="Fitness Level"
-          name="fitnessLevel"
-          rules={[
-            { required: true, message: "Please select your fitness level" },
-          ]}
-        >
-          <Select placeholder="Select your fitness level">
-            <Option value="beginner">Beginner</Option>
-            <Option value="intermediate">Intermediate</Option>
-            <Option value="advanced">Advanced</Option>
-          </Select>
-        </Form.Item>
-        <Form.Item
-          label="Goal"
-          name="goal"
-          rules={[{ required: true, message: "Please select your goal" }]}
-        >
-          <Select placeholder="Select your goal">
-            <Option value="weightLoss">Weight Loss</Option>
-            <Option value="muscleGain">Muscle Gain</Option>
-            <Option value="endurance">Endurance</Option>
-            <Option value="strength">Strength</Option>
-            <Option value="generalFitness">General Fitness</Option>
-          </Select>
-        </Form.Item>
-        <Form.Item>
-          <Button type="primary" htmlType="submit" block>
-            Generate Workout
-          </Button>
-        </Form.Item>
-      </Form>
+      {loading ? (
+        <Button type="primary" block loading={loading}>
+          Generating Workout...this may take a moment.
+        </Button>
+      ) : (
+        <Form form={form} layout="vertical" onFinish={handleFinish}>
+          <Form.Item
+            label="Fitness Level"
+            name="fitnessLevel"
+            rules={[
+              { required: true, message: "Please select your fitness level" },
+            ]}
+          >
+            <Select placeholder="Select your fitness level">
+              <Option value="beginner">Beginner</Option>
+              <Option value="intermediate">Intermediate</Option>
+              <Option value="advanced">Advanced</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
+            label="Goal"
+            name="goal"
+            rules={[{ required: true, message: "Please select your goal" }]}
+          >
+            <Select placeholder="Select your goal">
+              <Option value="weightLoss">Weight Loss</Option>
+              <Option value="muscleGain">Muscle Gain</Option>
+              <Option value="endurance">Endurance</Option>
+              <Option value="strength">Strength</Option>
+              <Option value="generalFitness">General Fitness</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item>
+            <Button type="primary" htmlType="submit" block loading={loading}>
+              Generate Workout
+            </Button>
+          </Form.Item>
+        </Form>
+      )}
     </Modal>
   );
 };
