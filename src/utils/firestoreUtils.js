@@ -76,17 +76,6 @@ export const createWorkout = async (workoutName, user) => {
       createdAt: currentTimeStamp,
     });
 
-    const userWorkoutsDocRef = doc(db, "userWorkouts", user.uid);
-    await setDoc(
-      userWorkoutsDocRef,
-      {
-        [docRef.id]: {
-          workoutId: docRef.id,
-        },
-      },
-      { merge: true }
-    );
-
     return {
       id: docRef.id,
       name: workoutName,
@@ -291,8 +280,7 @@ export const saveCompleteWorkoutInfo = async (
 
   try {
     const userRef = doc(db, "users", uid);
-    console.log(workoutInfo);
-    batch.set(userRef, workoutInfo);
+    batch.set(userRef, workoutInfo, { merge: true });
 
     const routineRef = doc(collection(db, "routines"));
     const routineData = {
