@@ -20,7 +20,7 @@ const EditableProfile = ({ userData }) => {
     age: userData?.age || "",
     sex: userData?.sex || "",
     fitnessLevel: formatGoalsAndFitnessLevelsText(userData?.fitnessLevel) || "",
-    goals: formatGoalsAndFitnessLevelsText(userData?.goals) || "",
+    goal: formatGoalsAndFitnessLevelsText(userData?.goal) || "",
   });
 
   const [isEditing, setIsEditing] = useState(false);
@@ -173,9 +173,9 @@ const EditableProfile = ({ userData }) => {
         </Form.Item>
 
         <Form.Item
-          label="Goals"
-          name="goals"
-          rules={[{ message: "Please select your goals" }]}
+          label="Goal"
+          name="goal"
+          rules={[{ message: "Please select your goal" }]}
         >
           <Select disabled={!isEditing} className="editable-select">
             <Option value="weightLoss">Weight Loss</Option>
