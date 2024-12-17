@@ -1,4 +1,10 @@
 import axios from "axios";
+import {
+  getFromLocalStorage,
+  saveToLocalStorage,
+} from "../utils/localStorageUtils";
+
+const CACHE_KEY = "allExercises";
 
 export const fetchAllExercises = async () => {
   const options = {
@@ -23,28 +29,31 @@ export const fetchAllExercises = async () => {
   }
 };
 
-export const fetchExercisesByBodyPart = async (bodyPart) => {
-  const options = {
-    params: {
-      bodyPart: bodyPart,
-      limit: "1000",
-    },
-    headers: {
-      "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API_KEY,
-      "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
-    },
-  };
+const isCacheExpired = () => {
+  const cachedData = getFromLocalStorage(CACHE_KEY);
+  if (!cachedData) return true;
+};
 
-  try {
-    const response = await axios.get(
-      `https://exercisedb.p.rapidapi.com/exercises/bodyPart/${bodyPart}`,
-      options
-    );
-    return response.data;
-  } catch (error) {
-    console.error(`Error fetching exercises for ${bodyPart}:`, error);
-    return [];
+const saveExercisesToCache = (exercises) => {
+  saveToLocalStorage(exercises);
+};
+
+export const getAllExercisesWithCache = async () => {
+  const cachedData = getFromLocalStorage(CACHE_KEY);
+  if (cachedData && !isCacheExpired()) {
+    return cachedData;
   }
+
+  const allExercises = await fetchAllExercises();
+
+  if (allExercises.length > 0) saveExercisesToCache(allExercises);
+
+  return allExercises;
+};
+
+export const getExercisesByBodyPart = async (bodyPart) => {
+  const allExercises = await getAllExercisesWithCache();
+  return allExercises.filter((exercise) => exercise.bodyPart === bodyPart);
 };
 
 export const shuffleArray = (array) => {
@@ -55,26 +64,32 @@ export const shuffleArray = (array) => {
   return array;
 };
 
-export const getRandomExercisesForBodyParts = async (exerciseCounts) => {
-  const exercisesByBodyPart = {};
+export const getAllExerciseNamesAndGifUrlsByBodyPart = async (
+  exerciseCounts
+) => {
+  try {
+    const allExercises = await getAllExercisesWithCache();
 
-  for (const [bodyPart, count] of Object.entries(exerciseCounts)) {
-    const exercises = await fetchExercisesByBodyPart(bodyPart);
+    const exerciseNamesAndGifUrls = {};
 
-    if (exercises.length > 0) {
-      const shuffledExercises = shuffleArray(exercises);
-      const randomExercises = shuffledExercises
-        .slice(0, count)
-        .map((exercise) => ({
-          name: exercise.name,
-          gifUrl: exercise.gifUrl,
-        }));
+    for (const [bodyPart, count] of Object.entries(exerciseCounts)) {
+      const exercisesByBodyPart = allExercises.filter(
+        (exercise) => exercise.bodyPart.toLowerCase() === bodyPart.toLowerCase()
+      );
 
-      exercisesByBodyPart[bodyPart] = randomExercises;
-    } else {
-      exercisesByBodyPart[bodyPart] = [];
+      const shuffledExercises = shuffleArray(exercisesByBodyPart);
+
+      const selectedExercises = shuffledExercises.slice(0, count);
+
+      selectedExercises.forEach((exercise) => {
+        exerciseNamesAndGifUrls[exercise.name] = exercise.gifUrl || "";
+      });
     }
+    return exerciseNamesAndGifUrls;
+  } catch (error) {
+    console.error("Error fetching exercises:", error);
+    return {
+      exerciseNamesAndGifUrls: {},
+    };
   }
-
-  return exercisesByBodyPart;
 };

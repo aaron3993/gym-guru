@@ -294,32 +294,24 @@ export const saveCompleteWorkoutInfo = async (
 
     workoutPlan.days.forEach((day) => {
       const workoutRef = doc(collection(db, "workouts"));
-      const workoutData =
-        day.name.toLowerCase() === "rest"
-          ? {
-              name: day.name,
-              day: day.day,
-              dayOfWeek: day.dayOfWeek,
-              routineId: routineRef.id,
-              userId: uid,
-              exercises: [],
-              createdAt: serverTimestamp(),
-            }
-          : {
-              name: day.name,
-              day: day.day,
-              dayOfWeek: day.dayOfWeek,
-              routineId: routineRef.id,
-              userId: uid,
-              exercises: day.exercises.map((exercise) => ({
+      const workoutData = {
+        name: day.name,
+        day: day.day,
+        dayOfWeek: day.dayOfWeek,
+        routineId: routineRef.id,
+        userId: uid,
+        exercises:
+          day.name.toLowerCase() === "rest"
+            ? []
+            : day.exercises.map((exercise) => ({
                 name: exercise.name,
                 gifUrl: exercise.gifUrl,
                 sets: exercise.sets,
                 reps: exercise.reps,
                 rest: exercise.rest,
               })),
-              createdAt: serverTimestamp(),
-            };
+        createdAt: serverTimestamp(),
+      };
 
       batch.set(workoutRef, workoutData);
     });

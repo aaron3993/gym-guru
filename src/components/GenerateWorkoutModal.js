@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Modal, Form, Select, Button, message } from "antd";
 import { useAuth } from "../contexts/AuthContext";
@@ -11,25 +11,8 @@ const GenerateWorkoutModal = ({ isVisible, onClose }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [form] = Form.useForm();
-  // const [data, setData] = useState();
+  const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
-
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     try {
-  //       const response = await fetch(`/data/mock-workout-plan.json`);
-  //       if (!response.ok) {
-  //         throw new Error(`HTTP error! Status: ${response.status}`);
-  //       }
-  //       const jsonData = await response.json();
-  //       setData(jsonData);
-  //     } catch (error) {
-  //       console.error("Error fetching the JSON file:", error);
-  //     }
-  //   };
-
-  //   fetchData();
-  // }, []);
 
   const handleFinish = async (values) => {
     try {
@@ -37,7 +20,6 @@ const GenerateWorkoutModal = ({ isVisible, onClose }) => {
       setLoading(true);
 
       try {
-        // const workoutPlan = data;
         const workoutPlan = await generateWorkoutPlan(values);
         if (!workoutPlan) {
           throw new Error("Failed to generate a valid workout plan.");
