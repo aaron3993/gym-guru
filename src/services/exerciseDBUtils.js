@@ -9,7 +9,7 @@ const CACHE_KEY = "allExercises";
 export const fetchAllExercises = async () => {
   const options = {
     params: {
-      limit: "1000",
+      limit: "1323",
     },
     headers: {
       "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API_KEY,
