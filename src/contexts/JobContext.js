@@ -1,9 +1,11 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
+import { useAuth } from "./AuthContext";
 import {
   startJobInFirestore,
   monitorJobInFirestore,
   completeJobInFirestore,
   cancelJobInFirestore,
+  getPendingJobForUser,
 } from "../utils/firestoreUtils";
 import { message } from "antd";
 
@@ -14,26 +16,49 @@ export const useJob = () => {
 };
 
 export const JobProvider = ({ children }) => {
+  const { user, isAuthenticated } = useAuth();
   const [jobState, setJobState] = useState({
     jobId: null,
     status: null,
   });
 
+  useEffect(() => {
+    if (!isAuthenticated) {
+      return;
+    }
+
+    const fetchUserJob = async () => {
+      try {
+        if (user && user.uid) {
+          const userJob = await getPendingJobForUser(user.uid);
+          if (userJob && userJob.jobId) {
+            setJobState({
+              jobId: userJob.jobId,
+              status: userJob.status,
+            });
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user job:", error);
+      }
+    };
+
+    fetchUserJob();
+  }, [user, isAuthenticated]);
+
   // useEffect(() => {
   //   if (jobState.jobId) {
-  //     // Monitor updates from Firestore when jobId is available
   //     const unsubscribe = monitorJobInFirestore(jobState.jobId, (jobData) => {
   //       setJobState({
   //         jobId: jobData.jobId,
   //         status: jobData.status,
   //       });
+  //       console.log(jobData.status);
   //     });
-
-  //     // Cleanup listener when job state is reset or component unmounts
   //     return () => unsubscribe();
   //   }
   // }, [jobState.jobId]);
-  // Start a new job
+
   const startJob = async (userId) => {
     try {
       const jobId = await startJobInFirestore(userId);

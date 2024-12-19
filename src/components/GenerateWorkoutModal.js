@@ -29,7 +29,7 @@ const GenerateWorkoutModal = ({ isVisible, onClose }) => {
       form.resetFields();
 
       const jobId = await startJob(user.uid);
-      await new Promise((resolve) => setTimeout(resolve, 5000));
+      // await new Promise((resolve) => setTimeout(resolve, 5000));
       // The logic inside this function will run as a background job
       // const workoutPlan = await generateWorkoutPlan(values);
       // if (!workoutPlan) {

@@ -355,15 +355,15 @@ export const getAllRoutinesForUser = async (userId) => {
 export const startJobInFirestore = async (userId) => {
   const jobsRef = collection(db, "jobs");
 
-  const runningJobs = await getDocs(
+  const pendingJobs = await getDocs(
     query(
       jobsRef,
       where("userId", "==", userId),
-      where("isRunning", "==", true)
+      where("status", "==", "pending")
     )
   );
 
-  if (!runningJobs.empty) {
+  if (!pendingJobs.empty) {
     throw new Error("A job is already running. Please wait for it to finish.");
   }
 
@@ -408,4 +408,28 @@ export const cancelJobInFirestore = async (jobId) => {
     endTime: new Date().toISOString(),
     status: "cancelled",
   });
+};
+
+export const getPendingJobForUser = async (userId) => {
+  const jobsCollectionRef = collection(db, "jobs");
+
+  const q = query(
+    jobsCollectionRef,
+    where("userId", "==", userId),
+    where("status", "==", "pending")
+  );
+
+  try {
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      const jobDoc = querySnapshot.docs[0];
+      return { jobId: jobDoc.id, ...jobDoc.data() };
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching user's pending job:", error);
+    return null;
+  }
 };
