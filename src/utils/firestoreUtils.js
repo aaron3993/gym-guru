@@ -379,10 +379,11 @@ export const startJobInFirestore = async (userId) => {
 
 export const monitorJobInFirestore = (jobId, callback) => {
   const jobRef = doc(db, "jobs", jobId);
-
+  console.log("monitoring in firestore");
   const unsubscribe = onSnapshot(jobRef, (docSnapshot) => {
     if (docSnapshot.exists()) {
       callback(docSnapshot.data());
+      console.log(docSnapshot.data());
     } else {
       console.error("Job document does not exist.");
     }

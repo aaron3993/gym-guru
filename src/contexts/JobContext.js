@@ -7,7 +7,7 @@ import {
   cancelJobInFirestore,
   getPendingJobForUser,
 } from "../utils/firestoreUtils";
-import { message } from "antd";
+import { message, notification } from "antd";
 
 const JobContext = createContext();
 
@@ -46,27 +46,52 @@ export const JobProvider = ({ children }) => {
     fetchUserJob();
   }, [user, isAuthenticated]);
 
-  // useEffect(() => {
-  //   if (jobState.jobId) {
-  //     const unsubscribe = monitorJobInFirestore(jobState.jobId, (jobData) => {
-  //       setJobState({
-  //         jobId: jobData.jobId,
-  //         status: jobData.status,
-  //       });
-  //       console.log(jobData.status);
-  //     });
-  //     return () => unsubscribe();
-  //   }
-  // }, [jobState.jobId]);
+  useEffect(() => {
+    if (jobState.jobId) {
+      // console.log(jobState);
+      const unsubscribe = monitorJobInFirestore(jobState.jobId, (jobData) => {
+        console.log(jobData);
+        setJobState({
+          jobId: jobData.jobId,
+          status: jobData.status,
+        });
+      });
+      return () => unsubscribe();
+    }
+  }, [jobState.jobId]);
+
+  useEffect(() => {
+    if (jobState?.status === "completed") {
+      notification.success({
+        message: "Job Completed",
+        description: "Your job has been successfully completed.",
+        placement: "topRight",
+      });
+    }
+  }, [jobState?.status]);
 
   const startJob = async (userId) => {
     try {
       const jobId = await startJobInFirestore(userId);
 
-      setJobState((prevState) => ({
-        ...prevState,
+      setJobState(() => ({
+        jobId,
         status: "pending",
       }));
+      // setJobState((prevState) => ({
+      //   ...prevState,
+      //   status: "pending",
+      // }));
+      // monitorJobInFirestore((jobId) => {});
+      monitorJobInFirestore(jobId, (jobData) => {
+        // Handle job completion
+        if (jobData.status === "completed") {
+          message.success("Job completed successfully!");
+          setJobState(() => ({
+            status: "completed",
+          }));
+        }
+      });
       // monitorJobInFirestore(jobId, (jobData) => {
 
       //   // Handle job completion

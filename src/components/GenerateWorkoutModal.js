@@ -14,25 +14,15 @@ const GenerateWorkoutModal = ({ isVisible, onClose }) => {
   const { startJob, jobState, completeJob, cancelJob } = useJob();
   const [form] = Form.useForm();
 
-  useEffect(() => {
-    if (jobState?.status === "completed") {
-      notification.success({
-        message: "Job Completed",
-        description: "Your job has been successfully completed.",
-        placement: "topRight",
-      });
-    }
-  }, [jobState?.status]);
-
   // useEffect(() => {
-  //   // This effect will run whenever jobState changes
-  //   if (jobState.status === "completed") {
-  //     message.success("Job completed successfully!");
-  //     onClose(); // Close the modal when job is completed
-  //   } else if (jobState.status === "cancelled") {
-  //     message.error("Job was cancelled.");
+  //   if (jobState?.status === "completed") {
+  //     notification.success({
+  //       message: "Job Completed",
+  //       description: "Your job has been successfully completed.",
+  //       placement: "topRight",
+  //     });
   //   }
-  // }, [jobState, onClose]); // Re-run effect when jobState changes
+  // }, [jobState?.status]);
 
   const handleFinish = async (values) => {
     try {
@@ -40,21 +30,24 @@ const GenerateWorkoutModal = ({ isVisible, onClose }) => {
 
       const jobId = await startJob(user.uid);
       // await new Promise((resolve) => setTimeout(resolve, 5000));
-      // The logic inside this function will run as a background job
+
       // const workoutPlan = await generateWorkoutPlan(values);
       // if (!workoutPlan) {
       //   throw new Error("Failed to generate a valid workout plan.");
       // }
 
-      // const routineId = await saveCompleteWorkoutInfo(user.uid, workoutPlan, values);
+      // const routineId = await saveCompleteWorkoutInfo(
+      //   user.uid,
+      //   workoutPlan,
+      //   values
+      // );
       // if (!routineId) {
       //   throw new Error("Failed to save workout information.");
       // }
 
-      // navigate(`/routines/${routineId}`);
-
-      await completeJob(jobId);
+      // await completeJob(jobId);
       // await completeJob(jobState.jobId, routineId);
+      // navigate(`/routines/${routineId}`);
     } finally {
       onClose();
     }
