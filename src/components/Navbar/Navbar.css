@@ -108,5 +108,19 @@
 
   .mobile-nav {
     display: block;
+    width: 100%;
   }
+
+  .job-status {
+    display: none;
+  }
+}
+
+.job-status {
+  margin-right: 24px;
+  color: #fff;
+}
+
+.mobile-job-status {
+  margin-left: 16px;
 }

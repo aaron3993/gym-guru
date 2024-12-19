@@ -33,7 +33,7 @@ const App = () => {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        {isAuthenticated && <Navbar user={user} onLogout={handleLogout} />}
+        {isAuthenticated && <Navbar onLogout={handleLogout} />}
         <Routes>
           <Route
             path="/"
