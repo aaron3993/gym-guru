@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { Button } from "antd";
+import { Button, Typography } from "antd";
 import RoutineList from "./RoutineList/RoutineList";
 import { getAllRoutinesForUser } from "../../utils/firestoreUtils";
 import { useAuth } from "../../contexts/AuthContext";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import GenerateWorkoutModal from "../../components/GenerateWorkoutModal";
 import "./RoutinesPage.css";
+
+const { Title } = Typography;
 
 const RoutinesPage = () => {
   const { user } = useAuth();
@@ -39,13 +41,14 @@ const RoutinesPage = () => {
   return (
     <div className="routines-page">
       <div className="header">
-        <h1>Your Routines</h1>
+        <Title level={1}>My Routines</Title>
         <p>Generate routines using AI based on your criteria.</p>
+      </div>
+
+      <div className="content">
         <Button type="primary" className="ai-button" onClick={showModal}>
           Generate Routine with AI
         </Button>
-      </div>
-      <div className="content">
         {loading ? (
           <LoadingSpinner />
         ) : routines.length > 0 ? (
@@ -54,6 +57,7 @@ const RoutinesPage = () => {
           <p>No routines found. Start creating one!</p>
         )}
       </div>
+
       <GenerateWorkoutModal isVisible={isModalVisible} onClose={closeModal} />
     </div>
   );

@@ -5,7 +5,7 @@ import { formatGoalsAndFitnessLevelsText } from "../../../utils/dataUtils";
 import { useAuth } from "../../../contexts/AuthContext";
 import "./EditableProfile.css";
 
-const { Text } = Typography;
+const { Text, Title } = Typography;
 const { Option } = Select;
 
 const EditableProfile = ({ userData }) => {
@@ -51,6 +51,9 @@ const EditableProfile = ({ userData }) => {
 
   return (
     <div className="editable-profile-container">
+      <div className="header">
+        <Title level={1}>My Profile</Title>
+      </div>
       <Form
         form={form}
         layout="vertical"
