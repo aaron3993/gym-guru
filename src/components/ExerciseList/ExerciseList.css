@@ -7,24 +7,20 @@
 
 .exercise-list {
   display: grid;
-  grid-template-columns: repeat(1, 1fr); /* One card per row by default */
-  gap: 16px; /* Space between cards */
+  grid-template-columns: repeat(1, 1fr);
+  gap: 16px;
   width: 100%;
-  max-width: 1200px; /* Adjust as necessary for your layout */
+  max-width: 1200px;
 }
 
 @media (min-width: 768px) {
   .exercise-list {
-    grid-template-columns: repeat(
-      2,
-      1fr
-    ); /* Two cards per row on larger screens */
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-/* Styling for pagination */
 .pagination-container {
-  margin-top: 20px; /* Adjust the top margin */
+  margin-top: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -33,7 +29,7 @@
 
 .pagination {
   display: flex;
-  gap: 10px; /* Space between pagination buttons */
+  gap: 10px;
 }
 
 .pagination-text {
@@ -52,11 +48,11 @@
 }
 
 .pagination button:hover {
-  background-color: #f0f0f0; /* Light gray on hover */
+  background-color: #f0f0f0;
 }
 
 .pagination button.active {
-  border-color: #1890ff; /* Highlight active page */
+  border-color: #1890ff;
   background-color: #1890ff;
   color: #ffffff;
 }

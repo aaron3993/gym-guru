@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Modal, Form, Select, Button, message } from "antd";
+import { Modal, Form, Select, Button, message, notification } from "antd";
 import { useAuth } from "../contexts/AuthContext";
 import { useJob } from "../contexts/JobContext";
 import { generateWorkoutPlan } from "../services/openaiUtils";
@@ -13,6 +13,16 @@ const GenerateWorkoutModal = ({ isVisible, onClose }) => {
   const { user } = useAuth();
   const { startJob, jobState, completeJob, cancelJob } = useJob();
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    if (jobState?.status === "completed") {
+      notification.success({
+        message: "Job Completed",
+        description: "Your job has been successfully completed.",
+        placement: "topRight",
+      });
+    }
+  }, [jobState?.status]);
 
   // useEffect(() => {
   //   // This effect will run whenever jobState changes
@@ -46,14 +56,13 @@ const GenerateWorkoutModal = ({ isVisible, onClose }) => {
       await completeJob(jobId);
       // await completeJob(jobState.jobId, routineId);
     } finally {
-      message.success("Workout plan generated successfully!");
       onClose();
     }
   };
 
   return (
     <Modal
-      title="Generate Your Personalized Workout"
+      title="Generate Your Personalized Routine"
       open={isVisible}
       footer={null}
       onCancel={onClose}
@@ -93,7 +102,7 @@ const GenerateWorkoutModal = ({ isVisible, onClose }) => {
             loading={jobState.status === "pending"}
             disabled={jobState.status === "pending"}
           >
-            Generate Workout
+            Generate Routine
           </Button>
         </Form.Item>
       </Form>

@@ -1,24 +1,13 @@
-import React, { useState, useEffect } from "react";
-import { Drawer, Button, Badge, notification, Spin } from "antd";
+import React, { useState } from "react";
+import { Drawer, Button, Spin } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { useJob } from "../../contexts/JobContext";
 import "./Navbar.css";
-import LoadingSpinner from "../LoadingSpinner";
 
 const Navbar = ({ onLogout }) => {
   const [drawerVisible, setDrawerVisible] = useState(false);
   const { jobState } = useJob();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (jobState?.status === "completed") {
-      notification.success({
-        message: "Job Completed",
-        description: "Your job has been successfully completed.",
-        placement: "topRight",
-      });
-    }
-  }, [jobState?.status]);
 
   const showDrawer = () => {
     setDrawerVisible(true);
