@@ -5,13 +5,16 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import Modal from "react-modal";
 import { AuthProvider } from "./contexts/AuthContext";
+import { JobProvider } from "./contexts/JobContext";
 
 Modal.setAppElement("#root");
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <AuthProvider>
-    <App />
+    <JobProvider>
+      <App />
+    </JobProvider>
   </AuthProvider>
 );
 

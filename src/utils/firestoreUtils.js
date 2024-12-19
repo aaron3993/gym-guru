@@ -14,6 +14,7 @@ import {
   orderBy,
   serverTimestamp,
   writeBatch,
+  onSnapshot,
 } from "firebase/firestore";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth, db } from "../firebase";
@@ -349,4 +350,62 @@ export const getAllRoutinesForUser = async (userId) => {
     console.error("Error fetching routines from Firestore:", error);
     throw new Error("Failed to fetch routines.");
   }
+};
+
+export const startJobInFirestore = async (userId) => {
+  const jobsRef = collection(db, "jobs");
+
+  const runningJobs = await getDocs(
+    query(
+      jobsRef,
+      where("userId", "==", userId),
+      where("isRunning", "==", true)
+    )
+  );
+
+  if (!runningJobs.empty) {
+    throw new Error("A job is already running. Please wait for it to finish.");
+  }
+
+  const newJobRef = await addDoc(jobsRef, {
+    userId,
+    startTime: new Date().toISOString(),
+    endTime: null,
+    status: "pending",
+  });
+
+  return newJobRef.id;
+};
+
+export const monitorJobInFirestore = (jobId, callback) => {
+  const jobRef = doc(db, "jobs", jobId);
+
+  const unsubscribe = onSnapshot(jobRef, (docSnapshot) => {
+    if (docSnapshot.exists()) {
+      callback(docSnapshot.data());
+    } else {
+      console.error("Job document does not exist.");
+    }
+  });
+
+  return unsubscribe;
+};
+
+export const completeJobInFirestore = async (jobId) => {
+  const jobRef = doc(db, "jobs", jobId);
+
+  await updateDoc(jobRef, {
+    endTime: new Date().toISOString(),
+    status: "completed",
+  });
+};
+
+export const cancelJobInFirestore = async (jobId) => {
+  const jobRef = doc(db, "jobs", jobId);
+
+  await updateDoc(jobRef, {
+    isRunning: false,
+    endTime: new Date().toISOString(),
+    status: "cancelled",
+  });
 };

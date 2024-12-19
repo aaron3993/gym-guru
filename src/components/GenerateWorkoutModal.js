@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Modal, Form, Select, Button, message } from "antd";
 import { useAuth } from "../contexts/AuthContext";
+import { useJob } from "../contexts/JobContext";
 import { generateWorkoutPlan } from "../services/openaiUtils";
 import { saveCompleteWorkoutInfo } from "../utils/firestoreUtils";
 
@@ -10,44 +11,43 @@ const { Option } = Select;
 const GenerateWorkoutModal = ({ isVisible, onClose }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { startJob, jobState, completeJob, cancelJob } = useJob();
   const [form] = Form.useForm();
-  const [data, setData] = useState();
-  const [loading, setLoading] = useState(false);
+
+  // useEffect(() => {
+  //   // This effect will run whenever jobState changes
+  //   if (jobState.status === "completed") {
+  //     message.success("Job completed successfully!");
+  //     onClose(); // Close the modal when job is completed
+  //   } else if (jobState.status === "cancelled") {
+  //     message.error("Job was cancelled.");
+  //   }
+  // }, [jobState, onClose]); // Re-run effect when jobState changes
 
   const handleFinish = async (values) => {
     try {
       form.resetFields();
-      setLoading(true);
 
-      try {
-        const workoutPlan = await generateWorkoutPlan(values);
-        if (!workoutPlan) {
-          throw new Error("Failed to generate a valid workout plan.");
-        }
-        const routineId = await saveCompleteWorkoutInfo(
-          user.uid,
-          workoutPlan,
-          values
-        );
-        if (!routineId) {
-          throw new Error("Failed to save workout information.");
-        }
+      const jobId = await startJob(user.uid);
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+      // The logic inside this function will run as a background job
+      // const workoutPlan = await generateWorkoutPlan(values);
+      // if (!workoutPlan) {
+      //   throw new Error("Failed to generate a valid workout plan.");
+      // }
 
-        message.success({
-          content: "Workout plan generated successfully!",
-          key: "generateWorkout",
-        });
+      // const routineId = await saveCompleteWorkoutInfo(user.uid, workoutPlan, values);
+      // if (!routineId) {
+      //   throw new Error("Failed to save workout information.");
+      // }
 
-        navigate(`/routines/${routineId}`);
-      } catch (error) {
-        message.error({
-          content: `Error: ${error.message}`,
-          key: "generateWorkout",
-        });
-      }
+      // navigate(`/routines/${routineId}`);
+
+      await completeJob(jobId);
+      // await completeJob(jobState.jobId, routineId);
     } finally {
+      message.success("Workout plan generated successfully!");
       onClose();
-      setLoading(false);
     }
   };
 
@@ -55,48 +55,48 @@ const GenerateWorkoutModal = ({ isVisible, onClose }) => {
     <Modal
       title="Generate Your Personalized Workout"
       open={isVisible}
-      onCancel={!loading ? onClose : () => {}}
       footer={null}
+      onCancel={onClose}
     >
-      {loading ? (
-        <Button type="primary" block loading={loading}>
-          Generating Workout...this may take a moment.
-        </Button>
-      ) : (
-        <Form form={form} layout="vertical" onFinish={handleFinish}>
-          <Form.Item
-            label="Fitness Level"
-            name="fitnessLevel"
-            rules={[
-              { required: true, message: "Please select your fitness level" },
-            ]}
+      <Form form={form} layout="vertical" onFinish={handleFinish}>
+        <Form.Item
+          label="Fitness Level"
+          name="fitnessLevel"
+          rules={[
+            { required: true, message: "Please select your fitness level" },
+          ]}
+        >
+          <Select placeholder="Select your fitness level">
+            <Option value="beginner">Beginner</Option>
+            <Option value="intermediate">Intermediate</Option>
+            <Option value="advanced">Advanced</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item
+          label="Goal"
+          name="goal"
+          rules={[{ required: true, message: "Please select your goal" }]}
+        >
+          <Select placeholder="Select your goal">
+            <Option value="weightLoss">Weight Loss</Option>
+            <Option value="muscleGain">Muscle Gain</Option>
+            <Option value="endurance">Endurance</Option>
+            <Option value="strength">Strength</Option>
+            <Option value="generalFitness">General Fitness</Option>
+          </Select>
+        </Form.Item>
+        <Form.Item>
+          <Button
+            type="primary"
+            htmlType="submit"
+            block
+            loading={jobState.status === "pending"}
+            disabled={jobState.status === "pending"}
           >
-            <Select placeholder="Select your fitness level">
-              <Option value="beginner">Beginner</Option>
-              <Option value="intermediate">Intermediate</Option>
-              <Option value="advanced">Advanced</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item
-            label="Goal"
-            name="goal"
-            rules={[{ required: true, message: "Please select your goal" }]}
-          >
-            <Select placeholder="Select your goal">
-              <Option value="weightLoss">Weight Loss</Option>
-              <Option value="muscleGain">Muscle Gain</Option>
-              <Option value="endurance">Endurance</Option>
-              <Option value="strength">Strength</Option>
-              <Option value="generalFitness">General Fitness</Option>
-            </Select>
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit" block loading={loading}>
-              Generate Workout
-            </Button>
-          </Form.Item>
-        </Form>
-      )}
+            Generate Workout
+          </Button>
+        </Form.Item>
+      </Form>
     </Modal>
   );
 };
