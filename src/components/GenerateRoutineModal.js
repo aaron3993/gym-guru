@@ -8,10 +8,10 @@ import { saveCompleteWorkoutInfo } from "../utils/firestoreUtils";
 
 const { Option } = Select;
 
-const GenerateWorkoutModal = ({ isVisible, onClose }) => {
+const GenerateRoutineModal = ({ isVisible, onClose }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { startJob, jobId, status, completeJob } = useJob();
+  const { startJob, status, completeJob } = useJob();
   const [form] = Form.useForm();
 
   const handleFinish = async (values) => {
@@ -91,4 +91,4 @@ const GenerateWorkoutModal = ({ isVisible, onClose }) => {
   );
 };
 
-export default GenerateWorkoutModal;
+export default GenerateRoutineModal;

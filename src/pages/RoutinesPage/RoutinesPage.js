@@ -3,14 +3,16 @@ import { Button, Typography } from "antd";
 import RoutineList from "./RoutineList/RoutineList";
 import { getAllRoutinesForUser } from "../../utils/firestoreUtils";
 import { useAuth } from "../../contexts/AuthContext";
+import { useJob } from "../../contexts/JobContext";
 import LoadingSpinner from "../../components/LoadingSpinner";
-import GenerateWorkoutModal from "../../components/GenerateWorkoutModal";
+import GenerateWorkoutModal from "../../components/GenerateRoutineModal";
 import "./RoutinesPage.css";
 
 const { Title } = Typography;
 
 const RoutinesPage = () => {
   const { user } = useAuth();
+  const { status } = useJob();
   const [routines, setRoutines] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -28,7 +30,7 @@ const RoutinesPage = () => {
     };
 
     fetchRoutines();
-  }, [user.uid]);
+  }, [user.uid, status]);
 
   const showModal = () => {
     setIsModalVisible(true);
