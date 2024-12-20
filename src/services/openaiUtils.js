@@ -2,6 +2,11 @@ import axios from "axios";
 import { getAllExerciseNamesAndGifUrlsByBodyPart } from "./exerciseDBUtils";
 
 const addGifUrlsToWorkoutPlan = (workoutData, exerciseGifUrls) => {
+  if (!workoutData || !Array.isArray(workoutData.days)) {
+    console.error("Invalid workoutData structure:", workoutData);
+    return null;
+  }
+
   return {
     ...workoutData,
     days: workoutData.days.map((day) => ({
@@ -41,6 +46,10 @@ export const generateWorkoutPlan = async (criteria) => {
     const exerciseNamesString = formatExercisesForInput(
       exerciseNamesAndGifUrls
     );
+
+    if (!exerciseNamesString) {
+      throw new Error("Failed to format exercise names for input");
+    }
 
     const messages = [
       {
@@ -93,12 +102,30 @@ export const generateWorkoutPlan = async (criteria) => {
       }
     );
 
+    if (response.status !== 200) {
+      throw new Error(`API request failed with status: ${response.status}`);
+    }
+
     const generatedText = response.data.choices[0].message.content.trim();
-    const parsedText = JSON.parse(generatedText);
+    if (!generatedText) {
+      throw new Error("Failed to retrieve content from API response");
+    }
+
+    let parsedText;
+    try {
+      parsedText = JSON.parse(generatedText);
+    } catch (error) {
+      throw new Error("Failed to parse API response as JSON");
+    }
+
     const updatedTextWithGifUrls = addGifUrlsToWorkoutPlan(
       parsedText,
       exerciseNamesAndGifUrls
     );
+    if (!updatedTextWithGifUrls) {
+      throw new Error("Failed to add GIF URLs to workout plan");
+    }
+
     return updatedTextWithGifUrls;
   } catch (error) {
     console.error("Error generating workout plan:", error);
