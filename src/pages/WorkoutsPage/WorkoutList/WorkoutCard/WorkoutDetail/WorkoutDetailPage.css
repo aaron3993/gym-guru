@@ -73,16 +73,12 @@
   border-radius: 5px;
   font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.2s, box-shadow 0.2s;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .delete-btn:hover {
-  background-color: #e60026;
-  box-shadow: 0 4px 10px rgba(255, 0, 0, 0.2);
-}
-
-.delete-btn:active {
-  background-color: #cc0000;
+  background-color: #d9363e !important;
+  transform: scale(1.05);
 }
 
 .modal .ant-modal-title {

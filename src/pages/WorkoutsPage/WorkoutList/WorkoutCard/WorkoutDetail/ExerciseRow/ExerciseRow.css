@@ -1,5 +1,3 @@
-/* ExerciseRow.css */
-
 .exercise-row {
   display: flex;
   justify-content: space-between;
@@ -9,11 +7,12 @@
   border-radius: 8px;
   margin-bottom: 10px;
   background-color: #fff;
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.3s ease, transform 0.2s ease;
 }
 
 .exercise-row:hover {
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
 }
 
 .exercise-info {
@@ -29,9 +28,9 @@
   object-fit: cover;
 }
 
-.exercise-info h5 {
+.exercise-info h4 {
   margin: 0;
-  font-size: 12px;
+  font-size: 18px;
   color: #333;
 }
 
@@ -53,9 +52,9 @@
   gap: 5px;
 }
 
-.editable-number h5 {
+.editable-number h4 {
   margin: 0;
-  font-size: 14px;
+  font-size: 16px;
   color: #555;
 }
 
@@ -83,11 +82,12 @@
   justify-content: center;
   padding: 5px;
   border-radius: 50%;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .remove-exercise-icon:hover {
   background-color: #f8d7da;
+  transform: scale(1.3);
 }
 
 .remove-exercise-icon .anticon {

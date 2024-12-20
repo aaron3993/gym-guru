@@ -118,7 +118,7 @@ const ExerciseRow = ({
           className="remove-exercise-icon"
           type="text"
           danger
-          icon={<DeleteOutlined />}
+          icon={<DeleteOutlined style={{ fontSize: "20px" }} />}
           onClick={() => onRemoveExercise()}
         />
       </div>

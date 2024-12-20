@@ -1,23 +1,26 @@
 .modal-title {
   font-size: 1.5rem;
+  font-weight: 600;
 }
 
-.ant-modal-body {
-  margin-bottom: 24px;
+.input-group {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
 }
 
 .input-label {
   font-size: 1.2rem;
   margin-right: 8px;
-  margin-left: 16px;
+  width: 50px;
 }
 
 .input-field {
-  width: 100%;
+  flex: 1;
   font-size: 1.2rem;
+  margin-right: 1rem;
 }
 
-.error-text {
-  margin-top: 0;
-  font-size: 1rem;
+.ant-alert {
+  margin-top: 16px;
 }
