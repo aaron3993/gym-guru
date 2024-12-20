@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
-import { message, Input, Button, Modal } from "antd";
+import { message, Input, Button, Modal, Typography } from "antd";
 import { db } from "../../../../../firebase";
 import { fetchAllExercises } from "../../../../../services/exerciseDBUtils";
 import { applyExerciseFiltersAndLimit } from "../../../../../utils/dataUtils";
@@ -16,6 +16,8 @@ import LoadingSpinner from "../../../../../components/LoadingSpinner";
 import ExerciseRow from "./ExerciseRow/ExerciseRow";
 import AddExerciseModal from "../../../../../components/AddExerciseModal";
 import "./WorkoutDetailPage.css";
+
+const { Title } = Typography;
 
 const WorkoutDetailPage = () => {
   const navigate = useNavigate();
@@ -203,7 +205,9 @@ const WorkoutDetailPage = () => {
             className="workout-name-input"
           />
         ) : (
-          <h1 onClick={handleClickName}>{editedName}</h1>
+          <Title className="title" level={1} onClick={handleClickName}>
+            {editedName}
+          </Title>
         )}
       </div>
       <div className="workout-exercises-container">

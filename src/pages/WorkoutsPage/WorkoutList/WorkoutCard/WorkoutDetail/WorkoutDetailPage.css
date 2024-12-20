@@ -9,18 +9,9 @@
 
 .workout-name {
   text-align: center;
-  margin-bottom: 20px;
 }
 
-.workout-name h1 {
-  font-size: 2rem;
-  color: #0a1d45;
-  margin: 0;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-
-.workout-name h1:hover {
+.workout-name .title:hover {
   color: #007acc;
 }
 
@@ -28,7 +19,7 @@
   width: 100%;
   max-width: 500px;
   margin: 0 auto;
-  font-size: 1.5rem;
+  font-size: 18px;
   text-align: center;
   padding: 8px;
   border: 1px solid #ddd;

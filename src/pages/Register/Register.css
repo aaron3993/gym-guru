@@ -39,6 +39,10 @@
   box-sizing: border-box;
 }
 
+.register-btn {
+  margin-bottom: 24px;
+}
+
 .signup-container a {
-  color: #2c3e50;
+  color: #3498db;
 }

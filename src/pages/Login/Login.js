@@ -7,8 +7,6 @@ import "./Login.css";
 
 const Login = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
   const [alertType, setAlertType] = useState("error");
 
@@ -34,7 +32,6 @@ const Login = () => {
       .then((userCredential) => {
         const user = userCredential.user;
         navigate("/");
-        console.log(user);
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -105,7 +102,7 @@ const Login = () => {
               </Form.Item>
             </Form>
 
-            <p className="text-sm text-white text-center">
+            <p>
               No account yet? <NavLink to="/register">Sign up</NavLink>
             </p>
           </div>
