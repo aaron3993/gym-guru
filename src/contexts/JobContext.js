@@ -4,7 +4,6 @@ import {
   startJobInFirestore,
   monitorJobInFirestore,
   completeJobInFirestore,
-  cancelJobInFirestore,
   getPendingJobForUser,
 } from "../utils/firestoreUtils";
 import { message, notification } from "antd";
@@ -23,11 +22,9 @@ export const JobProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    if (!isAuthenticated) {
-      return;
-    }
+    if (!isAuthenticated) return;
 
-    const fetchUserJob = async () => {
+    const fetchAndMonitorJob = async () => {
       try {
         if (user && user.uid) {
           const userJob = await getPendingJobForUser(user.uid);
@@ -36,39 +33,36 @@ export const JobProvider = ({ children }) => {
               jobId: userJob.jobId,
               status: userJob.status,
             });
+            if (userJob.jobId) {
+              const unsubscribe = monitorJobInFirestore(
+                userJob.jobId,
+                (jobData) => {
+                  setJobState({
+                    jobId: jobData.jobId,
+                    status: jobData.status,
+                  });
+                  if (jobData.status === "completed") {
+                    notification.success({
+                      message: "Routine Generated",
+                      description:
+                        "Your routine generation has been successfully completed.",
+                      placement: "topRight",
+                    });
+                  }
+                }
+              );
+
+              return () => unsubscribe();
+            }
           }
         }
       } catch (error) {
-        console.error("Error fetching user job:", error);
+        console.error("Error fetching or monitoring job:", error);
       }
     };
 
-    fetchUserJob();
-  }, [user, isAuthenticated]);
-
-  useEffect(() => {
-    if (jobState.jobId) {
-      // console.log(jobState);
-      const unsubscribe = monitorJobInFirestore(jobState.jobId, (jobData) => {
-        console.log(jobData);
-        setJobState({
-          jobId: jobData.jobId,
-          status: jobData.status,
-        });
-      });
-      return () => unsubscribe();
-    }
-  }, [jobState.jobId]);
-
-  useEffect(() => {
-    if (jobState?.status === "completed") {
-      notification.success({
-        message: "Job Completed",
-        description: "Your job has been successfully completed.",
-        placement: "topRight",
-      });
-    }
-  }, [jobState?.status]);
+    fetchAndMonitorJob();
+  }, [user]);
 
   const startJob = async (userId) => {
     try {
@@ -78,32 +72,16 @@ export const JobProvider = ({ children }) => {
         jobId,
         status: "pending",
       }));
-      // setJobState((prevState) => ({
-      //   ...prevState,
-      //   status: "pending",
-      // }));
-      // monitorJobInFirestore((jobId) => {});
       monitorJobInFirestore(jobId, (jobData) => {
-        // Handle job completion
         if (jobData.status === "completed") {
-          message.success("Job completed successfully!");
-          setJobState(() => ({
-            status: "completed",
-          }));
+          notification.success({
+            message: "Routine Generated",
+            description:
+              "Your routine generation has been successfully completed.",
+            placement: "topRight",
+          });
         }
       });
-      // monitorJobInFirestore(jobId, (jobData) => {
-
-      //   // Handle job completion
-      //   if (jobData.status === "completed") {
-      //     message.success("Job completed successfully!");
-      //   }
-
-      //   // Handle cancellation
-      //   if (jobData.status === "cancelled") {
-      //     message.error("Job was cancelled.");
-      //   }
-      // });
       return jobId;
     } catch (error) {
       message.error(`Error starting job: ${error.message}`);
@@ -124,37 +102,12 @@ export const JobProvider = ({ children }) => {
     }
   };
 
-  const cancelJob = async () => {
-    if (!jobState.jobId) return;
-
-    try {
-      await cancelJobInFirestore(jobState.jobId);
-      setJobState((prevState) => ({
-        ...prevState,
-        status: "cancelled",
-        isRunning: false,
-      }));
-    } catch (error) {
-      message.error(`Error cancelling job: ${error.message}`);
-    }
-  };
-
-  const resetJobState = () => {
-    setJobState({
-      jobId: null,
-      isRunning: false,
-      status: null,
-      result: null,
-    });
-  };
-
   return (
     <JobContext.Provider
       value={{
         jobState,
         startJob,
         completeJob,
-        cancelJob,
       }}
     >
       {children}
