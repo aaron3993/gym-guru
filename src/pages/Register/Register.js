@@ -1,16 +1,12 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
-import { Alert, Input, Button, Form, Typography } from "antd";
+import { Alert, Input, Button, Form } from "antd";
 import { registerUser } from "../../utils/firestoreUtils";
 import "./Register.css";
-
-const { Text } = Typography;
 
 const Register = () => {
   const navigate = useNavigate();
 
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
@@ -18,7 +14,7 @@ const Register = () => {
 
   const onSubmit = async () => {
     try {
-      const result = await registerUser(firstName, lastName, email, password);
+      const result = await registerUser(email, password);
 
       if (result.success) {
         navigate("/");
@@ -49,34 +45,6 @@ const Register = () => {
               />
             )}
             <Form onFinish={onSubmit}>
-              <Form.Item
-                name="firstName"
-                rules={[{ message: "Please enter your first name" }]}
-                labelCol={{ span: 24 }}
-                wrapperCol={{ span: 24 }}
-              >
-                <Input
-                  type="text"
-                  value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
-                  placeholder="First name"
-                />
-              </Form.Item>
-
-              <Form.Item
-                name="lastName"
-                rules={[{ message: "Please enter your last name" }]}
-                labelCol={{ span: 24 }}
-                wrapperCol={{ span: 24 }}
-              >
-                <Input
-                  type="text"
-                  value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
-                  placeholder="Last name"
-                />
-              </Form.Item>
-
               <Form.Item
                 name="email"
                 rules={[

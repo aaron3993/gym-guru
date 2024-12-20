@@ -29,8 +29,7 @@ const Login = () => {
     }
 
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        const user = userCredential.user;
+      .then(() => {
         navigate("/");
       })
       .catch((error) => {
