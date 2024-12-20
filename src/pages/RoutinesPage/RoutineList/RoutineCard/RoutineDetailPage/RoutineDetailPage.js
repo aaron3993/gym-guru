@@ -44,7 +44,7 @@ const RoutineDetailPage = () => {
           <Title level={1}>{routineTitle}</Title>
         </div>
 
-        <div className="workout-list">
+        <div className="routine-list">
           {workouts.map((workout) => (
             <div
               key={workout.id}
