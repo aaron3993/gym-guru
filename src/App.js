@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  BrowserRouter as Router,
-  Route,
-  Routes,
-  Navigate,
-} from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
@@ -32,72 +27,62 @@ const App = () => {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Router>
-        {isAuthenticated && <Navbar onLogout={handleLogout} />}
-        <Routes>
-          <Route
-            path="/"
-            element={
-              <PrivateRoute isAuthenticated={isAuthenticated}>
-                <Home />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <PrivateRoute isAuthenticated={isAuthenticated}>
-                <User user={user} />
-              </PrivateRoute>
-            }
-          />
-          {/* <Route
-            path="/exercises"
-            element={
-              <PrivateRoute isAuthenticated={isAuthenticated}>
-                <ExercisesPage />
-              </PrivateRoute>
-            }
-          /> */}
-          <Route
-            path="/workouts"
-            element={
-              <PrivateRoute isAuthenticated={isAuthenticated}>
-                <WorkoutsPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/workouts/:workoutId"
-            element={
-              <PrivateRoute isAuthenticated={isAuthenticated}>
-                <WorkoutDetailPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/routines"
-            element={
-              <PrivateRoute isAuthenticated={isAuthenticated}>
-                <RoutinesPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/routines/:routineId"
-            element={
-              <PrivateRoute isAuthenticated={isAuthenticated}>
-                <RoutineDetailPage />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/login"
-            element={isAuthenticated ? <Navigate to="/" /> : <Login />}
-          />
-          <Route path="/register" element={<Register />} />
-        </Routes>
-      </Router>
+      {isAuthenticated && <Navbar user={user} onLogout={handleLogout} />}
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <Home />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <User user={user} />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/workouts"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <WorkoutsPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/workouts/:workoutId"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <WorkoutDetailPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/routines"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <RoutinesPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/routines/:routineId"
+          element={
+            <PrivateRoute isAuthenticated={isAuthenticated}>
+              <RoutineDetailPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path="/login"
+          element={isAuthenticated ? <Navigate to="/" /> : <Login />}
+        />
+        <Route path="/register" element={<Register />} />
+      </Routes>
     </ThemeProvider>
   );
 };

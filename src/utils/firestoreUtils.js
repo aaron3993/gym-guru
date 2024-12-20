@@ -378,8 +378,8 @@ export const startJobInFirestore = async (userId) => {
 };
 
 export const monitorJobInFirestore = (jobId, callback) => {
-  const jobRef = doc(db, "jobs", jobId);
   console.log("monitoring in firestore");
+  const jobRef = doc(db, "jobs", jobId);
   const unsubscribe = onSnapshot(jobRef, (docSnapshot) => {
     if (docSnapshot.exists()) {
       callback(docSnapshot.data());
@@ -392,12 +392,13 @@ export const monitorJobInFirestore = (jobId, callback) => {
   return unsubscribe;
 };
 
-export const completeJobInFirestore = async (jobId) => {
+export const completeJobInFirestore = async (jobId, routineId) => {
   const jobRef = doc(db, "jobs", jobId);
 
   await updateDoc(jobRef, {
     endTime: new Date().toISOString(),
     status: "completed",
+    routineId,
   });
 };
 
@@ -432,5 +433,22 @@ export const getPendingJobForUser = async (userId) => {
   } catch (error) {
     console.error("Error fetching user's pending job:", error);
     return null;
+  }
+};
+
+export const getRoutineIdForJob = async (jobId) => {
+  try {
+    const jobRef = doc(db, "jobs", jobId);
+    const jobSnap = await getDoc(jobRef);
+
+    if (jobSnap.exists()) {
+      const jobData = jobSnap.data();
+      return jobData.routineId;
+    } else {
+      throw new Error("Job not found");
+    }
+  } catch (error) {
+    console.error("Error fetching routineId:", error);
+    throw error;
   }
 };

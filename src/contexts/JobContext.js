@@ -1,10 +1,12 @@
 import React, { createContext, useState, useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import {
   startJobInFirestore,
   monitorJobInFirestore,
   completeJobInFirestore,
   getPendingJobForUser,
+  getRoutineIdForJob,
 } from "../utils/firestoreUtils";
 import { message, notification } from "antd";
 
@@ -16,6 +18,7 @@ export const useJob = () => {
 
 export const JobProvider = ({ children }) => {
   const { user, isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
   const [jobId, setJobId] = useState(null);
   const [status, setStatus] = useState(null);
@@ -32,23 +35,7 @@ export const JobProvider = ({ children }) => {
             setStatus(userJob.status);
 
             if (userJob.jobId) {
-              const unsubscribe = monitorJobInFirestore(
-                userJob.jobId,
-                (jobData) => {
-                  setJobId(jobData.jobId);
-                  setStatus(jobData.status);
-
-                  if (jobData.status === "completed") {
-                    notification.success({
-                      message: "Routine Generated",
-                      description:
-                        "Your routine generation has been successfully completed.",
-                      placement: "topRight",
-                    });
-                  }
-                }
-              );
-
+              const unsubscribe = monitorJobAndNotify(userJob.jobId);
               return () => unsubscribe();
             }
           }
@@ -67,17 +54,7 @@ export const JobProvider = ({ children }) => {
 
       setJobId(newJobId);
       setStatus("pending");
-
-      monitorJobInFirestore(newJobId, (jobData) => {
-        if (jobData.status === "completed") {
-          notification.success({
-            message: "Routine Generated",
-            description:
-              "Your routine generation has been successfully completed.",
-            placement: "topRight",
-          });
-        }
-      });
+      monitorJobAndNotify(newJobId);
 
       return newJobId;
     } catch (error) {
@@ -85,15 +62,37 @@ export const JobProvider = ({ children }) => {
     }
   };
 
-  const completeJob = async (jobId) => {
+  const completeJob = async (jobId, routineId) => {
     if (!jobId) return;
 
     try {
-      await completeJobInFirestore(jobId);
+      await completeJobInFirestore(jobId, routineId);
       setStatus("completed");
     } catch (error) {
       message.error(`Error completing job: ${error.message}`);
     }
+  };
+
+  const monitorJobAndNotify = (jobId) => {
+    monitorJobInFirestore(jobId, async (jobData) => {
+      setJobId(jobData.jobId);
+      setStatus(jobData.status);
+      if (jobData.status === "completed") {
+        // const routineId = await getRoutineIdForJob(jobData.jobId);
+        notification.success({
+          message: "Routine Generated",
+          description: "Click here to go to your routine.",
+          placement: "topRight",
+          style: { cursor: "pointer" },
+          onClick: () => {
+            // if (routineId) {
+            navigate(`/routines/`);
+            // navigate(`/routines/${routineId}`);
+            // }
+          },
+        });
+      }
+    });
   };
 
   return (
