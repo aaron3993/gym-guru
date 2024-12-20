@@ -155,8 +155,17 @@ export const getAllWorkouts = async () => {
   }
 };
 
-export const fetchWorkoutsByRoutineId = async (routineId) => {
+export const fetchRoutineWithWorkouts = async (routineId) => {
   try {
+    const routineRef = doc(db, "routines", routineId);
+    const routineDoc = await getDoc(routineRef);
+
+    if (!routineDoc.exists()) {
+      throw new Error(`Routine with ID ${routineId} not found.`);
+    }
+
+    const routineData = routineDoc.data();
+
     const workoutsRef = collection(db, "workouts");
     const q = query(
       workoutsRef,
@@ -165,12 +174,18 @@ export const fetchWorkoutsByRoutineId = async (routineId) => {
     );
     const querySnapshot = await getDocs(q);
 
-    return querySnapshot.docs.map((doc) => ({
+    const workouts = querySnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
     }));
+
+    return {
+      id: routineDoc.id,
+      ...routineData,
+      workouts,
+    };
   } catch (error) {
-    console.error("Error fetching workouts:", error);
+    console.error("Error fetching routine with workouts:", error);
     throw error;
   }
 };
