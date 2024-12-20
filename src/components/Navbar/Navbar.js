@@ -6,7 +6,7 @@ import "./Navbar.css";
 
 const Navbar = ({ onLogout }) => {
   const [drawerVisible, setDrawerVisible] = useState(false);
-  const { jobState } = useJob();
+  const { status } = useJob();
   const navigate = useNavigate();
 
   const showDrawer = () => {
@@ -34,7 +34,7 @@ const Navbar = ({ onLogout }) => {
         </Link>
       </div>
       <div>
-        {jobState?.status === "pending" && (
+        {status === "pending" && (
           <span className="job-status">
             Generating your routine... <Spin />
           </span>
@@ -53,7 +53,7 @@ const Navbar = ({ onLogout }) => {
       </div>
       <div className="mobile-nav">
         <Button onClick={showDrawer}>☰</Button>
-        {jobState?.status === "pending" && (
+        {status === "pending" && (
           <span className="mobile-job-status">
             Generating your routine... <Spin />
           </span>

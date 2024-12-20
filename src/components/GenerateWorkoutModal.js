@@ -11,26 +11,14 @@ const { Option } = Select;
 const GenerateWorkoutModal = ({ isVisible, onClose }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
-  const { startJob, jobState, completeJob, cancelJob } = useJob();
+  const { startJob, jobId, status, completeJob } = useJob();
   const [form] = Form.useForm();
-
-  // useEffect(() => {
-  //   if (jobState?.status === "completed") {
-  //     notification.success({
-  //       message: "Job Completed",
-  //       description: "Your job has been successfully completed.",
-  //       placement: "topRight",
-  //     });
-  //   }
-  // }, [jobState?.status]);
 
   const handleFinish = async (values) => {
     try {
       form.resetFields();
 
       const jobId = await startJob(user.uid);
-      // await new Promise((resolve) => setTimeout(resolve, 5000));
-
       // const workoutPlan = await generateWorkoutPlan(values);
       // if (!workoutPlan) {
       //   throw new Error("Failed to generate a valid workout plan.");
@@ -92,8 +80,8 @@ const GenerateWorkoutModal = ({ isVisible, onClose }) => {
             type="primary"
             htmlType="submit"
             block
-            loading={jobState.status === "pending"}
-            disabled={jobState.status === "pending"}
+            loading={status === "pending"}
+            disabled={status === "pending"}
           >
             Generate Routine
           </Button>

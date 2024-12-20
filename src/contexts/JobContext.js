@@ -16,10 +16,9 @@ export const useJob = () => {
 
 export const JobProvider = ({ children }) => {
   const { user, isAuthenticated } = useAuth();
-  const [jobState, setJobState] = useState({
-    jobId: null,
-    status: null,
-  });
+
+  const [jobId, setJobId] = useState(null);
+  const [status, setStatus] = useState(null);
 
   useEffect(() => {
     if (!isAuthenticated) return;
@@ -29,18 +28,16 @@ export const JobProvider = ({ children }) => {
         if (user && user.uid) {
           const userJob = await getPendingJobForUser(user.uid);
           if (userJob && userJob.jobId) {
-            setJobState({
-              jobId: userJob.jobId,
-              status: userJob.status,
-            });
+            setJobId(userJob.jobId);
+            setStatus(userJob.status);
+
             if (userJob.jobId) {
               const unsubscribe = monitorJobInFirestore(
                 userJob.jobId,
                 (jobData) => {
-                  setJobState({
-                    jobId: jobData.jobId,
-                    status: jobData.status,
-                  });
+                  setJobId(jobData.jobId);
+                  setStatus(jobData.status);
+
                   if (jobData.status === "completed") {
                     notification.success({
                       message: "Routine Generated",
@@ -62,17 +59,16 @@ export const JobProvider = ({ children }) => {
     };
 
     fetchAndMonitorJob();
-  }, [user]);
+  }, [user, isAuthenticated]);
 
   const startJob = async (userId) => {
     try {
-      const jobId = await startJobInFirestore(userId);
+      const newJobId = await startJobInFirestore(userId);
 
-      setJobState(() => ({
-        jobId,
-        status: "pending",
-      }));
-      monitorJobInFirestore(jobId, (jobData) => {
+      setJobId(newJobId);
+      setStatus("pending");
+
+      monitorJobInFirestore(newJobId, (jobData) => {
         if (jobData.status === "completed") {
           notification.success({
             message: "Routine Generated",
@@ -82,7 +78,8 @@ export const JobProvider = ({ children }) => {
           });
         }
       });
-      return jobId;
+
+      return newJobId;
     } catch (error) {
       message.error(`Error starting job: ${error.message}`);
     }
@@ -93,10 +90,7 @@ export const JobProvider = ({ children }) => {
 
     try {
       await completeJobInFirestore(jobId);
-      setJobState((prevState) => ({
-        ...prevState,
-        status: "completed",
-      }));
+      setStatus("completed");
     } catch (error) {
       message.error(`Error completing job: ${error.message}`);
     }
@@ -105,7 +99,8 @@ export const JobProvider = ({ children }) => {
   return (
     <JobContext.Provider
       value={{
-        jobState,
+        jobId,
+        status,
         startJob,
         completeJob,
       }}
