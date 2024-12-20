@@ -51,7 +51,6 @@ export const JobProvider = ({ children }) => {
   const startJob = async (userId) => {
     try {
       const newJobId = await startJobInFirestore(userId);
-
       setJobId(newJobId);
       setStatus("pending");
       monitorJobAndNotify(newJobId);
@@ -77,18 +76,18 @@ export const JobProvider = ({ children }) => {
     monitorJobInFirestore(jobId, async (jobData) => {
       setJobId(jobData.jobId);
       setStatus(jobData.status);
+
       if (jobData.status === "completed") {
-        // const routineId = await getRoutineIdForJob(jobData.jobId);
+        const routineId = await getRoutineIdForJob(jobData.jobId);
         notification.success({
           message: "Routine Generated",
           description: "Click here to go to your routine.",
           placement: "topRight",
           style: { cursor: "pointer" },
           onClick: () => {
-            // if (routineId) {
-            navigate(`/routines/`);
-            // navigate(`/routines/${routineId}`);
-            // }
+            if (routineId) {
+              navigate(`/routines/${routineId}`);
+            }
           },
         });
       }

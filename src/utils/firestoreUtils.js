@@ -378,18 +378,15 @@ export const startJobInFirestore = async (userId) => {
 };
 
 export const monitorJobInFirestore = (jobId, callback) => {
-  console.log("monitoring in firestore");
   const jobRef = doc(db, "jobs", jobId);
-  const unsubscribe = onSnapshot(jobRef, (docSnapshot) => {
-    if (docSnapshot.exists()) {
-      callback(docSnapshot.data());
-      console.log(docSnapshot.data());
+  onSnapshot(jobRef, (snapshot) => {
+    if (snapshot.exists()) {
+      const jobData = snapshot.data();
+      callback({ ...jobData, jobId: snapshot.id });
     } else {
-      console.error("Job document does not exist.");
+      console.error("Job not found");
     }
   });
-
-  return unsubscribe;
 };
 
 export const completeJobInFirestore = async (jobId, routineId) => {

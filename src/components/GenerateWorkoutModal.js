@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Modal, Form, Select, Button, message, notification } from "antd";
+import { Modal, Form, Select, Button } from "antd";
 import { useAuth } from "../contexts/AuthContext";
 import { useJob } from "../contexts/JobContext";
 import { generateWorkoutPlan } from "../services/openaiUtils";
@@ -19,23 +19,23 @@ const GenerateWorkoutModal = ({ isVisible, onClose }) => {
       form.resetFields();
 
       const jobId = await startJob(user.uid);
-      // const workoutPlan = await generateWorkoutPlan(values);
-      // if (!workoutPlan) {
-      //   throw new Error("Failed to generate a valid workout plan.");
-      // }
+      const workoutPlan = await generateWorkoutPlan(values);
+      if (!workoutPlan) {
+        throw new Error("Failed to generate a valid workout plan.");
+      }
 
-      // const routineId = await saveCompleteWorkoutInfo(
-      //   user.uid,
-      //   workoutPlan,
-      //   values
-      // );
-      // if (!routineId) {
-      //   throw new Error("Failed to save workout information.");
-      // }
+      const routineId = await saveCompleteWorkoutInfo(
+        user.uid,
+        workoutPlan,
+        values
+      );
 
-      // await completeJob(jobId);
-      // await completeJob(jobState.jobId, routineId);
-      // navigate(`/routines/${routineId}`);
+      if (!routineId) {
+        throw new Error("Failed to save workout information.");
+      }
+
+      await completeJob(jobId, routineId);
+      navigate(`/routines/${routineId}`);
     } finally {
       onClose();
     }

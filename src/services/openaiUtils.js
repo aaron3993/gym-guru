@@ -6,10 +6,13 @@ const addGifUrlsToWorkoutPlan = (workoutData, exerciseGifUrls) => {
     ...workoutData,
     days: workoutData.days.map((day) => ({
       ...day,
-      exercises: day.exercises.map((exercise) => ({
-        ...exercise,
-        gifUrl: exerciseGifUrls[exercise.name] || "",
-      })),
+      exercises:
+        day.exercises.length > 0
+          ? day.exercises.map((exercise) => ({
+              ...exercise,
+              gifUrl: exerciseGifUrls[exercise.name] || "",
+            }))
+          : [],
     })),
   };
 };
@@ -62,13 +65,13 @@ export const generateWorkoutPlan = async (criteria) => {
             - day: Monday for example
             - dayOfWeek: 1 for example
             - name: Muscle group trained
-            - exercises. Four to seven exercises per weight training day. Each exercise should be appropriate for the fitness level and goal and have the following attributes:
+            - exercises. Five exercises per weight training day. Each exercise should be appropriate for the fitness level and goal and have the following attributes:
               - name: The name of the exercise.
               - gifUrl: The gif URL of the exercise (if it exists).
               - sets: The number of sets (integer).
               - reps: A string to represent the range of numbers.
               - rest: A string indicating rest duration.
-            - Rest days should still be shown but without exercises
+            - Rest days should still be shown but with an empty exercises array
             - Include cardio where necessary.
         `,
       },
