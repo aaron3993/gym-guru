@@ -90,7 +90,7 @@ const CreateWorkoutModal = ({
         <div>
           <Form.Item className="input-label" name="workoutName">
             <Input
-              className="input-field"
+              className="create-workout-input-field"
               placeholder="Workout Name"
               onChange={handleInputChange}
               onKeyDown={handleKeyDown}
