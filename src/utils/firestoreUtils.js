@@ -24,9 +24,9 @@ const isValidEmail = (email) => {
   return emailRegex.test(email);
 };
 
-export const registerUser = async (firstName, lastName, email, password) => {
+export const registerUser = async (email, password) => {
   try {
-    if (!firstName || !lastName || !email || !password) {
+    if (!email || !password) {
       throw new Error("Please fill in all required fields.");
     }
 
@@ -47,8 +47,6 @@ export const registerUser = async (firstName, lastName, email, password) => {
 
     await setDoc(doc(db, "users", user.uid), {
       userId: user.uid,
-      firstName,
-      lastName,
       email,
       createdAt: new Date().toISOString(),
     });

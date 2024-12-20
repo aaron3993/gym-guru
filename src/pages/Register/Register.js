@@ -62,6 +62,7 @@ const Register = () => {
                 <Input
                   type="email"
                   value={email}
+                  autoComplete="email"
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="Email address"
                 />
@@ -74,6 +75,7 @@ const Register = () => {
                 wrapperCol={{ span: 24 }}
               >
                 <Input.Password
+                  autoComplete="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Password"
