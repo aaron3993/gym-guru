@@ -4,7 +4,7 @@ import { capitalizeFirstLetter } from "../../../utils/dataUtils";
 import { Button } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 
-const ExerciseCard = ({ exercise, onOpenExerciseModal }) => {
+const ExerciseCard = ({ exercise, onAddToWorkout }) => {
   return (
     <div className="exercise-card">
       <img src={exercise.gifUrl} alt={exercise.name} />
@@ -16,7 +16,7 @@ const ExerciseCard = ({ exercise, onOpenExerciseModal }) => {
         className="add-to-workout-button"
         type="primary"
         icon={<PlusOutlined />}
-        onClick={() => onOpenExerciseModal(exercise)}
+        onClick={() => onAddToWorkout(exercise)}
       />
     </div>
   );

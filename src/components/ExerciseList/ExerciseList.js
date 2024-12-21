@@ -4,11 +4,7 @@ import { displayCategoryName } from "../../utils/dataUtils";
 import Pagination from "../Pagination/Pagination";
 import "./ExerciseList.css";
 
-const ExerciseList = ({
-  exercises,
-  isWorkoutDetailPage,
-  onOpenExerciseModal,
-}) => {
+const ExerciseList = ({ exercises, isWorkoutDetailPage, onAddToWorkout }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(10);
 
@@ -45,7 +41,7 @@ const ExerciseList = ({
               key={exercise.id}
               exercise={exercise}
               isWorkoutDetailPage={isWorkoutDetailPage}
-              onOpenExerciseModal={onOpenExerciseModal}
+              onAddToWorkout={onAddToWorkout}
             />
           ))
         ) : (

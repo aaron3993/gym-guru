@@ -198,13 +198,11 @@ export const updateWorkoutName = async (workoutId, newName) => {
   }
 };
 
-export const addExerciseToWorkout = async (workoutId, exercise, reps, sets) => {
+export const addExerciseToWorkout = async (workoutId, exercise) => {
   const workoutRef = doc(db, "workouts", workoutId);
 
-  const exerciseObj = { ...exercise, reps, sets };
-
   await updateDoc(workoutRef, {
-    exercises: arrayUnion(exerciseObj),
+    exercises: arrayUnion(exercise),
   });
 };
 

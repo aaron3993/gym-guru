@@ -7,6 +7,7 @@ import { fetchAllExercises } from "../../../../../services/exerciseDBUtils";
 import { applyExerciseFiltersAndLimit } from "../../../../../utils/dataUtils";
 import {
   updateWorkoutName,
+  addExerciseToWorkout,
   removeExerciseFromWorkout,
   deleteWorkout,
 } from "../../../../../utils/firestoreUtils";
@@ -14,7 +15,6 @@ import SearchBar from "../../../../../components/SearchBar/SearchBar";
 import ExerciseList from "../../../../../components/ExerciseList/ExerciseList";
 import LoadingSpinner from "../../../../../components/LoadingSpinner";
 import ExerciseRow from "./ExerciseRow/ExerciseRow";
-import AddExerciseModal from "../../../../../components/AddExerciseModal";
 import "./WorkoutDetailPage.css";
 
 const { Title } = Typography;
@@ -130,14 +130,23 @@ const WorkoutDetailPage = () => {
     }
   };
 
-  const openExerciseModal = (exercise) => {
-    setSelectedExercise(exercise);
-    setExerciseModalOpen(true);
-  };
+  const handleAddExerciseToWorkout = async (exercise) => {
+    try {
+      if (
+        currentWorkout.exercises &&
+        currentWorkout.exercises.some((e) => e.id === exercise.id)
+      ) {
+        console.warn("Exercise is already in the workout.");
+        return;
+      }
 
-  const closeExerciseModal = () => {
-    setSelectedExercise(null);
-    setExerciseModalOpen(false);
+      await addExerciseToWorkout(currentWorkout.id, exercise);
+
+      await fetchWorkoutDetails();
+      message.success(`${exercise.name} added to workout.`);
+    } catch (error) {
+      console.error("Error adding exercise directly:", error);
+    }
   };
 
   const handleRemoveExerciseFromWorkout = async (exerciseToRemove) => {
@@ -236,8 +245,7 @@ const WorkoutDetailPage = () => {
             workoutId={workoutId}
             workouts={workouts}
             isWorkoutDetailPage={true}
-            onOpenExerciseModal={openExerciseModal}
-            onAddToWorkout={() => fetchWorkoutDetails()}
+            onAddToWorkout={handleAddExerciseToWorkout}
           />
         </div>
       </div>
@@ -248,15 +256,6 @@ const WorkoutDetailPage = () => {
       >
         Delete Workout
       </Button>
-      {selectedExercise && (
-        <AddExerciseModal
-          currentWorkout={currentWorkout}
-          exercise={selectedExercise}
-          isOpen={exerciseModalOpen}
-          onRequestClose={closeExerciseModal}
-          onAddToWorkout={() => fetchWorkoutDetails()}
-        />
-      )}
       <Modal
         title="Delete Workout"
         open={deleteModalVisible}
