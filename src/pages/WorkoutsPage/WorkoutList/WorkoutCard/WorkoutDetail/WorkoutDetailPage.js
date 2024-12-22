@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { message, Input, Button, Modal, Typography } from "antd";
 import { db } from "../../../../../firebase";
-import { fetchAllExercises } from "../../../../../services/exerciseDBUtils";
+import { getAllExercisesWithCache } from "../../../../../services/exerciseDBUtils";
 import { applyExerciseFiltersAndLimit } from "../../../../../utils/dataUtils";
 import {
   updateWorkoutName,
@@ -88,19 +88,12 @@ const WorkoutDetailPage = () => {
 
   const fetchAllExercisesData = async () => {
     try {
-      let exercises = [];
-      const cachedExercises = localStorage.getItem("allExercises");
-      if (cachedExercises) {
-        exercises = JSON.parse(cachedExercises);
-      } else {
-        exercises = await fetchAllExercises();
+      const cachedExercises = await getAllExercisesWithCache();
 
-        localStorage.setItem("allExercises", JSON.stringify(exercises));
-      }
-      setAllExercises(exercises);
+      setAllExercises(cachedExercises);
 
       setFilteredExercises(
-        applyExerciseFiltersAndLimit(allExercises, searchQuery)
+        applyExerciseFiltersAndLimit(cachedExercises, searchQuery)
       );
     } catch (error) {
       console.error("Error fetching all exercises:", error);

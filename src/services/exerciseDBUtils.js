@@ -34,10 +34,6 @@ const isCacheExpired = () => {
   if (!cachedData) return true;
 };
 
-const saveExercisesToCache = (exercises) => {
-  saveToLocalStorage(exercises);
-};
-
 export const getAllExercisesWithCache = async () => {
   const cachedData = getFromLocalStorage(CACHE_KEY);
   if (cachedData && !isCacheExpired()) {
@@ -46,7 +42,7 @@ export const getAllExercisesWithCache = async () => {
 
   const allExercises = await fetchAllExercises();
 
-  if (allExercises.length > 0) saveExercisesToCache(allExercises);
+  if (allExercises.length > 0) saveToLocalStorage(CACHE_KEY, allExercises);
 
   return allExercises;
 };
