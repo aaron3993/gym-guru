@@ -136,7 +136,6 @@ const WorkoutDetailPage = () => {
       await addExerciseToWorkout(currentWorkout.id, exercise);
 
       await fetchWorkoutDetails();
-      message.success(`${exercise.name} added to workout.`);
     } catch (error) {
       console.error("Error adding exercise directly:", error);
     }
