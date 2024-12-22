@@ -319,6 +319,7 @@ export const saveCompleteWorkoutInfo = async (
           day.name.toLowerCase() === "rest"
             ? []
             : day.exercises.map((exercise) => ({
+                id: exercise.id,
                 name: exercise.name,
                 gifUrl: exercise.gifUrl,
                 sets: exercise.sets,

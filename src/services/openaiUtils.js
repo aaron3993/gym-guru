@@ -2,11 +2,11 @@ import axios from "axios";
 import { formatGoalsAndFitnessLevelsText } from "../utils/dataUtils";
 import { getAllExerciseDetailsByBodyPart } from "./exerciseDBUtils";
 
-const formatExercisesForInput = (exerciseNamesAndGifUrls) => {
-  return Object.keys(exerciseNamesAndGifUrls).join(",");
+const formatExercisesForInput = (exerciseDetails) => {
+  return Object.keys(exerciseDetails).join(",");
 };
 
-const addGifUrlsToWorkoutPlan = (workoutData, exerciseDetails) => {
+const addDetailsToParsedText = (workoutData, exerciseDetails) => {
   if (!workoutData || !Array.isArray(workoutData.days)) {
     console.error("Invalid workoutData structure:", workoutData);
     return null;
@@ -83,13 +83,14 @@ export const generateWorkoutPlan = async (criteria) => {
             - dayOfWeek: 1 for example
             - name: Muscle group trained
             - exercises. Five exercises per weight training day. Each exercise should be appropriate for the fitness level and goal and have the following attributes:
-              - name: The name of the exercise.
-              - gifUrl: The gif URL of the exercise (if it exists).
-              - sets: The number of sets (integer).
-              - reps: A string to represent the range of numbers.
-              - rest: A string indicating rest duration.
+              - id: Empty string
+              - name: The name of the exercise in lower case
+              - gifUrl: Empty string
+              - sets: The number of sets (integer)
+              - reps: A string to represent the range of numbers
+              - rest: A string indicating rest duration
             - Rest days should still be shown but with an empty exercises array
-            - Include cardio where necessary.
+            - Include cardio where necessary
         `,
       },
     ];
@@ -126,7 +127,7 @@ export const generateWorkoutPlan = async (criteria) => {
       throw new Error("Failed to parse API response as JSON");
     }
 
-    const workoutPlan = addGifUrlsToWorkoutPlan(parsedText, exerciseDetails);
+    const workoutPlan = addDetailsToParsedText(parsedText, exerciseDetails);
     if (!workoutPlan) {
       throw new Error("Failed to add GIF URLs to workout plan");
     }

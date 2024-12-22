@@ -81,7 +81,7 @@ export const getAllExerciseDetailsByBodyPart = async (exerciseCounts) => {
 
       selectedExercises.forEach((exercise) => {
         exerciseNamesAndDetails[exercise.name] = {
-          id: exercise.id,
+          id: exercise.id || "",
           gifUrl: exercise.gifUrl || "",
         };
       });
