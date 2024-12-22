@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { InputNumber, Button, message } from "antd";
+import { Input, InputNumber, Button, message } from "antd";
 import { DeleteOutlined } from "@ant-design/icons";
 import "./ExerciseRow.css";
 import { updateExerciseInWorkout } from "../../../../../../utils/firestoreUtils";
@@ -11,12 +11,11 @@ const ExerciseRow = ({
   onRemoveExercise,
   onUpdateExercise,
 }) => {
-  const [editableReps, setEditableReps] = useState(exercise.reps);
-  const [editableSets, setEditableSets] = useState(exercise.sets);
+  const [editableReps, setEditableReps] = useState(exercise.reps || "");
+  const [editableSets, setEditableSets] = useState(exercise.sets || "");
   const [isEditingReps, setIsEditingReps] = useState(false);
   const [isEditingSets, setIsEditingSets] = useState(false);
 
-  const validRepsRange = { min: 1, max: 100 };
   const validSetsRange = { min: 1, max: 20 };
 
   const handleEditReps = () => {
@@ -28,12 +27,11 @@ const ExerciseRow = ({
   };
 
   const handleUpdateReps = async () => {
-    const parsedReps = parseInt(editableReps, 10);
-    if (isNaN(parsedReps)) {
-      return console.error("Invalid range for reps or sets.");
+    if (editableReps.length > 15) {
+      return console.error("Reps input exceeds 15 characters.");
     }
     setIsEditingReps(false);
-    if (parsedReps !== exercise.reps) {
+    if (editableReps !== exercise.reps) {
       await updateExerciseInWorkout(
         workoutId,
         exercise.id,
@@ -48,10 +46,10 @@ const ExerciseRow = ({
   const handleUpdateSets = async () => {
     const parsedSets = parseInt(editableSets, 10);
     if (isNaN(parsedSets)) {
-      return console.error("Invalid range for reps or sets.");
+      return console.error("Invalid value for sets.");
     }
     setIsEditingSets(false);
-    if (editableSets !== exercise.sets) {
+    if (parsedSets !== exercise.sets) {
       await updateExerciseInWorkout(
         workoutId,
         exercise.id,
@@ -91,25 +89,25 @@ const ExerciseRow = ({
               />
             ) : (
               <p onClick={handleEditSets} className="clickable-number">
-                {editableSets}
+                {editableSets || "Enter sets"}
               </p>
             )}
           </div>
           <div className="editable-number">
             <h4>Reps</h4>
             {isEditingReps ? (
-              <InputNumber
+              <Input
                 autoFocus
                 value={editableReps}
-                onChange={(value) => setEditableReps(value)}
+                onChange={(e) => setEditableReps(e.target.value)}
                 onBlur={handleUpdateReps}
                 onKeyDown={(e) => handleKeyDown(e, handleUpdateReps)}
-                min={validRepsRange.min}
-                max={validRepsRange.max}
+                maxLength={15}
+                placeholder="Enter reps"
               />
             ) : (
               <p onClick={handleEditReps} className="clickable-number">
-                {editableReps}
+                {editableReps || "Enter reps"}
               </p>
             )}
           </div>

@@ -1,7 +1,12 @@
 import axios from "axios";
-import { getAllExerciseNamesAndGifUrlsByBodyPart } from "./exerciseDBUtils";
+import { formatGoalsAndFitnessLevelsText } from "../utils/dataUtils";
+import { getAllExerciseDetailsByBodyPart } from "./exerciseDBUtils";
 
-const addGifUrlsToWorkoutPlan = (workoutData, exerciseGifUrls) => {
+const formatExercisesForInput = (exerciseNamesAndGifUrls) => {
+  return Object.keys(exerciseNamesAndGifUrls).join(",");
+};
+
+const addGifUrlsToWorkoutPlan = (workoutData, exerciseDetails) => {
   if (!workoutData || !Array.isArray(workoutData.days)) {
     console.error("Invalid workoutData structure:", workoutData);
     return null;
@@ -13,17 +18,17 @@ const addGifUrlsToWorkoutPlan = (workoutData, exerciseGifUrls) => {
       ...day,
       exercises:
         day.exercises.length > 0
-          ? day.exercises.map((exercise) => ({
-              ...exercise,
-              gifUrl: exerciseGifUrls[exercise.name] || "",
-            }))
+          ? day.exercises.map((exercise) => {
+              const exerciseDetail = exerciseDetails[exercise.name] || {};
+              return {
+                ...exercise,
+                id: exerciseDetail.id || null,
+                gifUrl: exerciseDetail.gifUrl || "",
+              };
+            })
           : [],
     })),
   };
-};
-
-const formatExercisesForInput = (exerciseNamesAndGifUrls) => {
-  return Object.keys(exerciseNamesAndGifUrls).join(",");
 };
 
 export const generateWorkoutPlan = async (criteria) => {
@@ -40,12 +45,11 @@ export const generateWorkoutPlan = async (criteria) => {
       cardio: 5,
     };
 
-    const exerciseNamesAndGifUrls =
-      await getAllExerciseNamesAndGifUrlsByBodyPart(exerciseCounts);
-
-    const exerciseNamesString = formatExercisesForInput(
-      exerciseNamesAndGifUrls
+    const exerciseDetails = await getAllExerciseDetailsByBodyPart(
+      exerciseCounts
     );
+
+    const exerciseNamesString = formatExercisesForInput(exerciseDetails);
 
     if (!exerciseNamesString) {
       throw new Error("Failed to format exercise names for input");
@@ -60,14 +64,18 @@ export const generateWorkoutPlan = async (criteria) => {
       {
         role: "user",
         content: `
-          Create a structured JSON format for a weekly workout plan for someone whose goal is ${criteria.goal} and fitness level is ${criteria.fitnessLevel}.
+          Create a structured JSON format for a weekly workout plan for someone whose goal is ${
+            criteria.goal
+          } and fitness level is ${criteria.fitnessLevel}.
           Only output the JSON and no other text.
           Use the following exercises and their gifUrls in your plan:
  
           ${exerciseNamesString}
 
           The format should include:
-          - title: ${criteria.fitnessLevel} ${criteria.goal} Routine (Capitalize first letters)
+          - title: ${criteria.fitnessLevel} ${formatGoalsAndFitnessLevelsText(
+          criteria.goal
+        )} Routine
           - fitnessLevel
           - goal
           - days. Each day has the following attributes:
@@ -118,15 +126,12 @@ export const generateWorkoutPlan = async (criteria) => {
       throw new Error("Failed to parse API response as JSON");
     }
 
-    const updatedTextWithGifUrls = addGifUrlsToWorkoutPlan(
-      parsedText,
-      exerciseNamesAndGifUrls
-    );
-    if (!updatedTextWithGifUrls) {
+    const workoutPlan = addGifUrlsToWorkoutPlan(parsedText, exerciseDetails);
+    if (!workoutPlan) {
       throw new Error("Failed to add GIF URLs to workout plan");
     }
 
-    return updatedTextWithGifUrls;
+    return workoutPlan;
   } catch (error) {
     console.error("Error generating workout plan:", error);
     return null;

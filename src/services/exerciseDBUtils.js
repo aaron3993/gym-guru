@@ -64,13 +64,11 @@ export const shuffleArray = (array) => {
   return array;
 };
 
-export const getAllExerciseNamesAndGifUrlsByBodyPart = async (
-  exerciseCounts
-) => {
+export const getAllExerciseDetailsByBodyPart = async (exerciseCounts) => {
   try {
     const allExercises = await getAllExercisesWithCache();
 
-    const exerciseNamesAndGifUrls = {};
+    const exerciseNamesAndDetails = {};
 
     for (const [bodyPart, count] of Object.entries(exerciseCounts)) {
       const exercisesByBodyPart = allExercises.filter(
@@ -82,14 +80,15 @@ export const getAllExerciseNamesAndGifUrlsByBodyPart = async (
       const selectedExercises = shuffledExercises.slice(0, count);
 
       selectedExercises.forEach((exercise) => {
-        exerciseNamesAndGifUrls[exercise.name] = exercise.gifUrl || "";
+        exerciseNamesAndDetails[exercise.name] = {
+          id: exercise.id,
+          gifUrl: exercise.gifUrl || "",
+        };
       });
     }
-    return exerciseNamesAndGifUrls;
+    return exerciseNamesAndDetails;
   } catch (error) {
     console.error("Error fetching exercises:", error);
-    return {
-      exerciseNamesAndGifUrls: {},
-    };
+    return {};
   }
 };
