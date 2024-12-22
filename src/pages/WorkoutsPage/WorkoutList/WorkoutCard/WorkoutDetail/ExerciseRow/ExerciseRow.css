@@ -19,6 +19,7 @@
   display: flex;
   align-items: center;
   gap: 15px;
+  width: 50%;
 }
 
 .exercise-info img {
@@ -38,18 +39,22 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  width: 50%;
 }
 
 .exercise-sets-and-reps {
   display: flex;
   gap: 20px;
+  width: 100%;
 }
 
 .editable-number {
   display: flex;
   flex-direction: column;
   align-items: center;
+  text-align: center;
   gap: 5px;
+  width: 100%;
 }
 
 .editable-number h4 {
