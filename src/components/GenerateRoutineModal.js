@@ -15,30 +15,29 @@ const GenerateRoutineModal = ({ isVisible, onClose }) => {
   const [form] = Form.useForm();
 
   const handleFinish = async (values) => {
-    try {
-      form.resetFields();
+    form.resetFields();
 
-      const jobId = await startJob(user.uid);
-      const workoutPlan = await generateWorkoutPlan(values);
-      if (!workoutPlan) {
-        throw new Error("Failed to generate a valid workout plan.");
-      }
+    const jobId = await startJob(user.uid);
 
-      const routineId = await saveCompleteWorkoutInfo(
-        user.uid,
-        workoutPlan,
-        values
-      );
+    onClose();
 
-      if (!routineId) {
-        throw new Error("Failed to save workout information.");
-      }
-
-      await completeJob(jobId, routineId);
-      navigate(`/routines/${routineId}`);
-    } finally {
-      onClose();
+    const workoutPlan = await generateWorkoutPlan(values);
+    if (!workoutPlan) {
+      throw new Error("Failed to generate a valid workout plan.");
     }
+
+    const routineId = await saveCompleteWorkoutInfo(
+      user.uid,
+      workoutPlan,
+      values
+    );
+
+    if (!routineId) {
+      throw new Error("Failed to save workout information.");
+    }
+
+    await completeJob(jobId, routineId);
+    navigate(`/routines/${routineId}`);
   };
 
   return (
