@@ -220,11 +220,14 @@ export const updateExerciseInWorkout = async (
       const currentExercises = workoutDoc.data().exercises || [];
       const updatedExercises = currentExercises.map((exercise) => {
         if (exercise.id === exerciseId) {
-          return { ...exercise, reps: newReps, sets: newSets };
+          return {
+            ...exercise,
+            reps: newReps || "",
+            sets: newSets || null,
+          };
         }
         return exercise;
       });
-
       await updateDoc(workoutRef, { exercises: updatedExercises });
     } else {
       console.error("Workout not found");
