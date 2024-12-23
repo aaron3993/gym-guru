@@ -39,6 +39,14 @@ export const registerUser = async (email, password) => {
       throw new Error("Password must be at least 6 characters long.");
     }
 
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*(),.?":{}|<>]).{6,}$/;
+    if (!passwordRegex.test(password)) {
+      throw new Error(
+        "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character."
+      );
+    }
+
     const userCredential = await createUserWithEmailAndPassword(
       auth,
       email,
