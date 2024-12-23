@@ -1,22 +1,56 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Modal, Form, Select, Button, notification } from "antd";
+import { Modal, Form, Select, Button, notification, Typography } from "antd";
 import { useAuth } from "../contexts/AuthContext";
 import { useJob } from "../contexts/JobContext";
 import { generateWorkoutPlan } from "../services/openaiUtils";
-import { saveCompleteWorkoutInfo } from "../utils/firestoreUtils";
+import {
+  saveCompleteWorkoutInfo,
+  checkAndUpdateRateLimit,
+  incrementRoutineCount,
+} from "../utils/firestoreUtils";
 
 const { Option } = Select;
+const { Text } = Typography;
 
 const GenerateRoutineModal = ({ isVisible, onClose }) => {
   const navigate = useNavigate();
   const { user } = useAuth();
   const { startJob, status, completeJob } = useJob();
   const [form] = Form.useForm();
+  const [rateLimitInfo, setRateLimitInfo] = useState({
+    numberOfRoutinesGenerated: 0,
+    rateLimited: false,
+  });
+
+  // Check the rate limit before opening the modal or right after opening
+  useEffect(() => {
+    if (isVisible && user?.uid) {
+      checkRateLimit();
+    }
+  }, [isVisible, user]);
+
+  const checkRateLimit = async () => {
+    const { rateLimited, numberOfRoutinesGenerated } =
+      await checkAndUpdateRateLimit(user.uid);
+    setRateLimitInfo({ rateLimited, numberOfRoutinesGenerated });
+  };
 
   const handleFinish = async (values) => {
     form.resetFields();
 
+    // If the user has exceeded the rate limit, stop here
+    if (rateLimitInfo.rateLimited) {
+      notification.error({
+        message: "Rate Limit Exceeded",
+        description:
+          "You can only generate 3 routines per hour. Please try again later.",
+        placement: "topRight",
+      });
+      return;
+    }
+
+    // Proceed with generating the routine as the rate limit hasn't been exceeded
     const jobId = await startJob(user.uid);
 
     notification.info({
@@ -49,6 +83,8 @@ const GenerateRoutineModal = ({ isVisible, onClose }) => {
         throw new Error("Failed to save workout information.");
       }
 
+      await incrementRoutineCount(user.uid);
+
       await completeJob(jobId, routineId);
 
       navigate(`/routines/${routineId}`);
@@ -69,6 +105,19 @@ const GenerateRoutineModal = ({ isVisible, onClose }) => {
       footer={null}
       onCancel={onClose}
     >
+      <Text type="secondary">
+        {`You can generate up to 3 routines per hour. You have generated
+        ${rateLimitInfo.numberOfRoutinesGenerated} routine${
+          rateLimitInfo.numberOfRoutinesGenerated === 1 ? "" : "s"
+        } this hour.`}
+      </Text>
+      {rateLimitInfo.rateLimited && (
+        <Text type="danger" style={{ display: "block", marginTop: 10 }}>
+          You have reached your limit of 3 routines per hour. Please try again
+          later.
+        </Text>
+      )}
+
       <Form form={form} layout="vertical" onFinish={handleFinish}>
         <Form.Item
           label="Fitness Level"
@@ -77,7 +126,10 @@ const GenerateRoutineModal = ({ isVisible, onClose }) => {
             { required: true, message: "Please select your fitness level" },
           ]}
         >
-          <Select placeholder="Select your fitness level">
+          <Select
+            placeholder="Select your fitness level"
+            disabled={rateLimitInfo.rateLimited}
+          >
             <Option value="beginner">Beginner</Option>
             <Option value="intermediate">Intermediate</Option>
             <Option value="advanced">Advanced</Option>
@@ -88,7 +140,10 @@ const GenerateRoutineModal = ({ isVisible, onClose }) => {
           name="goal"
           rules={[{ required: true, message: "Please select your goal" }]}
         >
-          <Select placeholder="Select your goal">
+          <Select
+            placeholder="Select your goal"
+            disabled={rateLimitInfo.rateLimited}
+          >
             <Option value="weightLoss">Weight Loss</Option>
             <Option value="muscleGain">Muscle Gain</Option>
             <Option value="endurance">Endurance</Option>
@@ -102,7 +157,7 @@ const GenerateRoutineModal = ({ isVisible, onClose }) => {
             htmlType="submit"
             block
             loading={status === "pending"}
-            disabled={status === "pending"}
+            disabled={status === "pending" || rateLimitInfo.rateLimited}
           >
             Generate Routine
           </Button>
