@@ -174,8 +174,12 @@ const WorkoutDetailPage = () => {
     setDeleteModalVisible(false);
 
     try {
-      await deleteWorkout(workoutId);
-      navigate("/workouts");
+      const routineId = await deleteWorkout(workoutId);
+      if (routineId) {
+        navigate(`/routines/${routineId}`);
+      } else {
+        navigate("/workouts");
+      }
     } catch (error) {
       console.error("Error deleting workout:", error);
     }

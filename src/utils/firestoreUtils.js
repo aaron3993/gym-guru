@@ -247,8 +247,21 @@ export const removeExerciseFromWorkout = async (workoutId, exercise) => {
 
 export const deleteWorkout = async (workoutId) => {
   try {
-    const workoutDoc = doc(db, "workouts", workoutId);
-    await deleteDoc(workoutDoc);
+    const workoutDocRef = doc(db, "workouts", workoutId);
+    const workoutSnapshot = await getDoc(workoutDocRef);
+
+    let routineId = null;
+
+    if (workoutSnapshot.exists()) {
+      const workoutData = workoutSnapshot.data();
+      routineId = workoutData.routineId || null;
+    } else {
+      console.warn(`Workout with ID ${workoutId} does not exist.`);
+    }
+
+    await deleteDoc(workoutDocRef);
+
+    return routineId;
   } catch (error) {
     console.error("Error deleting workout:", error);
     throw error;
