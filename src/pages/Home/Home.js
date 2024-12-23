@@ -7,7 +7,6 @@ import "./Home.css";
 
 const Home = () => {
   const navigate = useNavigate();
-
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleManualWorkout = () => {
@@ -42,26 +41,26 @@ const Home = () => {
           <div className="button-options">
             <div className="option">
               <Button type="primary" className="ai-button" onClick={showModal}>
-                Generate with AI
+                ⚡ Generate with AI
               </Button>
               <p className="option-note">
-                Use our AI tool to create a personalized weekly routine. All you
-                need to do is fill out a quick form. You just need to wait about
-                a minute and we'll notify you when it's ready.
+                Get a personalized weekly workout in just 1 minute. Quick, easy,
+                and tailored to your goals!
               </p>
+              <div className="badge">Recommended</div>
             </div>
+
             <div className="option">
               <Button
                 type="primary"
                 className="manual-button"
                 onClick={handleManualWorkout}
               >
-                Create Workouts Manually
+                🛠️ Create Workouts Manually
               </Button>
               <p className="option-note">
-                Browse and filter through our large library of exercises to
-                create your own workouts. Perfect for those who prefer a
-                hands-on approach.
+                Build your own workout step-by-step from our extensive exercise
+                library. Perfect for hands-on users.
               </p>
             </div>
           </div>
