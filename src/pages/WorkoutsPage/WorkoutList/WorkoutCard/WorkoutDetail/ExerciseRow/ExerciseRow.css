@@ -19,7 +19,7 @@
   display: flex;
   align-items: center;
   gap: 15px;
-  width: 50%;
+  width: 40%;
 }
 
 .exercise-info img {
@@ -45,7 +45,7 @@
 .exercise-sets-and-reps {
   display: flex;
   gap: 20px;
-  width: 100%;
+  width: 80%;
 }
 
 .editable-number {
@@ -77,8 +77,12 @@
   border-radius: 4px;
 }
 
-.editable-number .ant-input-number {
-  width: 70px;
+.editable-sets {
+  width: 30%;
+}
+
+.editable-reps {
+  width: 45%;
 }
 
 .remove-exercise-icon {
@@ -101,6 +105,11 @@
 }
 
 @media (max-width: 768px) {
+  .exercise-info img {
+    width: 50px;
+    height: 50px;
+  }
+
   .exercise-info > h4 {
     font-size: 14px;
   }

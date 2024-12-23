@@ -75,7 +75,7 @@ const ExerciseRow = ({
       </div>
       <div className="exercise-actions">
         <div className="exercise-sets-and-reps">
-          <div className="editable-number">
+          <div className="editable-number editable-sets">
             <h4>Sets</h4>
             {isEditingSets ? (
               <InputNumber
@@ -93,7 +93,7 @@ const ExerciseRow = ({
               </p>
             )}
           </div>
-          <div className="editable-number">
+          <div className="editable-number editable-reps">
             <h4>Reps</h4>
             {isEditingReps ? (
               <Input
