@@ -39,7 +39,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  width: 50%;
+  width: 60%;
 }
 
 .exercise-sets-and-reps {
@@ -78,11 +78,11 @@
 }
 
 .editable-sets {
-  width: 30%;
+  width: 45%;
 }
 
 .editable-reps {
-  width: 45%;
+  width: 50%;
 }
 
 .remove-exercise-icon {
@@ -105,20 +105,28 @@
 }
 
 @media (max-width: 768px) {
+  .exercise-row {
+    padding: 10px 8px;
+  }
+
+  .exercise-info {
+    gap: 2px;
+  }
+
   .exercise-info img {
     width: 50px;
     height: 50px;
   }
 
   .exercise-info > h4 {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .editable-number > h4 {
-    font-size: 14px;
+    font-size: 13px;
   }
 
   .editable-number > p {
-    font-size: 14px;
+    font-size: 13px;
   }
 }
