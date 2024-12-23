@@ -45,16 +45,20 @@ const RoutineDetailPage = () => {
         </div>
 
         <div className="routine-list">
-          {workouts.map((workout) => (
-            <div
-              key={workout.id}
-              className="workout-card"
-              onClick={() => handleCardClick(workout)}
-            >
-              <h3>{workout.day}</h3>
-              <p>{workout.name}</p>
-            </div>
-          ))}
+          {workouts.length > 0 ? (
+            workouts.map((workout) => (
+              <div
+                key={workout.id}
+                className="workout-card"
+                onClick={() => handleCardClick(workout)}
+              >
+                <h3>{workout.day}</h3>
+                <p>{workout.name}</p>
+              </div>
+            ))
+          ) : (
+            <p>No workouts to show</p>
+          )}
         </div>
       </div>
     </div>
