@@ -83,3 +83,10 @@
   font-size: 1rem;
   color: #333;
 }
+
+@media (max-width: 768px) {
+  .workout-exercises-container {
+    display: flex;
+    flex-direction: column;
+  }
+}

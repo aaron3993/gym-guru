@@ -99,3 +99,17 @@
   font-size: 18px;
   color: #d9534f;
 }
+
+@media (max-width: 768px) {
+  .exercise-info > h4 {
+    font-size: 14px;
+  }
+
+  .editable-number > h4 {
+    font-size: 14px;
+  }
+
+  .editable-number > p {
+    font-size: 14px;
+  }
+}
