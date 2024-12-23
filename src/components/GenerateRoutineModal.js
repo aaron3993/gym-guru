@@ -23,7 +23,6 @@ const GenerateRoutineModal = ({ isVisible, onClose }) => {
     rateLimited: false,
   });
 
-  // Check the rate limit before opening the modal or right after opening
   useEffect(() => {
     if (isVisible && user?.uid) {
       checkRateLimit();
@@ -31,15 +30,18 @@ const GenerateRoutineModal = ({ isVisible, onClose }) => {
   }, [isVisible, user]);
 
   const checkRateLimit = async () => {
-    const { rateLimited, numberOfRoutinesGenerated } =
-      await checkAndUpdateRateLimit(user.uid);
-    setRateLimitInfo({ rateLimited, numberOfRoutinesGenerated });
+    try {
+      const { rateLimited, numberOfRoutinesGenerated } =
+        await checkAndUpdateRateLimit(user.uid);
+      setRateLimitInfo({ rateLimited, numberOfRoutinesGenerated });
+    } catch (error) {
+      console.error("Error checking rate limit:", error);
+    }
   };
 
   const handleFinish = async (values) => {
     form.resetFields();
 
-    // If the user has exceeded the rate limit, stop here
     if (rateLimitInfo.rateLimited) {
       notification.error({
         message: "Rate Limit Exceeded",
@@ -50,7 +52,6 @@ const GenerateRoutineModal = ({ isVisible, onClose }) => {
       return;
     }
 
-    // Proceed with generating the routine as the rate limit hasn't been exceeded
     const jobId = await startJob(user.uid);
 
     notification.info({
@@ -159,7 +160,9 @@ const GenerateRoutineModal = ({ isVisible, onClose }) => {
             loading={status === "pending"}
             disabled={status === "pending" || rateLimitInfo.rateLimited}
           >
-            Generate Routine
+            {`Generate Routine (${
+              3 - rateLimitInfo.numberOfRoutinesGenerated
+            })`}
           </Button>
         </Form.Item>
       </Form>
