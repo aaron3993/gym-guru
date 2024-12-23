@@ -4,7 +4,7 @@
 }
 
 .full-page-section {
-  height: 96vh;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -18,7 +18,6 @@
 }
 
 #options-section {
-  height: 96vh;
   background-color: #f7f7f7;
   padding: 20px;
 }
@@ -36,7 +35,7 @@
 }
 
 .cta-button {
-  margin-top: 32px;
+  margin-top: 48px;
   font-size: 30px;
   padding: 14px 28px;
   height: 110px;
@@ -144,5 +143,9 @@
   .button-options {
     flex-direction: column;
     gap: 20px;
+  }
+
+  .full-page-section {
+    height: calc(100vh - 60px);
   }
 }
