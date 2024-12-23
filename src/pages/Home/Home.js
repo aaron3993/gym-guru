@@ -44,8 +44,8 @@ const Home = () => {
                 ⚡ Generate with AI
               </Button>
               <p className="option-note">
-                Get a personalized weekly workout in just 1 minute. Quick, easy,
-                and tailored to your goals!
+                Get a personalized weekly workout routine in just 1 minute.
+                Quick, easy, and tailored to your goals!
               </p>
               <div className="badge">Recommended</div>
             </div>

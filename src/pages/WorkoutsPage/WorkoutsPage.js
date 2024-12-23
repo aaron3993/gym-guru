@@ -54,7 +54,7 @@ const WorkoutsPage = () => {
     <div className="workouts-page">
       <div className="header">
         <Title level={1}>My Workouts</Title>
-        <p>Create and manage your workout routines effortlessly.</p>
+        <p>Create and manage your workouts effortlessly.</p>
       </div>
 
       <div className="content">

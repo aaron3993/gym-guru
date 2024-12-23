@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Modal, Form, Select, Button } from "antd";
+import { Modal, Form, Select, Button, notification } from "antd";
 import { useAuth } from "../contexts/AuthContext";
 import { useJob } from "../contexts/JobContext";
 import { generateWorkoutPlan } from "../services/openaiUtils";
@@ -19,25 +19,47 @@ const GenerateRoutineModal = ({ isVisible, onClose }) => {
 
     const jobId = await startJob(user.uid);
 
+    notification.info({
+      message: "Routine Generation Started",
+      description: (
+        <span>
+          Your AI-generated workout routine is being prepared. While you wait,{" "}
+          <a href="/workouts">check out our custom workouts page</a> for more
+          options!
+        </span>
+      ),
+      placement: "topRight",
+      duration: 5,
+    });
+
     onClose();
+    try {
+      const workoutPlan = await generateWorkoutPlan(values);
+      if (!workoutPlan) {
+        throw new Error("Failed to generate a valid workout plan.");
+      }
 
-    const workoutPlan = await generateWorkoutPlan(values);
-    if (!workoutPlan) {
-      throw new Error("Failed to generate a valid workout plan.");
+      const routineId = await saveCompleteWorkoutInfo(
+        user.uid,
+        workoutPlan,
+        values
+      );
+
+      if (!routineId) {
+        throw new Error("Failed to save workout information.");
+      }
+
+      await completeJob(jobId, routineId);
+
+      navigate(`/routines/${routineId}`);
+    } catch (error) {
+      notification.error({
+        message: "Error",
+        description:
+          "An error occurred while generating your workout routine. Please try again.",
+        placement: "topRight",
+      });
     }
-
-    const routineId = await saveCompleteWorkoutInfo(
-      user.uid,
-      workoutPlan,
-      values
-    );
-
-    if (!routineId) {
-      throw new Error("Failed to save workout information.");
-    }
-
-    await completeJob(jobId, routineId);
-    navigate(`/routines/${routineId}`);
   };
 
   return (
