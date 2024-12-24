@@ -11,7 +11,7 @@ Live website: https://gymguru-37ed9.web.app/
 - **Create Custom Workouts:** Tailor your fitness experience by crafting custom workouts. Specify exercises, sets, reps, and more to design a routine that aligns with your fitness objectives.
 
 - **Exercise Database:** Browse and search through a vast database of exercises to add to your workouts. Filter exercises based on muscle groups, equipment, and difficulty level to find the perfect fit for your routine.
-- 
+  
 - **Weekly Workout Plan Generation (Powered by OpenAI):** Generate a customized weekly workout plan using OpenAI's API. Based on your preferences and goals, Gym Guru creates a plan designed to keep you on track and motivated.
 
 - **Easy Setup:** Get started quickly by running the following commands in the main directory:
