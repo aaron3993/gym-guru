@@ -3,8 +3,10 @@ import {
   getFromLocalStorage,
   saveToLocalStorage,
 } from "../utils/localStorageUtils";
+import { updateUserWorkoutsWithNewGifUrls } from "../utils/firestoreUtils";
 
 const CACHE_KEY = "allExercises";
+const CACHE_TIMESTAMP_KEY = "exerciseCacheTimestamp";
 
 export const fetchAllExercises = async () => {
   const options = {
@@ -30,19 +32,34 @@ export const fetchAllExercises = async () => {
 };
 
 const isCacheExpired = () => {
-  const cachedData = getFromLocalStorage(CACHE_KEY);
-  if (!cachedData) return true;
+  const lastFetchTimestamp = getFromLocalStorage(CACHE_TIMESTAMP_KEY);
+  if (!lastFetchTimestamp) return true;
+
+  const now = Date.now();
+  const twelveHoursInMillis = 12 * 60 * 60 * 1000;
+
+  const cacheIsOlderThanTwelveHours =
+    now - parseInt(lastFetchTimestamp, 10) > twelveHoursInMillis;
+
+  return cacheIsOlderThanTwelveHours;
 };
 
-export const getAllExercisesWithCache = async () => {
-  const cachedData = getFromLocalStorage(CACHE_KEY);
-  if (cachedData && !isCacheExpired()) {
-    return cachedData;
+export const getAllExercisesWithCache = async (userId) => {
+  if (!isCacheExpired()) {
+    const cachedData = getFromLocalStorage(CACHE_KEY);
+    if (cachedData) {
+      return cachedData;
+    }
   }
 
   const allExercises = await fetchAllExercises();
 
-  if (allExercises.length > 0) saveToLocalStorage(CACHE_KEY, allExercises);
+  if (allExercises.length > 0) {
+    saveToLocalStorage(CACHE_KEY, allExercises);
+    saveToLocalStorage(CACHE_TIMESTAMP_KEY, Date.now().toString());
+  }
+
+  await updateUserWorkoutsWithNewGifUrls(userId, allExercises);
 
   return allExercises;
 };

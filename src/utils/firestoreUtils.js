@@ -145,11 +145,21 @@ export const getAllCustomWorkoutsForUser = async (user) => {
   }
 };
 
-export const getAllWorkouts = async () => {
+export const getAllWorkoutsForUser = async (userId) => {
   try {
+    // Reference to the workouts collection
     const workoutsCollection = collection(db, "workouts");
-    const workoutsSnapshot = await getDocs(workoutsCollection);
 
+    // Query the workouts collection for workouts specific to the user
+    const userWorkoutsQuery = query(
+      workoutsCollection,
+      where("userId", "==", userId)
+    );
+
+    // Fetch the data based on the query
+    const workoutsSnapshot = await getDocs(userWorkoutsQuery);
+
+    // Map the snapshot to an array of workout objects with ids
     const workouts = workoutsSnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
@@ -157,11 +167,10 @@ export const getAllWorkouts = async () => {
 
     return workouts;
   } catch (error) {
-    console.error("Error fetching workouts:", error);
+    console.error("Error fetching workouts for user:", error);
     return [];
   }
 };
-
 export const fetchRoutineWithWorkouts = async (routineId) => {
   try {
     const routineRef = doc(db, "routines", routineId);
@@ -541,4 +550,57 @@ export const incrementRoutineCount = async (uid) => {
   await updateDoc(userRef, {
     "rateLimit.numberOfRoutinesGenerated": increment(1),
   });
+};
+
+export const updateUserWorkoutsWithNewGifUrls = async (
+  userId,
+  allExercises
+) => {
+  try {
+    const userWorkouts = await getAllWorkoutsForUser(userId);
+
+    const exerciseMap = new Map(allExercises.map((ex) => [ex.id, ex.gifUrl]));
+
+    const updatedWorkouts = userWorkouts.map((workout) => {
+      const updatedExercises = workout.exercises.map((exercise) => {
+        const gifUrl = exerciseMap.get(exercise.id);
+
+        if (gifUrl) {
+          exercise.gifUrl = gifUrl;
+        }
+
+        return exercise;
+      });
+
+      return { ...workout, exercises: updatedExercises };
+    });
+
+    await saveUpdatedUserWorkouts(userId, updatedWorkouts);
+  } catch (error) {
+    console.error("Error updating user workouts with new GIF URLs:", error);
+  }
+};
+
+export const saveUpdatedUserWorkouts = async (userId, workouts) => {
+  const batch = writeBatch(db);
+
+  try {
+    for (const workout of workouts) {
+      const workoutRef = doc(db, "users", userId, "workouts", workout.id);
+
+      const workoutDoc = await getDoc(workoutRef);
+
+      if (workoutDoc.exists()) {
+        batch.update(workoutRef, { exercises: workout.exercises });
+      } else {
+        batch.set(workoutRef, {
+          exercises: workout.exercises,
+        });
+      }
+    }
+
+    await batch.commit();
+  } catch (error) {
+    console.error("Error saving user workouts:", error);
+  }
 };

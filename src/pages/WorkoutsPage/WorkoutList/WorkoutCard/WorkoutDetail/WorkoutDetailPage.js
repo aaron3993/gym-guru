@@ -15,12 +15,15 @@ import SearchBar from "../../../../../components/SearchBar/SearchBar";
 import ExerciseList from "../../../../../components/ExerciseList/ExerciseList";
 import LoadingSpinner from "../../../../../components/LoadingSpinner";
 import ExerciseRow from "./ExerciseRow/ExerciseRow";
+import { useAuth } from "../../../../../contexts/AuthContext";
 import "./WorkoutDetailPage.css";
 
 const { Title } = Typography;
 
 const WorkoutDetailPage = () => {
   const navigate = useNavigate();
+
+  const { user } = useAuth();
 
   const { workoutId } = useParams();
 
@@ -32,8 +35,6 @@ const WorkoutDetailPage = () => {
   const [allExercises, setAllExercises] = useState([]);
   const [filteredExercises, setFilteredExercises] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const [exerciseModalOpen, setExerciseModalOpen] = useState(false);
-  const [selectedExercise, setSelectedExercise] = useState(null);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 
   useEffect(() => {
@@ -88,10 +89,8 @@ const WorkoutDetailPage = () => {
 
   const fetchAllExercisesData = async () => {
     try {
-      const cachedExercises = await getAllExercisesWithCache();
-
+      const cachedExercises = await getAllExercisesWithCache(user.uid);
       setAllExercises(cachedExercises);
-
       setFilteredExercises(
         applyExerciseFiltersAndLimit(cachedExercises, searchQuery)
       );
