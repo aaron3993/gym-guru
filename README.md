@@ -1,6 +1,6 @@
 # Gym Guru - Your Personal Workout Assistant
 
-Welcome to Gym Guru, your go-to workout app for creating and managing personalized fitness routines. Whether you're a seasoned gym enthusiast or just starting your fitness journey, Gym Guru empowers you to design and track workouts tailored to your goals.
+Welcome to Gym Guru, your go-to workout app for creating and managing personalized fitness routines. Whether you're a seasoned gym enthusiast or just starting your fitness journey, Gym Guru empowers you to design and track workouts tailored to your goals. The app uses an extensive and optimized algorithm to combine the power of the OpenAI API, ExerciseDB, and Firestore to create the most effective and personalized workout routines.
 
 Live website: https://gymguru-37ed9.web.app/
 
