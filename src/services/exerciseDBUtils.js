@@ -3,7 +3,6 @@ import {
   getFromLocalStorage,
   saveToLocalStorage,
 } from "../utils/localStorageUtils";
-import { updateUserWorkoutsWithNewGifUrls } from "../utils/firestoreUtils";
 
 const CACHE_KEY = "allExercises";
 const CACHE_TIMESTAMP_KEY = "exerciseCacheTimestamp";
@@ -58,8 +57,6 @@ export const getAllExercisesWithCache = async (userId) => {
     saveToLocalStorage(CACHE_KEY, allExercises);
     saveToLocalStorage(CACHE_TIMESTAMP_KEY, Date.now().toString());
   }
-
-  await updateUserWorkoutsWithNewGifUrls(userId, allExercises);
 
   return allExercises;
 };
