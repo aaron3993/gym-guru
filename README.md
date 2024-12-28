@@ -8,11 +8,15 @@ Live website: https://gymguru-37ed9.web.app/
 
 - **User Registration:** Create your account to unlock the full potential of Gym Guru. Your personalized profile allows you to save and revisit your workout routines seamlessly.
 
+- **Weekly Workout Plan Generation (Powered by OpenAI):** Generate a customized weekly workout plan using OpenAI's API. Based on your preferences and goals, Gym Guru creates a plan designed to keep you on track and motivated.
+
+- **Real-Time Feedback**: Each workout routine generation creates a background job that runs asynchronously. Jobs are actively monitored for progress and completion to ensure reliability and provide real-time updates to users.
+
 - **Create Custom Workouts:** Tailor your fitness experience by crafting custom workouts. Specify exercises, sets, reps, and more to design a routine that aligns with your fitness objectives.
 
 - **Exercise Database:** Browse and search through a vast database of exercises to add to your workouts. Filter exercises based on muscle groups, equipment, and difficulty level to find the perfect fit for your routine.
-  
-- **Weekly Workout Plan Generation (Powered by OpenAI):** Generate a customized weekly workout plan using OpenAI's API. Based on your preferences and goals, Gym Guru creates a plan designed to keep you on track and motivated.
+
+- **Caching Implementation:** Implements caching to reduce redundant API calls, significantly improving app performance and reducing load times for a smoother user experience.
 
 - **Easy Setup:** Get started quickly by running the following commands in the main directory:
   ```bash
@@ -23,10 +27,10 @@ Live website: https://gymguru-37ed9.web.app/
 ## Technologies Used
 
 - **React:** Building a dynamic and responsive user interface.
-- **Firebase Auth:** Enabling user authentication for a secure login experience.
-- **Firestore:** Storing user profiles, workouts, and exercise data in a scalable NoSQL database.
-- **ExerciseDB (RapidAPI):** Leveraging the RapidAPI ExerciseDB for a comprehensive database of exercises.
 - **OpenAI API:** Used for generating personalized weekly workout plans based on user goals and preferences.
+- **Firebase Auth:** Enabling user authentication for a secure registration and login experience, and user management.
+- **Firestore:** Storing user profiles, workouts, routines, jobs, and exercise data in a scalable NoSQL database.
+- **ExerciseDB (RapidAPI):** Leveraging the RapidAPI ExerciseDB for a comprehensive database of exercises.
 
 ## Getting Started
 
