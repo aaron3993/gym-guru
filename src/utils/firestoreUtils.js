@@ -145,11 +145,21 @@ export const getAllCustomWorkoutsForUser = async (user) => {
   }
 };
 
-export const getAllWorkouts = async () => {
+export const getAllWorkoutsForUser = async (userId) => {
   try {
+    // Reference to the workouts collection
     const workoutsCollection = collection(db, "workouts");
-    const workoutsSnapshot = await getDocs(workoutsCollection);
 
+    // Query the workouts collection for workouts specific to the user
+    const userWorkoutsQuery = query(
+      workoutsCollection,
+      where("userId", "==", userId)
+    );
+
+    // Fetch the data based on the query
+    const workoutsSnapshot = await getDocs(userWorkoutsQuery);
+
+    // Map the snapshot to an array of workout objects with ids
     const workouts = workoutsSnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
@@ -157,11 +167,10 @@ export const getAllWorkouts = async () => {
 
     return workouts;
   } catch (error) {
-    console.error("Error fetching workouts:", error);
+    console.error("Error fetching workouts for user:", error);
     return [];
   }
 };
-
 export const fetchRoutineWithWorkouts = async (routineId) => {
   try {
     const routineRef = doc(db, "routines", routineId);
