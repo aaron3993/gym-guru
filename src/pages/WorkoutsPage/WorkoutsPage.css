@@ -26,16 +26,19 @@
 }
 
 .create-workout-button {
-  background-color: #123456;
-  font-size: 20px;
-  height: 48px;
+  background-color: #1e71c4;
   color: white;
-  font-weight: bold;
+  width: 250px;
+  height: 56px;
+  font-size: 20px;
   border: none;
+  border-radius: 28px;
+  font-weight: bold;
+  transition: all 0.3s ease;
 }
 
 .create-workout-button:hover {
-  background-color: #1e7d34;
+  background-color: #1c72d4;
 }
 
 .workout-list {
