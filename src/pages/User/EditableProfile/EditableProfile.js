@@ -51,9 +51,6 @@ const EditableProfile = ({ userData }) => {
 
   return (
     <div className="editable-profile-container">
-      <div className="header">
-        <Title level={1}>My Profile</Title>
-      </div>
       <Form
         form={form}
         layout="vertical"

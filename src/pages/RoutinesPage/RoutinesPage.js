@@ -43,14 +43,16 @@ const RoutinesPage = () => {
   return (
     <div className="routines-page">
       <div className="header">
-        <Title level={1}>My Routines</Title>
-        <p>Generate routines using AI based on your criteria.</p>
+        <Title level={4}>
+          Generate routines using AI based on your criteria.
+        </Title>
       </div>
 
       <div className="content">
         <Button type="primary" className="ai-button" onClick={showModal}>
           Generate Routine with AI
         </Button>
+        <Title level={4}>My Routines</Title>
         {loading ? (
           <LoadingSpinner />
         ) : routines.length > 0 ? (

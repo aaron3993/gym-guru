@@ -53,8 +53,7 @@ const WorkoutsPage = () => {
   return (
     <div className="workouts-page">
       <div className="header">
-        <Title level={1}>My Workouts</Title>
-        <p>Create and manage your workouts effortlessly.</p>
+        <Title level={4}>Create and manage your workouts effortlessly.</Title>
       </div>
 
       <div className="content">
@@ -65,6 +64,7 @@ const WorkoutsPage = () => {
         >
           Create Workout
         </Button>
+        <Title level={4}>My Workouts</Title>
         {loading ? (
           <LoadingSpinner />
         ) : workouts.length > 0 ? (
