@@ -23,14 +23,14 @@ const Navbar = ({ onLogout }) => {
         <Link to="/" className="nav-link">
           Home
         </Link>
-        <Link to="/profile" className="nav-link">
-          Profile
+        <Link to="/routines" className="nav-link">
+          Routines
         </Link>
         <Link to="/workouts" className="nav-link">
           Workouts
         </Link>
-        <Link to="/routines" className="nav-link">
-          Routines
+        <Link to="/profile" className="nav-link">
+          Profile
         </Link>
       </div>
       <div>
@@ -79,14 +79,14 @@ const Navbar = ({ onLogout }) => {
           <Link to="/" className="drawer-link" onClick={closeDrawer}>
             Home
           </Link>
-          <Link to="/profile" className="drawer-link" onClick={closeDrawer}>
-            Profile
+          <Link to="/routines" className="drawer-link" onClick={closeDrawer}>
+            Routines
           </Link>
           <Link to="/workouts" className="drawer-link" onClick={closeDrawer}>
             Workouts
           </Link>
-          <Link to="/routines" className="drawer-link" onClick={closeDrawer}>
-            Routines
+          <Link to="/profile" className="drawer-link" onClick={closeDrawer}>
+            Profile
           </Link>
         </div>
         <Button
