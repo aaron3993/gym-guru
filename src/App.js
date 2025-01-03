@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import Login from "./pages/Login/Login";
@@ -14,11 +14,16 @@ import WorkoutDetailPage from "./pages/WorkoutsPage/WorkoutList/WorkoutCard/Work
 import RoutinesPage from "./pages/RoutinesPage/RoutinesPage";
 import { useAuth } from "./contexts/AuthContext";
 import RoutineDetailPage from "./pages/RoutinesPage/RoutineList/RoutineCard/RoutineDetailPage/RoutineDetailPage";
+import { logEvent, analytics } from "./firebase";
 
 const theme = createTheme();
 
 const App = () => {
   const { user, isAuthenticated, isLoading, handleLogout } = useAuth();
+
+  useEffect(() => {
+    logEvent(analytics, "user_landed");
+  }, []);
 
   if (isLoading) {
     return <LoadingSpinner />;
