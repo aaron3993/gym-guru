@@ -59,6 +59,7 @@ Start the Application:
 ```
 
 To access the list of exercises, you must create an account and get the api key from https://rapidapi.com/justin-WFnsXH_t6/api/exercisedb and put it in your local .env file. Api calls are cached to save quota.
+
 To access the ai functionality, you must create an account and get your api key from https://platform.openai.com/docs/overview. Openai will require a paid account to use this functionality.
 
 
