@@ -40,14 +40,14 @@ const LandingPage = () => {
       <section className="about-section">
         <h2>About Me</h2>
         <p>
-          I'm a dedicated fitness coach with over ten years of experience
-          getting people in shape and also possess two years of professional
-          experience as a full-stack software developer. I specialize in
-          building user-centric web applications, and my passion for fitness led
-          me to create a platform that combines technology and personalized
-          coaching. Whether you're looking to build muscle, lose fat, or stay in
-          shape, I provide tailored plans to fit your needs, leveraging my
-          technical expertise to track your progress efficiently.
+          Hi, I'm Aaron. I'm a dedicated fitness coach with over ten years of
+          experience getting people in shape and also possess two years of
+          professional experience as a full-stack software developer. I
+          specialize in building user-centric web applications, and my passion
+          for fitness led me to create a platform that combines technology and
+          personalized coaching. Whether you're looking to build muscle, lose
+          fat, or stay in shape, I provide tailored plans to fit your needs,
+          leveraging my technical expertise to track your progress efficiently.
         </p>
         <img
           src="/images/about-me.jpg"
