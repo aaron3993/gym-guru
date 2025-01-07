@@ -12,6 +12,7 @@ import LoadingSpinner from "./components/LoadingSpinner";
 import WorkoutsPage from "./pages/WorkoutsPage/WorkoutsPage";
 import WorkoutDetailPage from "./pages/WorkoutsPage/WorkoutList/WorkoutCard/WorkoutDetail/WorkoutDetailPage";
 import RoutinesPage from "./pages/RoutinesPage/RoutinesPage";
+import LandingPage from "./pages/LandingPage/LandingPage";
 import { useAuth } from "./contexts/AuthContext";
 import RoutineDetailPage from "./pages/RoutinesPage/RoutineList/RoutineCard/RoutineDetailPage/RoutineDetailPage";
 import { logEvent, analytics } from "./firebase";
@@ -36,6 +37,10 @@ const App = () => {
       <Routes>
         <Route
           path="/"
+          element={isAuthenticated ? <Navigate to="/home" /> : <LandingPage />}
+        />
+        <Route
+          path="/home"
           element={
             <PrivateRoute isAuthenticated={isAuthenticated}>
               <Home />
@@ -84,9 +89,12 @@ const App = () => {
         />
         <Route
           path="/login"
-          element={isAuthenticated ? <Navigate to="/" /> : <Login />}
+          element={isAuthenticated ? <Navigate to="/home" /> : <Login />}
         />
-        <Route path="/register" element={<Register />} />
+        <Route
+          path="/register"
+          element={isAuthenticated ? <Navigate to="/home" /> : <Register />}
+        />
       </Routes>
     </ThemeProvider>
   );
