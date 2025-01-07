@@ -1,27 +1,12 @@
-import React, { useState } from "react";
-import { Button, Modal } from "antd";
+import React from "react";
+import { Button } from "antd";
 import { useNavigate } from "react-router-dom";
 import "./LandingPage.css";
 
 const LandingPage = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const navigate = useNavigate();
 
   const handleGetStarted = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
-
-  const handleLoginRedirect = () => {
-    setIsModalOpen(false);
-    navigate("/login");
-  };
-
-  const handleSignupRedirect = () => {
-    setIsModalOpen(false);
     navigate("/register");
   };
 
@@ -55,14 +40,14 @@ const LandingPage = () => {
       <section className="about-section">
         <h2>About Me</h2>
         <p>
-          I'm a dedicated fitness coach with over ten years getting people in
-          shape and also possess two years of professional experience as a
-          full-stack software developer. I specialize in building user-centric
-          web applications, and my passion for fitness led me to create a
-          platform that combines technology and personalized coaching. Whether
-          you're looking to build muscle, lose fat, or stay in shape, I provide
-          tailored plans to fit your needs, leveraging my technical expertise to
-          track your progress efficiently.
+          I'm a dedicated fitness coach with over ten years of experience
+          getting people in shape and also possess two years of professional
+          experience as a full-stack software developer. I specialize in
+          building user-centric web applications, and my passion for fitness led
+          me to create a platform that combines technology and personalized
+          coaching. Whether you're looking to build muscle, lose fat, or stay in
+          shape, I provide tailored plans to fit your needs, leveraging my
+          technical expertise to track your progress efficiently.
         </p>
         <img
           src="/images/about-me.jpg"
@@ -92,42 +77,6 @@ const LandingPage = () => {
           Sign Up Now
         </Button>
       </section>
-
-      <Modal
-        title="Sign Up or Log In"
-        open={isModalOpen}
-        onCancel={handleCloseModal}
-        footer={null}
-        centered
-        // styles={{
-        //   body: {
-        //     // padding: "20px", // Adjust padding for snug fit
-        //     height: "450px",
-        //     display: "flex",
-        //     justifyContent: "center",
-        //     alignItems: "center",
-        //     flexDirection: "column",
-        //   },
-        // }}
-      >
-        <p>
-          Sign up or log in to access personalized workouts and track your
-          progress.
-        </p>
-        <div className="modal-buttons">
-          <Button
-            type="primary"
-            size="large"
-            onClick={handleSignupRedirect}
-            style={{ marginRight: "10px" }}
-          >
-            Sign Up
-          </Button>
-          <Button size="large" onClick={handleLoginRedirect}>
-            Log In
-          </Button>
-        </div>
-      </Modal>
     </div>
   );
 };
