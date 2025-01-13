@@ -147,19 +147,15 @@ export const getAllCustomWorkoutsForUser = async (user) => {
 
 export const getAllWorkoutsForUser = async (userId) => {
   try {
-    // Reference to the workouts collection
     const workoutsCollection = collection(db, "workouts");
 
-    // Query the workouts collection for workouts specific to the user
     const userWorkoutsQuery = query(
       workoutsCollection,
       where("userId", "==", userId)
     );
 
-    // Fetch the data based on the query
     const workoutsSnapshot = await getDocs(userWorkoutsQuery);
 
-    // Map the snapshot to an array of workout objects with ids
     const workouts = workoutsSnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
@@ -202,6 +198,26 @@ export const fetchRoutineWithWorkouts = async (routineId) => {
     };
   } catch (error) {
     console.error("Error fetching routine with workouts:", error);
+    throw error;
+  }
+};
+
+export const fetchWorkoutDetailsFromFirestore = async (workoutId) => {
+  try {
+    const workoutDoc = doc(db, "workouts", workoutId);
+    const workoutSnapshot = await getDoc(workoutDoc);
+
+    if (workoutSnapshot.exists()) {
+      return {
+        id: workoutSnapshot.id,
+        ...workoutSnapshot.data(),
+      };
+    } else {
+      console.error("Workout not found");
+      return null;
+    }
+  } catch (error) {
+    console.error("Error fetching workout details:", error);
     throw error;
   }
 };

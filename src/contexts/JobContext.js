@@ -1,4 +1,10 @@
-import React, { createContext, useState, useContext, useEffect } from "react";
+import React, {
+  createContext,
+  useState,
+  useContext,
+  useEffect,
+  useCallback,
+} from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./AuthContext";
 import {
@@ -23,6 +29,31 @@ export const JobProvider = ({ children }) => {
   const [jobId, setJobId] = useState(null);
   const [status, setStatus] = useState(null);
 
+  const monitorJobAndNotify = useCallback(
+    (jobId) => {
+      monitorJobInFirestore(jobId, async (jobData) => {
+        setJobId(jobData.jobId);
+        setStatus(jobData.status);
+
+        if (jobData.status === "completed") {
+          const routineId = await getRoutineIdForJob(jobData.jobId);
+          notification.success({
+            message: "Routine Generated",
+            description: "Click here to go to your routine.",
+            placement: "topRight",
+            style: { cursor: "pointer" },
+            onClick: () => {
+              if (routineId) {
+                navigate(`/routines/${routineId}`);
+              }
+            },
+          });
+        }
+      });
+    },
+    [navigate]
+  );
+
   useEffect(() => {
     if (!isAuthenticated) return;
 
@@ -46,7 +77,7 @@ export const JobProvider = ({ children }) => {
     };
 
     fetchAndMonitorJob();
-  }, [user, isAuthenticated]);
+  }, [user, isAuthenticated, monitorJobAndNotify]);
 
   const startJob = async (userId) => {
     try {
@@ -70,28 +101,6 @@ export const JobProvider = ({ children }) => {
     } catch (error) {
       message.error(`Error completing job: ${error.message}`);
     }
-  };
-
-  const monitorJobAndNotify = (jobId) => {
-    monitorJobInFirestore(jobId, async (jobData) => {
-      setJobId(jobData.jobId);
-      setStatus(jobData.status);
-
-      if (jobData.status === "completed") {
-        const routineId = await getRoutineIdForJob(jobData.jobId);
-        notification.success({
-          message: "Routine Generated",
-          description: "Click here to go to your routine.",
-          placement: "topRight",
-          style: { cursor: "pointer" },
-          onClick: () => {
-            if (routineId) {
-              navigate(`/routines/${routineId}`);
-            }
-          },
-        });
-      }
-    });
   };
 
   return (

@@ -5,7 +5,7 @@ import { formatGoalsAndFitnessLevelsText } from "../../../utils/dataUtils";
 import { useAuth } from "../../../contexts/AuthContext";
 import "./EditableProfile.css";
 
-const { Text, Title } = Typography;
+const { Text } = Typography;
 const { Option } = Select;
 
 const EditableProfile = ({ userData }) => {
