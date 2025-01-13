@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Button, message, Form, Typography } from "antd";
 import CreateWorkoutModal from "../../components/CreateWorkoutModal";
 import WorkoutList from "./WorkoutList/WorkoutList";
@@ -18,22 +18,23 @@ const WorkoutsPage = () => {
   const [loading, setLoading] = useState(true);
   const [form] = Form.useForm();
 
-  useEffect(() => {
-    fetchWorkouts();
-  }, [user]);
-
-  const fetchWorkouts = async () => {
+  const fetchWorkouts = useCallback(async () => {
+    if (!user) return;
     try {
-      if (user) {
-        const fetchedWorkouts = await getAllCustomWorkoutsForUser(user);
-        setWorkouts(fetchedWorkouts);
-      }
+      const fetchedWorkouts = await getAllCustomWorkoutsForUser(user);
+      setWorkouts(fetchedWorkouts);
     } catch (error) {
       console.error("Error fetching workouts:", error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
+
+  useEffect(() => {
+    if (user) {
+      fetchWorkouts();
+    }
+  }, [user, fetchWorkouts]);
 
   const handleOpenModal = () => {
     setModalOpen(true);

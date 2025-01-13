@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import { doc, getDoc } from "firebase/firestore";
 import { message, Input, Button, Modal, Typography } from "antd";
-import { db } from "../../../../../firebase";
 import { getAllExercisesWithCache } from "../../../../../services/exerciseDBUtils";
 import { applyExerciseFiltersAndLimit } from "../../../../../utils/dataUtils";
 import {
+  fetchWorkoutDetailsFromFirestore,
   updateWorkoutName,
   addExerciseToWorkout,
   removeExerciseFromWorkout,
@@ -31,13 +30,36 @@ const WorkoutDetailPage = () => {
   const [isEditingName, setIsEditingName] = useState(false);
   const [editedName, setEditedName] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
-  const [workouts, setWorkouts] = useState([]);
+  const [workouts] = useState([]);
   const [allExercises, setAllExercises] = useState([]);
   const [filteredExercises, setFilteredExercises] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
 
+  const fetchWorkoutDetails = useCallback(async () => {
+    if (!workoutId) return;
+    try {
+      const workoutDetails = await fetchWorkoutDetailsFromFirestore(workoutId);
+      setCurrentWorkout(workoutDetails);
+      setEditedName(workoutDetails.name);
+    } catch (error) {
+      console.error("Error fetching workout details:", error);
+    }
+  }, [workoutId]);
+
   useEffect(() => {
+    const fetchAllExercisesData = async () => {
+      try {
+        const cachedExercises = await getAllExercisesWithCache(user.uid);
+        setAllExercises(cachedExercises);
+        setFilteredExercises(
+          applyExerciseFiltersAndLimit(cachedExercises, searchQuery)
+        );
+      } catch (error) {
+        console.error("Error fetching all exercises:", error);
+      }
+    };
+
     const fetchData = async () => {
       try {
         await fetchWorkoutDetails();
@@ -50,7 +72,7 @@ const WorkoutDetailPage = () => {
     };
 
     fetchData();
-  }, [workoutId]);
+  }, [workoutId, fetchWorkoutDetails]);
 
   useEffect(() => {
     const filterDisplayedExercises = () => {
@@ -67,37 +89,6 @@ const WorkoutDetailPage = () => {
 
     filterDisplayedExercises();
   }, [allExercises, currentWorkout, searchQuery]);
-
-  const fetchWorkoutDetails = async () => {
-    try {
-      const workoutDoc = doc(db, "workouts", workoutId);
-      const workoutSnapshot = await getDoc(workoutDoc);
-
-      if (workoutSnapshot.exists()) {
-        setCurrentWorkout({
-          id: workoutSnapshot.id,
-          ...workoutSnapshot.data(),
-        });
-        setEditedName(workoutSnapshot.data().name);
-      } else {
-        console.error("Workout not found");
-      }
-    } catch (error) {
-      console.error("Error fetching workout details:", error);
-    }
-  };
-
-  const fetchAllExercisesData = async () => {
-    try {
-      const cachedExercises = await getAllExercisesWithCache(user.uid);
-      setAllExercises(cachedExercises);
-      setFilteredExercises(
-        applyExerciseFiltersAndLimit(cachedExercises, searchQuery)
-      );
-    } catch (error) {
-      console.error("Error fetching all exercises:", error);
-    }
-  };
 
   const handleClickName = () => {
     setIsEditingName(true);

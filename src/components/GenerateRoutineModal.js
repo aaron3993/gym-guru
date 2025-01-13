@@ -24,20 +24,20 @@ const GenerateRoutineModal = ({ isVisible, onClose }) => {
   });
 
   useEffect(() => {
+    const checkRateLimit = async () => {
+      try {
+        const { rateLimited, numberOfRoutinesGenerated } =
+          await checkAndUpdateRateLimit(user.uid);
+        setRateLimitInfo({ rateLimited, numberOfRoutinesGenerated });
+      } catch (error) {
+        console.error("Error checking rate limit:", error);
+      }
+    };
+
     if (isVisible && user?.uid) {
       checkRateLimit();
     }
   }, [isVisible, user]);
-
-  const checkRateLimit = async () => {
-    try {
-      const { rateLimited, numberOfRoutinesGenerated } =
-        await checkAndUpdateRateLimit(user.uid);
-      setRateLimitInfo({ rateLimited, numberOfRoutinesGenerated });
-    } catch (error) {
-      console.error("Error checking rate limit:", error);
-    }
-  };
 
   const handleFinish = async (values) => {
     form.resetFields();
