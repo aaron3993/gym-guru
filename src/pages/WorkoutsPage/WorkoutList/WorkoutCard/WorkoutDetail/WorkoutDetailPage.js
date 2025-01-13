@@ -61,6 +61,7 @@ const WorkoutDetailPage = () => {
     };
 
     const fetchData = async () => {
+      if (!workoutId || !user?.uid) return;
       try {
         await fetchWorkoutDetails();
         await fetchAllExercisesData();
@@ -72,7 +73,7 @@ const WorkoutDetailPage = () => {
     };
 
     fetchData();
-  }, [workoutId, fetchWorkoutDetails]);
+  }, [workoutId, fetchWorkoutDetails, user.uid, searchQuery]);
 
   useEffect(() => {
     const filterDisplayedExercises = () => {
