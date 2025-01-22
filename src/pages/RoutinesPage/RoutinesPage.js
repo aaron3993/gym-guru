@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Button, Typography } from "antd";
+import { Button, Typography, Modal } from "antd";
 import RoutineList from "./RoutineList/RoutineList";
 import { getAllRoutinesForUser } from "../../utils/firestoreUtils";
 import { useAuth } from "../../contexts/AuthContext";
@@ -33,7 +33,15 @@ const RoutinesPage = () => {
   }, [user.uid, status]);
 
   const showModal = () => {
-    setIsModalVisible(true);
+    // Temporarily disabled
+    Modal.info({
+      title: "Work in Progress",
+      content:
+        "AI-powered routine generation is currently unavailable. We are working on improving this feature.",
+      okText: "Understood",
+    });
+    // Commented out original modal logic
+    // setIsModalVisible(true);
   };
 
   const closeModal = () => {
@@ -43,9 +51,7 @@ const RoutinesPage = () => {
   return (
     <div className="routines-page">
       <div className="header">
-        <Title level={4}>
-          Generate routines using AI based on your criteria.
-        </Title>
+        <Title level={4}>AI-powered routine generation: Coming Soon</Title>
       </div>
 
       <div className="content">
