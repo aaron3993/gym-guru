@@ -33,6 +33,7 @@ const RoutinesPage = () => {
   }, [user.uid, status]);
 
   const showModal = () => {
+    // setIsModalVisible(true);
     // Temporarily disabled
     Modal.info({
       title: "Work in Progress",
