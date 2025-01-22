@@ -20,8 +20,8 @@ const Navbar = ({ onLogout }) => {
   return (
     <nav className="navbar">
       <div className="nav-links desktop-nav">
-        <Link to="/" className="nav-link">
-          Home
+        <Link to="/" className="nav-link home-link">
+          Gym Guru
         </Link>
         <Link to="/routines" className="nav-link">
           Routines
@@ -52,12 +52,18 @@ const Navbar = ({ onLogout }) => {
         </Button>
       </div>
       <div className="mobile-nav">
-        <Button onClick={showDrawer}>☰</Button>
         {status === "pending" && (
           <span className="mobile-job-status">
             Generating your routine... <Spin />
           </span>
         )}
+
+        <span className="mobile-job-status">
+          Generating your routine... <Spin />
+        </span>
+        <Button className="hamburger-btn" onClick={showDrawer}>
+          ☰
+        </Button>
       </div>
       <Drawer
         placement="left"
@@ -65,8 +71,8 @@ const Navbar = ({ onLogout }) => {
         open={drawerVisible}
         className="custom-drawer"
         style={{
-          backgroundColor: "#333",
-          color: "#fff",
+          backgroundColor: "white",
+          color: "black",
           width: "50%",
         }}
         styles={{
@@ -77,7 +83,7 @@ const Navbar = ({ onLogout }) => {
       >
         <div>
           <Link to="/" className="drawer-link" onClick={closeDrawer}>
-            Home
+            Gym Guru
           </Link>
           <Link to="/routines" className="drawer-link" onClick={closeDrawer}>
             Routines
