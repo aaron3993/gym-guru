@@ -57,10 +57,6 @@ const Navbar = ({ onLogout }) => {
             Generating your routine... <Spin />
           </span>
         )}
-
-        <span className="mobile-job-status">
-          Generating your routine... <Spin />
-        </span>
         <Button className="hamburger-btn" onClick={showDrawer}>
           ☰
         </Button>
