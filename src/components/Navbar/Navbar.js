@@ -73,7 +73,7 @@ const Navbar = ({ onLogout }) => {
         style={{
           backgroundColor: "white",
           color: "black",
-          width: "50%",
+          width: "60%",
         }}
         styles={{
           body: {
@@ -82,7 +82,11 @@ const Navbar = ({ onLogout }) => {
         }}
       >
         <div>
-          <Link to="/" className="drawer-link" onClick={closeDrawer}>
+          <Link
+            to="/"
+            className="drawer-link home-drawer-link"
+            onClick={closeDrawer}
+          >
             Gym Guru
           </Link>
           <Link to="/routines" className="drawer-link" onClick={closeDrawer}>

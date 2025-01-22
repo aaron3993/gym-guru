@@ -21,7 +21,6 @@
 .nav-link {
   text-decoration: none;
   color: black;
-  font-weight: bold;
   font-size: 20px;
   transition: color 0.3s ease, transform 0.3s ease;
 }
@@ -34,10 +33,12 @@
 .home-link {
   font-size: 28px;
   letter-spacing: -1px;
+  font-weight: bold;
 }
 
 .logout-btn {
   background-color: #ff4d4f;
+  margin-right: 24px;
   border: none;
   color: white;
   border-radius: 5px;
@@ -61,7 +62,6 @@
 
 .custom-drawer .ant-drawer-header {
   background-color: white;
-  border-bottom: 1px solid #444;
 }
 
 .custom-drawer .ant-drawer-header-title {
@@ -81,13 +81,18 @@
   font-size: 16px;
   padding: 5px 0;
   padding-left: 30px;
-  font-weight: bold;
   text-align: left;
   transition: color 0.3s ease, background-color 0.3s ease;
 }
 
 .drawer-link:hover {
   color: #00bfff;
+}
+
+.home-drawer-link {
+  font-size: 20px;
+  font-weight: bold;
+  letter-spacing: -1px;
 }
 
 .custom-drawer .ant-drawer-content-wrapper {
@@ -133,6 +138,10 @@
 
   .job-status {
     display: none;
+  }
+
+  .logout-btn {
+    margin: 16px;
   }
 }
 

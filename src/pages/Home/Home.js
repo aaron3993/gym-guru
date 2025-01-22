@@ -23,7 +23,7 @@ const Home = () => {
 
   return (
     <div className="home-page">
-      <section id="landing-section" className="full-page-section">
+      {/* <section id="landing-section" className="full-page-section">
         <div className="content-container">
           <h1 className="app-title">Gym Guru</h1>
           <p className="slogan">Customize Your Journey, Sculpt Your Success.</p>
@@ -33,7 +33,7 @@ const Home = () => {
             </Button>
           </Link>
         </div>
-      </section>
+      </section> */}
 
       <section id="options-section" className="full-page-section">
         <div className="options-container">
