@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { message, Input, Button, Modal, Typography } from "antd";
-import { getAllExercisesWithCache } from "../../../../../services/exerciseDBUtils";
+import { getAllExercisesWithCache,fetchHelloWorld } from "../../../../../services/exerciseDBUtils";
 import { applyExerciseFiltersAndLimit } from "../../../../../utils/dataUtils";
 import {
   fetchWorkoutDetailsFromFirestore,
@@ -16,6 +16,7 @@ import LoadingSpinner from "../../../../../components/LoadingSpinner";
 import ExerciseRow from "./ExerciseRow/ExerciseRow";
 import { useAuth } from "../../../../../contexts/AuthContext";
 import "./WorkoutDetailPage.css";
+
 
 const { Title } = Typography;
 
@@ -35,6 +36,7 @@ const WorkoutDetailPage = () => {
   const [filteredExercises, setFilteredExercises] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const [deleteModalVisible, setDeleteModalVisible] = useState(false);
+  const [helloWorld, setHelloWorld] = useState({});
 
   const fetchWorkoutDetails = useCallback(async () => {
     if (!workoutId) return;
@@ -48,6 +50,14 @@ const WorkoutDetailPage = () => {
   }, [workoutId]);
 
   useEffect(() => {
+    const callHelloWorldFunction = async () => {
+      try {
+        const helloWorld = await fetchHelloWorld();
+        setHelloWorld(helloWorld);
+      } catch (error) {
+        console.error("Error fetching hello world:", error);
+      }
+    };
     const fetchAllExercisesData = async () => {
       try {
         const cachedExercises = await getAllExercisesWithCache(user.uid);
@@ -65,6 +75,7 @@ const WorkoutDetailPage = () => {
       try {
         await fetchWorkoutDetails();
         await fetchAllExercisesData();
+        await callHelloWorldFunction();
       } catch (error) {
         console.error("Error fetching data:", error);
       } finally {
@@ -202,13 +213,14 @@ const WorkoutDetailPage = () => {
           />
         ) : (
           <Title className="title" level={1} onClick={handleClickName}>
-            {editedName}
+            {editedName}55
           </Title>
         )}
       </div>
       <div className="workout-exercises-container">
         <div className="exercise-row-list">
           <h3>Your Exercises</h3>
+          {helloWorld && <p>{helloWorld}</p>} here
           {currentWorkout.exercises.length > 0 ? (
             currentWorkout.exercises.map((exercise) => (
               <ExerciseRow

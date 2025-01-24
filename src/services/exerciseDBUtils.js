@@ -3,9 +3,18 @@ import {
   getFromLocalStorage,
   saveToLocalStorage,
 } from "../utils/localStorageUtils";
+import { callCloudFunction } from "./firebaseUtils"
 
 const CACHE_KEY = "allExercises";
 const CACHE_TIMESTAMP_KEY = "exerciseCacheTimestamp";
+
+export const fetchHelloWorld = async () => {
+  try {
+    return await callCloudFunction("helloWorld", {});
+  } catch (error) {
+    console.error("Error calling Cloud Function:", error);
+  }
+};
 
 export const fetchAllExercises = async () => {
   const options = {
