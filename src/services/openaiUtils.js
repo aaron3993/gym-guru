@@ -1,6 +1,6 @@
-import axios from "axios";
 import { formatGoalsAndFitnessLevelsText } from "../utils/dataUtils";
 import { getAllExerciseDetailsByBodyPart } from "./exerciseDBUtils";
+import { callCloudFunction } from "../firebase";
 
 const formatExercisesForInput = (exerciseDetails) => {
   return Object.keys(exerciseDetails).join(",");
@@ -95,39 +95,10 @@ export const generateWorkoutPlan = async (criteria) => {
       },
     ];
 
-    const response = await axios.post(
-      "https://api.openai.com/v1/chat/completions",
-      {
-        model: "gpt-4",
-        messages,
-        temperature: 0.7,
-        max_tokens: 2000,
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    // Call the cloud function to generate the workout plan
+    const workoutData = await callCloudFunction('generateWorkoutPlan', { messages });
 
-    if (response.status !== 200) {
-      throw new Error(`API request failed with status: ${response.status}`);
-    }
-
-    const generatedText = response.data.choices[0].message.content.trim();
-    if (!generatedText) {
-      throw new Error("Failed to retrieve content from API response");
-    }
-
-    let parsedText;
-    try {
-      parsedText = JSON.parse(generatedText);
-    } catch (error) {
-      throw new Error("Failed to parse API response as JSON");
-    }
-
-    const workoutPlan = addDetailsToParsedText(parsedText, exerciseDetails);
+    const workoutPlan = addDetailsToParsedText(workoutData, exerciseDetails);
     if (!workoutPlan) {
       throw new Error("Failed to add GIF URLs to workout plan");
     }
