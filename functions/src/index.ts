@@ -11,7 +11,7 @@ export const fetchAllExercises = onCall(
   {
     secrets: [rapidApiKey],
   },
-  async (context) => {
+  async () => {
     // Retrieve RapidAPI key from secret
     const apiKey = rapidApiKey.value();
 
