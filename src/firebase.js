@@ -2,6 +2,8 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getAnalytics, logEvent } from "firebase/analytics";
+import { getFunctions, httpsCallable } from "firebase/functions";
+
 import "firebase/firestore";
 
 const firebaseConfig = {
@@ -18,5 +20,17 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 const analytics = getAnalytics(app);
+const functions = getFunctions(app);
 
-export { app, db, auth, logEvent, analytics };
+const callCloudFunction = async (functionName, data) => {
+  try {
+    const cloudFunction = httpsCallable(functions, functionName);
+    const result = await cloudFunction(data || {});
+    return result.data;
+  } catch (error) {
+    console.error(`Cloud Function (${functionName}) Error:`, error);
+    throw error;
+  }
+};
+
+export { app, db, auth, logEvent, analytics, callCloudFunction };
