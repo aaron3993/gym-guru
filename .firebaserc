@@ -1,6 +1,6 @@
 {
   "projects": {
-    "default": "gymguru-37ed9",
+    "default": "gym-guru-david",
     "staging": "gym-guru-staging",
     "prod": "gymguru-37ed9"
   },
