@@ -1,6 +1,7 @@
 import axios from "axios";
 import { formatGoalsAndFitnessLevelsText } from "../utils/dataUtils";
 import { getAllExerciseDetailsByBodyPart } from "./exerciseDBUtils";
+import { fetchAuthToken } from "../utils/authUtils";
 
 const formatExercisesForInput = (exerciseDetails) => {
   return Object.keys(exerciseDetails).join(",");
@@ -69,9 +70,9 @@ export const generateWorkoutPlan = async (criteria) => {
           } and fitness level is ${criteria.fitnessLevel}.
           Only output the JSON and no other text.
           Use the following exercises and their gifUrls in your plan:
- 
-          ${exerciseNamesString}
 
+          ${exerciseNamesString}
+          
           The format should include:
           - title: ${criteria.fitnessLevel} ${formatGoalsAndFitnessLevelsText(
           criteria.goal
@@ -95,31 +96,37 @@ export const generateWorkoutPlan = async (criteria) => {
       },
     ];
 
+    // Fetch the authentication token
+    const token = await fetchAuthToken();
+
+    // Make API request to OpenAI via backend (Lambda)
+    const workoutPlan = await fetchWorkoutPlanFromLambda(
+      messages,
+      token,
+      exerciseDetails
+    );
+    return workoutPlan;
+  } catch (error) {
+    console.error("Error generating workout plan:", error);
+    return null;
+  }
+};
+
+// Call backend API to get the workout plan
+const fetchWorkoutPlanFromLambda = async (messages, token, exerciseDetails) => {
+  try {
     const response = await axios.post(
-      "https://api.openai.com/v1/chat/completions",
-      {
-        model: "gpt-4",
-        messages,
-        temperature: 0.7,
-        max_tokens: 2000,
-      },
+      process.env.REACT_APP_OPENAI_API_GATEWAY, // Lambda API Gateway URL
+      { messages },
       {
         headers: {
-          Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
       }
     );
 
-    if (response.status !== 200) {
-      throw new Error(`API request failed with status: ${response.status}`);
-    }
-
     const generatedText = response.data.choices[0].message.content.trim();
-    if (!generatedText) {
-      throw new Error("Failed to retrieve content from API response");
-    }
-
     let parsedText;
     try {
       parsedText = JSON.parse(generatedText);
@@ -134,7 +141,7 @@ export const generateWorkoutPlan = async (criteria) => {
 
     return workoutPlan;
   } catch (error) {
-    console.error("Error generating workout plan:", error);
+    console.error("Error calling Lambda function:", error);
     return null;
   }
 };
