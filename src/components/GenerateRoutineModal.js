@@ -69,26 +69,12 @@ const GenerateRoutineModal = ({ isVisible, onClose }) => {
 
     onClose();
     try {
-      const workoutPlan = await generateWorkoutPlan(values);
+      const workoutPlan = await generateWorkoutPlan(values, user.uid, jobId);
       if (!workoutPlan) {
         throw new Error("Failed to generate a valid workout plan.");
       }
 
-      const routineId = await saveCompleteWorkoutInfo(
-        user.uid,
-        workoutPlan,
-        values
-      );
-
-      if (!routineId) {
-        throw new Error("Failed to save workout information.");
-      }
-
       await incrementRoutineCount(user.uid);
-
-      await completeJob(jobId, routineId);
-
-      navigate(`/routines/${routineId}`);
     } catch (error) {
       notification.error({
         message: "Error",

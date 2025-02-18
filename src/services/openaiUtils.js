@@ -32,7 +32,27 @@ const addDetailsToParsedText = (workoutData, exerciseDetails) => {
   };
 };
 
-export const generateWorkoutPlan = async (criteria) => {
+const fetchWorkoutPlanFromLambda = async (
+  token,
+  criteria,
+  prompt,
+  userId,
+  jobId
+) => {
+  const response = await axios.post(
+    process.env.REACT_APP_OPENAI_API_GATEWAY,
+    { criteria, prompt, userId, jobId },
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  return response;
+};
+
+export const generateWorkoutPlan = async (criteria, userId, jobId) => {
   try {
     const exerciseCounts = {
       chest: 10,
@@ -56,92 +76,105 @@ export const generateWorkoutPlan = async (criteria) => {
       throw new Error("Failed to format exercise names for input");
     }
 
-    const messages = [
-      {
-        role: "system",
-        content:
-          "You are a fitness expert who creates structured workout plans in JSON format.",
-      },
-      {
-        role: "user",
-        content: `
-          Create a structured JSON format for a weekly workout plan for someone whose goal is ${
-            criteria.goal
-          } and fitness level is ${criteria.fitnessLevel}.
-          Only output the JSON and no other text.
-          Use the following exercises and their gifUrls in your plan:
+    // const messages = [
+    //   {
+    //     role: "system",
+    //     content:
+    //       "You are a fitness expert who creates structured workout plans in JSON format.",
+    //   },
+    //   {
+    //     role: "user",
+    //     content: `
+    //       Create a structured JSON format for a weekly workout plan for someone whose goal is ${
+    //         criteria.goal
+    //       } and fitness level is ${criteria.fitnessLevel}.
+    //       Only output the JSON and no other text.
+    //       Use the following exercises and their gifUrls in your plan:
 
-          ${exerciseNamesString}
-          
-          The format should include:
-          - title: ${criteria.fitnessLevel} ${formatGoalsAndFitnessLevelsText(
-          criteria.goal
-        )} Routine
-          - fitnessLevel
-          - goal
-          - days. Each day has the following attributes:
-            - day: Monday for example
-            - dayOfWeek: 1 for example
-            - name: Muscle group trained
-            - exercises. Five exercises per weight training day. Each exercise should be appropriate for the fitness level and goal and have the following attributes:
-              - id: Empty string
-              - name: The name of the exercise in lower case
-              - gifUrl: Empty string
-              - sets: The number of sets (integer)
-              - reps: A string to represent the range of numbers
-              - rest: A string indicating rest duration
-            - Rest days should still be shown but with an empty exercises array
-            - Include cardio where necessary
-        `,
-      },
-    ];
+    //       ${exerciseNamesString}
 
-    // Fetch the authentication token
+    //       The format should include:
+    //       - title: ${criteria.fitnessLevel} ${formatGoalsAndFitnessLevelsText(
+    //       criteria.goal
+    //     )} Routine
+    //       - fitnessLevel
+    //       - goal
+    //       - days. Each day has the following attributes:
+    //         - day: Monday for example
+    //         - dayOfWeek: 1 for example
+    //         - name: Muscle group trained
+    //         - exercises. Five exercises per weight training day. Each exercise should be appropriate for the fitness level and goal and have the following attributes:
+    //           - id: Empty string
+    //           - name: The name of the exercise in lower case
+    //           - gifUrl: Empty string
+    //           - sets: The number of sets (integer)
+    //           - reps: A string to represent the range of numbers
+    //           - rest: A string indicating rest duration
+    //         - Rest days should still be shown but with an empty exercises array
+    //         - Include cardio where necessary
+    //     `,
+    //   },
+    // ];
+
+    const prompt = `Create a structured JSON format for a weekly workout plan for someone whose goal is ${
+      criteria.goal
+    } and fitness level is ${criteria.fitnessLevel}.
+    Only output the JSON and no other text.
+    Use the following exercises and their gifUrls in your plan:
+    
+    ${exerciseNamesString}
+    
+    The format should include:
+    - title: ${criteria.fitnessLevel} ${formatGoalsAndFitnessLevelsText(
+      criteria.goal
+    )} Routine
+    - fitnessLevel
+    - goal
+    - days. Each day has the following attributes:
+      - day: e.g., "Monday"
+      - dayOfWeek: e.g., 1
+      - name: Muscle group trained
+      - exercises: An array of five exercises per weight training day. Each exercise should have the following attributes:
+        - id: Empty string
+        - name: The name of the exercise in lowercase
+        - gifUrl: The gif URL of the exercise
+        - sets: The number of sets (integer)
+        - reps: A string to represent the range of reps (e.g., "8-12")
+        - rest: The rest duration (e.g., "60 seconds")
+      - Rest days should have an empty exercises array.
+      - Include cardio where necessary, even on rest days if appropriate.`;
+
     const token = await fetchAuthToken();
 
-    // Make API request to OpenAI via backend (Lambda)
-    const workoutPlan = await fetchWorkoutPlanFromLambda(
-      messages,
+    const lambdaResponse = await fetchWorkoutPlanFromLambda(
       token,
-      exerciseDetails
+      criteria,
+      prompt,
+      userId,
+      jobId
     );
-    return workoutPlan;
+
+    try {
+      return lambdaResponse.data;
+      //   let parsedText;
+      //   try {
+      //     parsedText = JSON.parse(lambdaResponse);
+      //   } catch (error) {
+      //     throw new Error("Failed to parse API response as JSON");
+      //   }
+      // const workoutPlan = addDetailsToParsedText(workoutData, exerciseDetails);
+      // const workoutPlan = addDetailsToParsedText(parsedText, exerciseDetails);
+      // if (!workoutPlan) {
+      //   throw new Error("Failed to add GIF URLs to workout plan");
+      // }
+
+      // return workoutPlan;
+    } catch (error) {
+      console.error("Error calling Lambda function:", error);
+      return null;
+    }
   } catch (error) {
     console.error("Error generating workout plan:", error);
-    return null;
-  }
-};
-
-// Call backend API to get the workout plan
-const fetchWorkoutPlanFromLambda = async (messages, token, exerciseDetails) => {
-  try {
-    const response = await axios.post(
-      process.env.REACT_APP_OPENAI_API_GATEWAY, // Lambda API Gateway URL
-      { messages },
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    const generatedText = response.data.choices[0].message.content.trim();
-    let parsedText;
-    try {
-      parsedText = JSON.parse(generatedText);
-    } catch (error) {
-      throw new Error("Failed to parse API response as JSON");
-    }
-
-    const workoutPlan = addDetailsToParsedText(parsedText, exerciseDetails);
-    if (!workoutPlan) {
-      throw new Error("Failed to add GIF URLs to workout plan");
-    }
-
-    return workoutPlan;
-  } catch (error) {
-    console.error("Error calling Lambda function:", error);
     return null;
   }
 };
