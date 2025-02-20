@@ -22,8 +22,7 @@ const fetchAllExercisesFromLambda = async () => {
     return response.data;
   } catch (error) {
     console.error("Error fetching exercises:", error);
-
-    return { error: "Failed to fetch exercises" };
+    return [];
   }
 };
 
