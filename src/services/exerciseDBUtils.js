@@ -47,7 +47,6 @@ export const getAllExercisesWithCache = async (userId) => {
     }
   }
 
-  // const allExercises = await fetchAllExercises();
   const allExercises = await fetchAllExercisesFromLambda();
 
   if (allExercises.length > 0) {
