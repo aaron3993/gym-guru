@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Modal, Form, Select, Button, notification, Typography } from "antd";
 import { useAuth } from "../contexts/AuthContext";
 import { useJob } from "../contexts/JobContext";
-import { generateWorkoutPlan } from "../services/openaiUtils";
+import { generateWorkoutPlan } from "../services/generateRoutineUtils";
 import {
-  saveCompleteWorkoutInfo,
   checkAndUpdateRateLimit,
   incrementRoutineCount,
 } from "../utils/firestoreUtils";
@@ -14,9 +12,8 @@ const { Option } = Select;
 const { Text } = Typography;
 
 const GenerateRoutineModal = ({ isVisible, onClose }) => {
-  const navigate = useNavigate();
   const { user } = useAuth();
-  const { startJob, status, completeJob } = useJob();
+  const { startJob, status } = useJob();
   const [form] = Form.useForm();
   const [rateLimitInfo, setRateLimitInfo] = useState({
     numberOfRoutinesGenerated: 0,
@@ -69,26 +66,12 @@ const GenerateRoutineModal = ({ isVisible, onClose }) => {
 
     onClose();
     try {
-      const workoutPlan = await generateWorkoutPlan(values);
+      const workoutPlan = await generateWorkoutPlan(values, user.uid, jobId);
       if (!workoutPlan) {
         throw new Error("Failed to generate a valid workout plan.");
       }
 
-      const routineId = await saveCompleteWorkoutInfo(
-        user.uid,
-        workoutPlan,
-        values
-      );
-
-      if (!routineId) {
-        throw new Error("Failed to save workout information.");
-      }
-
       await incrementRoutineCount(user.uid);
-
-      await completeJob(jobId, routineId);
-
-      navigate(`/routines/${routineId}`);
     } catch (error) {
       notification.error({
         message: "Error",
