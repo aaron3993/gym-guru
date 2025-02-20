@@ -23,6 +23,7 @@ jobs:
           REACT_APP_FIREBASE_APP_ID: ${{ secrets.REACT_APP_FIREBASE_APP_ID }}
           REACT_APP_FIREBASE_MEASUREMENT_ID: ${{ secrets.REACT_APP_FIREBASE_MEASUREMENT_ID }}
           REACT_APP_RAPID_API_KEY: ${{ secrets.REACT_APP_RAPID_API_KEY }}
+          REACT_APP_OPENAI_API_GATEWAY: ${{ secrets.REACT_APP_OPENAI_API_GATEWAY }}
 
       # Deploy the app to Firebase Hosting
       - uses: FirebaseExtended/action-hosting-deploy@v0
