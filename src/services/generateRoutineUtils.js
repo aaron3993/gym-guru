@@ -3,14 +3,15 @@ import { getAllExerciseDetailsByBodyPart } from "./exerciseDBUtils";
 import { fetchAuthToken } from "../utils/authUtils";
 
 const fetchWorkoutPlanFromLambda = async (
-  token,
   criteria,
   exerciseDetails,
   userId,
   jobId
 ) => {
+  const token = await fetchAuthToken();
+
   const response = await axios.post(
-    process.env.REACT_APP_OPENAI_API_GATEWAY,
+    process.env.REACT_APP_GEMINI_API_GATEWAY,
     { criteria, exerciseDetails, userId, jobId },
     {
       headers: {
@@ -40,10 +41,7 @@ export const generateWorkoutPlan = async (criteria, userId, jobId) => {
       exerciseCounts
     );
 
-    const token = await fetchAuthToken();
-
     const lambdaResponse = await fetchWorkoutPlanFromLambda(
-      token,
       criteria,
       exerciseDetails,
       userId,

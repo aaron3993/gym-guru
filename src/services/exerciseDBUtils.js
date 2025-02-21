@@ -3,26 +3,22 @@ import {
   getFromLocalStorage,
   saveToLocalStorage,
 } from "../utils/localStorageUtils";
+import { fetchAuthToken } from "../utils/authUtils";
 
 const CACHE_KEY = "allExercises";
 const CACHE_TIMESTAMP_KEY = "exerciseCacheTimestamp";
 
-export const fetchAllExercises = async () => {
-  const options = {
-    params: {
-      limit: "1323",
-    },
-    headers: {
-      "X-RapidAPI-Key": process.env.REACT_APP_RAPID_API_KEY,
-      "X-RapidAPI-Host": "exercisedb.p.rapidapi.com",
-    },
-  };
-
+const fetchAllExercisesFromLambda = async () => {
   try {
-    const response = await axios.get(
-      "https://exercisedb.p.rapidapi.com/exercises",
-      options
-    );
+    const token = await fetchAuthToken();
+
+    const response = await axios.get(process.env.REACT_APP_RAPID_API_GATEWAY, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
     return response.data;
   } catch (error) {
     console.error("Error fetching exercises:", error);
@@ -51,7 +47,7 @@ export const getAllExercisesWithCache = async (userId) => {
     }
   }
 
-  const allExercises = await fetchAllExercises();
+  const allExercises = await fetchAllExercisesFromLambda();
 
   if (allExercises.length > 0) {
     saveToLocalStorage(CACHE_KEY, allExercises);
