@@ -6,9 +6,7 @@ import Register from "./pages/Register/Register";
 import User from "./pages/User/User";
 import PrivateRoute from "./components/PrivateRoute";
 import Navbar from "./components/Navbar/Navbar";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import CssBaseline from "@mui/material/CssBaseline";
-import LoadingSpinner from "./components/LoadingSpinner";
+import LoadingSpinner from "./components/LoadingSpinner/LoadingSpinner";
 import WorkoutsPage from "./pages/WorkoutsPage/WorkoutsPage";
 import WorkoutDetailPage from "./pages/WorkoutsPage/WorkoutList/WorkoutCard/WorkoutDetail/WorkoutDetailPage";
 import RoutinesPage from "./pages/RoutinesPage/RoutinesPage";
@@ -16,8 +14,6 @@ import LandingPage from "./pages/LandingPage/LandingPage";
 import { useAuth } from "./contexts/AuthContext";
 import RoutineDetailPage from "./pages/RoutinesPage/RoutineList/RoutineCard/RoutineDetailPage/RoutineDetailPage";
 import { logEvent, analytics } from "./firebase";
-
-const theme = createTheme();
 
 const App = () => {
   const { user, isAuthenticated, isLoading, handleLogout } = useAuth();
@@ -31,8 +27,7 @@ const App = () => {
   }
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <>
       {isAuthenticated && <Navbar user={user} onLogout={handleLogout} />}
       <Routes>
         <Route
@@ -96,7 +91,7 @@ const App = () => {
           element={isAuthenticated ? <Navigate to="/home" /> : <Register />}
         />
       </Routes>
-    </ThemeProvider>
+    </>
   );
 };
 

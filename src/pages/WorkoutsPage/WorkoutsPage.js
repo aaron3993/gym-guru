@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Button, message, Form, Typography } from "antd";
 import CreateWorkoutModal from "../../components/CreateWorkoutModal";
 import WorkoutList from "./WorkoutList/WorkoutList";
-import LoadingSpinner from "../../components/LoadingSpinner";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import { getAllCustomWorkoutsForUser } from "../../utils/firestoreUtils";
 import { useAuth } from "../../contexts/AuthContext";
 import "./WorkoutsPage.css";

@@ -12,7 +12,7 @@ import {
 } from "../../../../../utils/firestoreUtils";
 import SearchBar from "../../../../../components/SearchBar/SearchBar";
 import ExerciseList from "../../../../../components/ExerciseList/ExerciseList";
-import LoadingSpinner from "../../../../../components/LoadingSpinner";
+import LoadingSpinner from "../../../../../components/LoadingSpinner/LoadingSpinner";
 import ExerciseRow from "./ExerciseRow/ExerciseRow";
 import { useAuth } from "../../../../../contexts/AuthContext";
 import "./WorkoutDetailPage.css";

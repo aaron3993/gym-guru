@@ -3,7 +3,7 @@ import { Typography } from "antd";
 import { useParams } from "react-router-dom";
 import { fetchRoutineWithWorkouts } from "../../../../../utils/firestoreUtils";
 import { useNavigate } from "react-router-dom";
-import LoadingSpinner from "../../../../../components/LoadingSpinner";
+import LoadingSpinner from "../../../../../components/LoadingSpinner/LoadingSpinner";
 import "./RoutineDetailPage.css";
 
 const { Title } = Typography;

@@ -4,7 +4,7 @@ import RoutineList from "./RoutineList/RoutineList";
 import { getAllRoutinesForUser } from "../../utils/firestoreUtils";
 import { useAuth } from "../../contexts/AuthContext";
 import { useJob } from "../../contexts/JobContext";
-import LoadingSpinner from "../../components/LoadingSpinner";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 import GenerateWorkoutModal from "../../components/GenerateRoutineModal";
 import "./RoutinesPage.css";
 
