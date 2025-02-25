@@ -5,7 +5,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #34495e;
+  background-color: #f4f5f7;
   font-family: Arial, sans-serif;
 }
 
@@ -17,7 +17,7 @@
 }
 
 .signup-container {
-  background-color: #ecf0f1;
+  background-color: #fff;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -25,22 +25,12 @@
   text-align: center;
 }
 
-.signup-container label {
-  font-size: 1.2em;
-  color: #2c3e50;
-  display: block;
-  margin-bottom: 8px;
-}
-
-.signup-container input {
-  width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  box-sizing: border-box;
+.input {
+  line-height: 28px;
 }
 
 .register-btn {
-  margin-bottom: 1rem;
+  width: 100%;
 }
 
 .signup-container a {

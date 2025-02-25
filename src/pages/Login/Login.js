@@ -82,7 +82,11 @@ const Login = () => {
                 labelCol={{ span: 24 }}
                 wrapperCol={{ span: 24 }}
               >
-                <Input autoComplete="email" placeholder="Email address" />
+                <Input
+                  className="input"
+                  autoComplete="email"
+                  placeholder="Email"
+                />
               </Form.Item>
 
               <Form.Item
@@ -92,13 +96,14 @@ const Login = () => {
                 wrapperCol={{ span: 24 }}
               >
                 <Input.Password
+                  className="input"
                   autoComplete="current-password"
                   placeholder="Password"
                 />
               </Form.Item>
 
               <Form.Item>
-                <Button type="primary" htmlType="submit">
+                <Button className="login-btn" type="primary" htmlType="submit">
                   Login
                 </Button>
               </Form.Item>

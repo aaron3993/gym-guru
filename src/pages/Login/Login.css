@@ -5,19 +5,12 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background-color: #34495e;
+  background-color: #f4f5f7;
   font-family: Arial, sans-serif;
 }
 
-.title {
-  font-size: 2em;
-  font-weight: bold;
-  color: #3498db;
-  margin-bottom: 20px;
-}
-
 .login-container {
-  background-color: #ecf0f1;
+  background-color: #fff;
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -25,11 +18,12 @@
   text-align: center;
 }
 
-.login-container input {
+.input {
+  line-height: 28px;
+}
+
+.login-btn {
   width: 100%;
-  padding: 10px;
-  margin: 8px 0;
-  box-sizing: border-box;
 }
 
 .login-container a {
