@@ -2,6 +2,7 @@
   font-family: Arial, sans-serif;
   background-color: #f9f9f9;
   padding: 20px;
+  height: calc(100vh - 140px);
 }
 
 .header {
@@ -23,12 +24,12 @@
   flex-direction: column;
   align-items: center;
   gap: 20px;
+  padding-bottom: 20px;
 }
 
 .ai-button {
   max-width: 300px;
   background-color: #28a745;
-  font-size: 20x;
   color: white;
   border: none;
 }
@@ -36,4 +37,10 @@
 .ai-button:hover {
   opacity: 0.8;
   background-color: #1e7d34;
+}
+
+@media (max-width: 768px) {
+  .routines-page {
+    height: calc(100vh - 100px);
+  }
 }

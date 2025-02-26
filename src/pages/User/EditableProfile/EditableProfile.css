@@ -2,11 +2,13 @@
   font-family: Arial, sans-serif;
   padding: 20px;
   background-color: #f9f9f9;
+  height: calc(100vh - 140px);
 }
 
 .editable-profile-form {
   max-width: 600px;
   margin: 0 auto;
+  padding-bottom: 20px;
 }
 
 .email-display {
@@ -88,4 +90,10 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .editable-profile-container {
+    height: calc(100vh - 100px);
+  }
 }
