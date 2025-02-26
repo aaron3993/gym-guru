@@ -66,11 +66,7 @@ const Navbar = ({ onLogout }) => {
         onClose={closeDrawer}
         open={drawerVisible}
         className="custom-drawer"
-        style={{
-          backgroundColor: "white",
-          color: "black",
-          width: "60%",
-        }}
+        width="60%"
         styles={{
           body: {
             padding: 0,

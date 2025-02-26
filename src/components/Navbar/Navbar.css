@@ -38,8 +38,10 @@
 
 .logout-btn {
   background-color: #ff4d4f;
-  margin-right: 24px;
   border: none;
+  font-size: 24px;
+  line-height: 24px;
+  padding: 8px;
   color: white;
   border-radius: 5px;
   cursor: pointer;
@@ -72,7 +74,6 @@
 }
 
 .drawer-link {
-  width: 60%;
   display: block;
   background-color: white;
   margin: 15px 0;
@@ -98,7 +99,6 @@
 .custom-drawer .ant-drawer-content-wrapper {
   height: auto;
   max-height: 90%;
-  width: 40%;
 }
 
 .ant-drawer-body {
@@ -121,6 +121,14 @@
 }
 
 @media (max-width: 768px) {
+  .drawer-link {
+    font-size: 28px;
+  }
+
+  .home-drawer-link {
+    font-size: 36px;
+  }
+
   .navbar {
     padding: 10px 20px;
   }
@@ -133,7 +141,6 @@
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    width: 100%;
   }
 
   .job-status {
@@ -148,4 +155,14 @@
 .job-status {
   margin-right: 24px;
   color: black;
+}
+
+@media (max-width: 320px) {
+  .drawer-link {
+    font-size: 20px;
+  }
+
+  .home-drawer-link {
+    font-size: 24px;
+  }
 }
