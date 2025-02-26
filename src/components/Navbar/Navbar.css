@@ -39,9 +39,6 @@
 .logout-btn {
   background-color: #ff4d4f;
   border: none;
-  font-size: 24px;
-  line-height: 24px;
-  padding: 8px;
   color: white;
   border-radius: 5px;
   cursor: pointer;
@@ -149,6 +146,8 @@
 
   .logout-btn {
     margin: 16px;
+    font-size: 24px;
+    line-height: 24px;
   }
 }
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Drawer, Button, Spin } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { useJob } from "../../contexts/JobContext";
@@ -9,13 +9,22 @@ const Navbar = ({ onLogout }) => {
   const { status } = useJob();
   const navigate = useNavigate();
 
-  const showDrawer = () => {
-    setDrawerVisible(true);
-  };
+  const showDrawer = () => setDrawerVisible(true);
+  const closeDrawer = () => setDrawerVisible(false);
 
-  const closeDrawer = () => {
-    setDrawerVisible(false);
-  };
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(min-width: 768px)");
+
+    const handleResize = () => {
+      if (mediaQuery.matches) {
+        setDrawerVisible(false);
+      }
+    };
+
+    mediaQuery.addEventListener("change", handleResize);
+
+    return () => mediaQuery.removeEventListener("change", handleResize);
+  }, []);
 
   return (
     <nav className="navbar">
@@ -39,7 +48,6 @@ const Navbar = ({ onLogout }) => {
             Generating your routine... <Spin />
           </span>
         )}
-
         <Button
           type="primary"
           className="logout-btn desktop-nav"
