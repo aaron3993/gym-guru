@@ -64,11 +64,6 @@
   color: black;
 }
 
-.custom-drawer .ant-drawer-header {
-  background-color: white;
-  border-bottom: 1px solid #f0f0f0;
-}
-
 .custom-drawer .ant-drawer-header-title {
   color: black;
   font-size: 18px;
