@@ -1,6 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Drawer, Button, Spin, Menu } from "antd";
-import { MenuOutlined } from "@ant-design/icons";
+import {
+  MenuOutlined,
+  HomeOutlined,
+  UnorderedListOutlined,
+  FireOutlined,
+  UserOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useJob } from "../../contexts/JobContext";
 import "./Navbar.css";
@@ -30,19 +37,37 @@ const Navbar = ({ onLogout }) => {
   }, []);
 
   const menuItems = [
-    { key: "home", label: <Link to="/">Gym Guru</Link> },
-    { key: "routines", label: <Link to="/routines">Routines</Link> },
-    { key: "workouts", label: <Link to="/workouts">Workouts</Link> },
-    { key: "profile", label: <Link to="/profile">Profile</Link> },
+    { key: "home", label: "Home", icon: <HomeOutlined />, path: "/" },
+    {
+      key: "routines",
+      label: "Routines",
+      icon: <UnorderedListOutlined />,
+      path: "/routines",
+    },
+    {
+      key: "workouts",
+      label: "Workouts",
+      icon: <FireOutlined />,
+      path: "/workouts",
+    },
+    {
+      key: "profile",
+      label: "Profile",
+      icon: <UserOutlined />,
+      path: "/profile",
+    },
   ];
 
   return (
     <nav className="navbar">
-      {/* Desktop Navigation */}
       {!isMobile && (
         <Menu mode="horizontal" className="desktop-nav">
           {menuItems.map((item) => (
-            <Menu.Item key={item.key}>{item.label}</Menu.Item>
+            <Menu.Item key={item.key}>
+              <Link to={item.path} className="nav-link">
+                {item.label}
+              </Link>
+            </Menu.Item>
           ))}
         </Menu>
       )}
@@ -58,6 +83,7 @@ const Navbar = ({ onLogout }) => {
             type="primary"
             danger
             className="logout-btn desktop-nav"
+            icon={<LogoutOutlined />}
             onClick={async () => {
               await onLogout();
               navigate("/login");
@@ -68,7 +94,6 @@ const Navbar = ({ onLogout }) => {
         )}
       </div>
 
-      {/* Mobile Navigation */}
       {isMobile && (
         <div className="mobile-nav">
           {status === "pending" && (
@@ -90,23 +115,34 @@ const Navbar = ({ onLogout }) => {
         open={drawerVisible}
         width="60%"
         styles={{ body: { padding: 0 } }}
+        className="custom-drawer"
       >
-        <Menu mode="vertical" onClick={closeDrawer}>
+        <div className="drawer-content">
           {menuItems.map((item) => (
-            <Menu.Item key={item.key}>{item.label}</Menu.Item>
+            <Link
+              key={item.key}
+              to={item.path}
+              className="drawer-link"
+              onClick={closeDrawer}
+            >
+              {item.icon}
+              <span>{item.label}</span>
+            </Link>
           ))}
-        </Menu>
-        <Button
-          type="primary"
-          danger
-          block
-          onClick={async () => {
-            await onLogout();
-            navigate("/login");
-          }}
-        >
-          Logout
-        </Button>
+          <Button
+            type="primary"
+            danger
+            block
+            icon={<LogoutOutlined />}
+            onClick={async () => {
+              await onLogout();
+              navigate("/login");
+            }}
+            className="logout-btn"
+          >
+            Logout
+          </Button>
+        </div>
       </Drawer>
     </nav>
   );
