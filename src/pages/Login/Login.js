@@ -3,6 +3,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Alert, Button, Form, Input } from "antd";
+import { MailOutlined, LockOutlined } from "@ant-design/icons";
 import "./Login.css";
 
 const Login = () => {
@@ -86,6 +87,7 @@ const Login = () => {
                   className="input"
                   autoComplete="email"
                   placeholder="Email"
+                  prefix={<MailOutlined />}
                 />
               </Form.Item>
 
@@ -99,6 +101,7 @@ const Login = () => {
                   className="input"
                   autoComplete="current-password"
                   placeholder="Password"
+                  prefix={<LockOutlined />}
                 />
               </Form.Item>
 
