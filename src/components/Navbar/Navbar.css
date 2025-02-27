@@ -119,11 +119,11 @@
 
 @media (max-width: 768px) {
   .drawer-link {
-    font-size: 28px;
+    font-size: 24px;
   }
 
   .home-drawer-link {
-    font-size: 36px;
+    font-size: 28px;
   }
 
   .navbar {

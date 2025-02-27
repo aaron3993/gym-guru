@@ -2,7 +2,9 @@
   font-family: Arial, sans-serif;
   padding: 20px;
   background-color: #f9f9f9;
-  height: calc(100vh - 140px);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .editable-profile-form {
@@ -90,10 +92,4 @@
   display: flex;
   justify-content: flex-end;
   margin-top: 20px;
-}
-
-@media (max-width: 768px) {
-  .editable-profile-container {
-    height: calc(100vh - 100px);
-  }
 }

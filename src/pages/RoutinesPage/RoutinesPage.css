@@ -2,7 +2,9 @@
   font-family: Arial, sans-serif;
   background-color: #f9f9f9;
   padding: 20px;
-  height: calc(100vh - 140px);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .header {
@@ -37,10 +39,4 @@
 .ai-button:hover {
   opacity: 0.8;
   background-color: #1e7d34;
-}
-
-@media (max-width: 768px) {
-  .routines-page {
-    height: calc(100vh - 100px);
-  }
 }

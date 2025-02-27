@@ -3,7 +3,9 @@
   overflow: hidden;
   color: #333;
   background-color: #f9f9f9;
-  height: calc(100vh - 140px);
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
   padding: 20px;
 }
 
@@ -146,10 +148,6 @@
 @media (max-width: 768px) {
   .app-title {
     font-size: 64px;
-  }
-
-  .home-page {
-    height: calc(100vh - 100px);
   }
 
   .button-options {
