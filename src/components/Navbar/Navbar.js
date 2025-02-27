@@ -61,51 +61,51 @@ const Navbar = ({ onLogout }) => {
   return (
     <nav className="navbar">
       {!isMobile && (
-        <Menu mode="horizontal" className="desktop-nav">
-          {menuItems.map((item) => (
-            <Menu.Item key={item.key}>
-              <Link to={item.path} className="nav-link">
-                {item.label}
-              </Link>
-            </Menu.Item>
-          ))}
-        </Menu>
-      )}
+        <>
+          <Menu mode="horizontal" className="desktop-nav">
+            {menuItems.map((item) => (
+              <Menu.Item key={item.key}>
+                <Link to={item.path} className="nav-link">
+                  {item.label}
+                </Link>
+              </Menu.Item>
+            ))}
+          </Menu>
 
-      <div>
-        {status === "pending" && (
-          <span className="job-status">
-            Generating your routine... <Spin />
-          </span>
-        )}
-        {!isMobile && (
-          <Button
-            type="primary"
-            danger
-            className="logout-btn desktop-nav"
-            icon={<LogoutOutlined />}
-            onClick={async () => {
-              await onLogout();
-              navigate("/login");
-            }}
-          >
-            Logout
-          </Button>
-        )}
-      </div>
+          <div className="nav-right">
+            {status === "pending" && (
+              <span className="job-status">
+                Generating your routine... <Spin />
+              </span>
+            )}
+            <Button
+              type="primary"
+              danger
+              className="logout-btn desktop-nav"
+              icon={<LogoutOutlined />}
+              onClick={async () => {
+                await onLogout();
+                navigate("/login");
+              }}
+            >
+              Logout
+            </Button>
+          </div>
+        </>
+      )}
 
       {isMobile && (
         <div className="mobile-nav">
-          {status === "pending" && (
-            <span className="mobile-job-status">
-              Generating your routine... <Spin />
-            </span>
-          )}
           <Button
             className="hamburger-btn"
             icon={<MenuOutlined />}
             onClick={showDrawer}
           />
+          {status === "pending" && (
+            <span className="mobile-job-status">
+              Generating your routine... <Spin />
+            </span>
+          )}
         </div>
       )}
 

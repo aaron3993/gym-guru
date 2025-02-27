@@ -116,6 +116,11 @@
   cursor: pointer;
 }
 
+.nav-right {
+  display: flex;
+  align-items: center;
+}
+
 @media (max-width: 768px) {
   .navbar {
     padding: 10px 20px;
@@ -127,12 +132,16 @@
 
   .mobile-nav {
     display: flex;
-    justify-content: flex-end;
     align-items: center;
   }
 
   .job-status {
     display: none;
+  }
+
+  .mobile-job-status {
+    margin-left: 8px;
+    color: black;
   }
 }
 
