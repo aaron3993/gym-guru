@@ -114,10 +114,12 @@ const Navbar = ({ onLogout }) => {
         onClose={closeDrawer}
         open={drawerVisible}
         width="60%"
-        styles={{ body: { padding: 0 } }}
+        styles={{
+          body: { padding: 0, display: "flex", flexDirection: "column" },
+        }}
         className="custom-drawer"
       >
-        <div className="drawer-content">
+        <div className="drawer-menu">
           {menuItems.map((item) => (
             <Link
               key={item.key}
@@ -129,6 +131,8 @@ const Navbar = ({ onLogout }) => {
               <span>{item.label}</span>
             </Link>
           ))}
+        </div>
+        <div className="drawer-footer">
           <Button
             type="primary"
             danger
