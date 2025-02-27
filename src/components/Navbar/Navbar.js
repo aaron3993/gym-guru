@@ -1,111 +1,152 @@
-import React, { useState } from "react";
-import { Drawer, Button, Spin } from "antd";
+import React, { useState, useEffect } from "react";
+import { Drawer, Button, Spin, Menu } from "antd";
+import {
+  MenuOutlined,
+  HomeOutlined,
+  UnorderedListOutlined,
+  FireOutlined,
+  UserOutlined,
+  LogoutOutlined,
+} from "@ant-design/icons";
 import { Link, useNavigate } from "react-router-dom";
 import { useJob } from "../../contexts/JobContext";
 import "./Navbar.css";
 
 const Navbar = ({ onLogout }) => {
   const [drawerVisible, setDrawerVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const { status } = useJob();
   const navigate = useNavigate();
 
-  const showDrawer = () => {
-    setDrawerVisible(true);
-  };
+  const showDrawer = () => setDrawerVisible(true);
+  const closeDrawer = () => setDrawerVisible(false);
 
-  const closeDrawer = () => {
-    setDrawerVisible(false);
-  };
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(max-width: 768px)");
+
+    const handleResize = () => {
+      setIsMobile(mediaQuery.matches);
+      if (!mediaQuery.matches) {
+        setDrawerVisible(false);
+      }
+    };
+
+    mediaQuery.addEventListener("change", handleResize);
+
+    return () => mediaQuery.removeEventListener("change", handleResize);
+  }, []);
+
+  const menuItems = [
+    { key: "home", label: "Home", icon: <HomeOutlined />, path: "/" },
+    {
+      key: "routines",
+      label: "Routines",
+      icon: <UnorderedListOutlined />,
+      path: "/routines",
+    },
+    {
+      key: "workouts",
+      label: "Workouts",
+      icon: <FireOutlined />,
+      path: "/workouts",
+    },
+    {
+      key: "profile",
+      label: "Profile",
+      icon: <UserOutlined />,
+      path: "/profile",
+    },
+  ];
 
   return (
     <nav className="navbar">
-      <div className="nav-links desktop-nav">
-        <Link to="/" className="nav-link home-link">
-          Gym Guru
-        </Link>
-        <Link to="/routines" className="nav-link">
-          Routines
-        </Link>
-        <Link to="/workouts" className="nav-link">
-          Workouts
-        </Link>
-        <Link to="/profile" className="nav-link">
-          Profile
-        </Link>
-      </div>
-      <div>
-        {status === "pending" && (
-          <span className="job-status">
-            Generating your routine... <Spin />
-          </span>
-        )}
+      {!isMobile && (
+        <>
+          <Menu mode="horizontal" className="desktop-nav">
+            {menuItems.map((item) => (
+              <Menu.Item key={item.key}>
+                <Link to={item.path} className="nav-link">
+                  {item.label}
+                </Link>
+              </Menu.Item>
+            ))}
+          </Menu>
 
-        <Button
-          type="primary"
-          className="logout-btn desktop-nav"
-          onClick={async () => {
-            await onLogout();
-            navigate("/login");
-          }}
-        >
-          Logout
-        </Button>
-      </div>
-      <div className="mobile-nav">
-        {status === "pending" && (
-          <span className="mobile-job-status">
-            Generating your routine... <Spin />
-          </span>
-        )}
-        <Button className="hamburger-btn" onClick={showDrawer}>
-          ☰
-        </Button>
-      </div>
+          <div className="nav-right">
+            {status === "pending" && (
+              <span className="job-status">
+                Generating your routine... <Spin />
+              </span>
+            )}
+            <Button
+              type="primary"
+              danger
+              className="logout-btn desktop-nav"
+              icon={<LogoutOutlined />}
+              onClick={async () => {
+                await onLogout();
+                navigate("/login");
+              }}
+            >
+              Logout
+            </Button>
+          </div>
+        </>
+      )}
+
+      {isMobile && (
+        <div className="mobile-nav">
+          <Button
+            className="hamburger-btn"
+            icon={<MenuOutlined />}
+            onClick={showDrawer}
+          />
+          {status === "pending" && (
+            <span className="mobile-job-status">
+              Generating your routine... <Spin />
+            </span>
+          )}
+        </div>
+      )}
+
       <Drawer
         placement="left"
         onClose={closeDrawer}
         open={drawerVisible}
-        className="custom-drawer"
-        style={{
-          backgroundColor: "white",
-          color: "black",
-          width: "60%",
-        }}
+        width="60%"
         styles={{
-          body: {
-            padding: 0,
-          },
+          body: { padding: 0, display: "flex", flexDirection: "column" },
         }}
+        className="custom-drawer"
       >
-        <div>
-          <Link
-            to="/"
-            className="drawer-link home-drawer-link"
-            onClick={closeDrawer}
-          >
-            Gym Guru
-          </Link>
-          <Link to="/routines" className="drawer-link" onClick={closeDrawer}>
-            Routines
-          </Link>
-          <Link to="/workouts" className="drawer-link" onClick={closeDrawer}>
-            Workouts
-          </Link>
-          <Link to="/profile" className="drawer-link" onClick={closeDrawer}>
-            Profile
-          </Link>
+        <div className="drawer-menu">
+          {menuItems.map((item) => (
+            <Link
+              key={item.key}
+              to={item.path}
+              className="drawer-link"
+              onClick={closeDrawer}
+            >
+              {item.icon}
+              <span>{item.label}</span>
+            </Link>
+          ))}
         </div>
-        <Button
-          type="primary"
-          danger
-          className="logout-btn"
-          onClick={async () => {
-            await onLogout();
-            navigate("/login");
-          }}
-        >
-          Logout
-        </Button>
+        <div className="drawer-footer">
+          <Button
+            type="primary"
+            danger
+            block
+            icon={<LogoutOutlined />}
+            onClick={async () => {
+              await onLogout();
+              navigate("/login");
+            }}
+            className="logout-btn"
+          >
+            Logout
+          </Button>
+        </div>
       </Drawer>
     </nav>
   );

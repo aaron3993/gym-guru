@@ -3,6 +3,7 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../firebase";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Alert, Button, Form, Input } from "antd";
+import { MailOutlined, LockOutlined } from "@ant-design/icons";
 import "./Login.css";
 
 const Login = () => {
@@ -82,7 +83,12 @@ const Login = () => {
                 labelCol={{ span: 24 }}
                 wrapperCol={{ span: 24 }}
               >
-                <Input autoComplete="email" placeholder="Email address" />
+                <Input
+                  className="input"
+                  autoComplete="email"
+                  placeholder="Email"
+                  prefix={<MailOutlined />}
+                />
               </Form.Item>
 
               <Form.Item
@@ -92,13 +98,15 @@ const Login = () => {
                 wrapperCol={{ span: 24 }}
               >
                 <Input.Password
+                  className="input"
                   autoComplete="current-password"
                   placeholder="Password"
+                  prefix={<LockOutlined />}
                 />
               </Form.Item>
 
               <Form.Item>
-                <Button type="primary" htmlType="submit">
+                <Button className="login-btn" type="primary" htmlType="submit">
                   Login
                 </Button>
               </Form.Item>

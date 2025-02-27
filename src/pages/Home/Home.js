@@ -22,18 +22,6 @@ const Home = () => {
 
   return (
     <div className="home-page">
-      {/* <section id="landing-section" className="full-page-section">
-        <div className="content-container">
-          <h1 className="app-title">Gym Guru</h1>
-          <p className="slogan">Customize Your Journey, Sculpt Your Success.</p>
-          <Link to="options-section" smooth={true} duration={800}>
-            <Button type="primary" className="cta-button">
-              Get Started
-            </Button>
-          </Link>
-        </div>
-      </section> */}
-
       <section id="options-section" className="full-page-section">
         <div className="options-container">
           <h2>Choose Your Workout Creation Method</h2>

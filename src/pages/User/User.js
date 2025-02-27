@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { fetchUserData } from "../../utils/firestoreUtils";
 import EditableProfile from "./EditableProfile/EditableProfile";
 import { useAuth } from "../../contexts/AuthContext";
-import LoadingSpinner from "../../components/LoadingSpinner";
+import LoadingSpinner from "../../components/LoadingSpinner/LoadingSpinner";
 
 const User = () => {
   const { user } = useAuth();

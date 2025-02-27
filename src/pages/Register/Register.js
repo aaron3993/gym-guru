@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { Alert, Input, Button, Form } from "antd";
+import { MailOutlined, LockOutlined } from "@ant-design/icons";
 import { registerUser } from "../../utils/firestoreUtils";
 import "./Register.css";
 
@@ -60,11 +61,13 @@ const Register = () => {
                 wrapperCol={{ span: 24 }}
               >
                 <Input
+                  className="input"
                   type="email"
                   value={email}
                   autoComplete="email"
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Email address"
+                  placeholder="Email"
+                  prefix={<MailOutlined />}
                 />
               </Form.Item>
 
@@ -75,10 +78,12 @@ const Register = () => {
                 wrapperCol={{ span: 24 }}
               >
                 <Input.Password
+                  className="input"
                   autoComplete="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Password"
+                  prefix={<LockOutlined />}
                 />
               </Form.Item>
 

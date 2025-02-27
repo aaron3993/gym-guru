@@ -1,0 +1,10 @@
+.custom-spin {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.ant-spin-dot {
+  color: #1890ff;
+}

@@ -5,7 +5,7 @@ import { formatGoalsAndFitnessLevelsText } from "../../../utils/dataUtils";
 import { useAuth } from "../../../contexts/AuthContext";
 import "./EditableProfile.css";
 
-const { Text } = Typography;
+const { Title } = Typography;
 const { Option } = Select;
 
 const EditableProfile = ({ userData }) => {
@@ -50,171 +50,170 @@ const EditableProfile = ({ userData }) => {
   };
 
   return (
-    <div className="editable-profile-container">
-      <Form
-        form={form}
-        layout="vertical"
-        initialValues={profileData}
-        className="editable-profile-form"
-      >
-        <div className="email-display">
-          <Text>
-            <b>Email: {userData?.email || "Not Set"}</b>
-          </Text>
+    <div className="profile-page">
+      <div className="editable-profile-container">
+        <div className="header">
+          <Title level={4}>My Profile</Title>
         </div>
-
-        <Form.Item
-          label="First Name"
-          name="firstName"
-          rules={[{ message: "First Name is required." }]}
+        <Form
+          form={form}
+          layout="vertical"
+          initialValues={profileData}
+          className="editable-profile-form"
         >
-          <Input disabled={!isEditing} className="editable-input" />
-        </Form.Item>
+          <Form.Item
+            label="First Name"
+            name="firstName"
+            rules={[{ message: "First Name is required." }]}
+          >
+            <Input disabled={!isEditing} className="editable-input" />
+          </Form.Item>
 
-        <Form.Item
-          label="Last Name"
-          name="lastName"
-          rules={[{ message: "Last Name is required." }]}
-        >
-          <Input disabled={!isEditing} className="editable-input" />
-        </Form.Item>
+          <Form.Item
+            label="Last Name"
+            name="lastName"
+            rules={[{ message: "Last Name is required." }]}
+          >
+            <Input disabled={!isEditing} className="editable-input" />
+          </Form.Item>
 
-        <Form.Item
-          label="Weight (kg)"
-          name="weight"
-          rules={[
-            {
-              validator: (_, value) => {
-                if (value === undefined || value === null || value === "") {
-                  return Promise.resolve();
-                }
-                return value > 0
-                  ? Promise.resolve()
-                  : Promise.reject("Enter a valid weight.");
+          <Form.Item
+            label="Weight (kg)"
+            name="weight"
+            rules={[
+              {
+                validator: (_, value) => {
+                  if (value === undefined || value === null || value === "") {
+                    return Promise.resolve();
+                  }
+                  return value > 0
+                    ? Promise.resolve()
+                    : Promise.reject("Enter a valid weight.");
+                },
               },
-            },
-          ]}
-        >
-          <Input
-            type="number"
-            disabled={!isEditing}
-            className="editable-input"
-          />
-        </Form.Item>
+            ]}
+          >
+            <Input
+              type="number"
+              disabled={!isEditing}
+              className="editable-input"
+            />
+          </Form.Item>
 
-        <Form.Item
-          label="Height (cm)"
-          name="height"
-          rules={[
-            {
-              validator: (_, value) => {
-                if (value === undefined || value === null || value === "") {
-                  return Promise.resolve();
-                }
-                return value > 0
-                  ? Promise.resolve()
-                  : Promise.reject("Enter a valid height.");
+          <Form.Item
+            label="Height (cm)"
+            name="height"
+            rules={[
+              {
+                validator: (_, value) => {
+                  if (value === undefined || value === null || value === "") {
+                    return Promise.resolve();
+                  }
+                  return value > 0
+                    ? Promise.resolve()
+                    : Promise.reject("Enter a valid height.");
+                },
               },
-            },
-          ]}
-        >
-          <Input
-            type="number"
-            disabled={!isEditing}
-            className="editable-input"
-          />
-        </Form.Item>
+            ]}
+          >
+            <Input
+              type="number"
+              disabled={!isEditing}
+              className="editable-input"
+            />
+          </Form.Item>
 
-        <Form.Item
-          label="Age"
-          name="age"
-          rules={[
-            {
-              validator: (_, value) => {
-                if (value === undefined || value === null || value === "") {
-                  return Promise.resolve();
-                }
-                return value > 0
-                  ? Promise.resolve()
-                  : Promise.reject("Enter a valid age.");
+          <Form.Item
+            label="Age"
+            name="age"
+            rules={[
+              {
+                validator: (_, value) => {
+                  if (value === undefined || value === null || value === "") {
+                    return Promise.resolve();
+                  }
+                  return value > 0
+                    ? Promise.resolve()
+                    : Promise.reject("Enter a valid age.");
+                },
               },
-            },
-          ]}
-        >
-          <Input
-            type="number"
-            disabled={!isEditing}
-            className="editable-input"
-          />
-        </Form.Item>
+            ]}
+          >
+            <Input
+              type="number"
+              disabled={!isEditing}
+              className="editable-input"
+            />
+          </Form.Item>
 
-        <Form.Item
-          label="Sex"
-          name="sex"
-          rules={[{ message: "Sex is required." }]}
-        >
-          <Select disabled={!isEditing} className="editable-select">
-            <Option value="Male">Male</Option>
-            <Option value="Female">Female</Option>
-            <Option value="Other">Other</Option>
-          </Select>
-        </Form.Item>
+          <Form.Item
+            label="Sex"
+            name="sex"
+            rules={[{ message: "Sex is required." }]}
+          >
+            <Select disabled={!isEditing} className="editable-select">
+              <Option value="Male">Male</Option>
+              <Option value="Female">Female</Option>
+              <Option value="Other">Other</Option>
+            </Select>
+          </Form.Item>
 
-        <Form.Item
-          label="Fitness Level"
-          name="fitnessLevel"
-          rules={[{ message: "Fitness Level is required." }]}
-        >
-          <Select disabled={!isEditing} className="editable-select">
-            <Option value="beginner">Beginner</Option>
-            <Option value="intermediate">Intermediate</Option>
-            <Option value="advanced">Advanced</Option>
-          </Select>
-        </Form.Item>
+          <Form.Item
+            label="Fitness Level"
+            name="fitnessLevel"
+            rules={[{ message: "Fitness Level is required." }]}
+          >
+            <Select disabled={!isEditing} className="editable-select">
+              <Option value="beginner">Beginner</Option>
+              <Option value="intermediate">Intermediate</Option>
+              <Option value="advanced">Advanced</Option>
+            </Select>
+          </Form.Item>
 
-        <Form.Item
-          label="Goal"
-          name="goal"
-          rules={[{ message: "Please select your goal" }]}
-        >
-          <Select disabled={!isEditing} className="editable-select">
-            <Option value="weightLoss">Weight Loss</Option>
-            <Option value="muscleGain">Muscle Gain</Option>
-            <Option value="endurance">Endurance</Option>
-            <Option value="strength">Strength</Option>
-            <Option value="generalFitness">General Fitness</Option>
-          </Select>
-        </Form.Item>
+          <Form.Item
+            label="Goal"
+            name="goal"
+            rules={[{ message: "Please select your goal" }]}
+          >
+            <Select disabled={!isEditing} className="editable-select">
+              <Option value="weightLoss">Weight Loss</Option>
+              <Option value="muscleGain">Muscle Gain</Option>
+              <Option value="endurance">Endurance</Option>
+              <Option value="strength">Strength</Option>
+              <Option value="generalFitness">General Fitness</Option>
+            </Select>
+          </Form.Item>
 
-        <div className="editable-profile-actions">
-          {isEditing ? (
-            <>
+          <div className="editable-profile-actions">
+            {isEditing ? (
+              <>
+                <Button
+                  type="default"
+                  onClick={handleCancel}
+                  className="cancel-button"
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="primary"
+                  onClick={handleSave}
+                  className="save-button"
+                >
+                  Save
+                </Button>
+              </>
+            ) : (
               <Button
                 type="default"
-                onClick={handleCancel}
-                className="cancel-button"
+                onClick={() => setIsEditing(true)}
+                className="edit-button"
               >
-                Cancel
+                Edit
               </Button>
-              <Button
-                type="primary"
-                onClick={handleSave}
-                className="save-button"
-              >
-                Save
-              </Button>
-            </>
-          ) : (
-            <Button
-              type="default"
-              onClick={() => setIsEditing(true)}
-              className="edit-button"
-            >
-              Edit
-            </Button>
-          )}
-        </div>
-      </Form>
+            )}
+          </div>
+        </Form>
+      </div>
     </div>
   );
 };
