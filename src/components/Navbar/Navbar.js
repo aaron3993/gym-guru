@@ -62,7 +62,14 @@ const Navbar = ({ onLogout }) => {
   return (
     <nav className="navbar">
       {!isMobile && (
-        <Menu mode="horizontal" className="desktop-nav" items={menuItems} />
+        <Menu
+          mode="horizontal"
+          className="desktop-nav"
+          items={menuItems.map((item) => ({
+            ...item,
+            icon: null,
+          }))}
+        />
       )}
 
       <div>
