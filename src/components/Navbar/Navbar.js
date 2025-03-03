@@ -37,75 +37,68 @@ const Navbar = ({ onLogout }) => {
   }, []);
 
   const menuItems = [
-    { key: "home", label: "Home", icon: <HomeOutlined />, path: "/" },
+    {
+      key: "home",
+      label: <Link to="/">Home</Link>,
+      icon: <HomeOutlined />,
+    },
     {
       key: "routines",
-      label: "Routines",
+      label: <Link to="/routines">Routines</Link>,
       icon: <UnorderedListOutlined />,
-      path: "/routines",
     },
     {
       key: "workouts",
-      label: "Workouts",
+      label: <Link to="/workouts">Workouts</Link>,
       icon: <FireOutlined />,
-      path: "/workouts",
     },
     {
       key: "profile",
-      label: "Profile",
+      label: <Link to="/profile">Profile</Link>,
       icon: <UserOutlined />,
-      path: "/profile",
     },
   ];
 
   return (
     <nav className="navbar">
       {!isMobile && (
-        <>
-          <Menu mode="horizontal" className="desktop-nav">
-            {menuItems.map((item) => (
-              <Menu.Item key={item.key}>
-                <Link to={item.path} className="nav-link">
-                  {item.label}
-                </Link>
-              </Menu.Item>
-            ))}
-          </Menu>
-
-          <div className="nav-right">
-            {status === "pending" && (
-              <span className="job-status">
-                Generating your routine... <Spin />
-              </span>
-            )}
-            <Button
-              type="primary"
-              danger
-              className="logout-btn desktop-nav"
-              icon={<LogoutOutlined />}
-              onClick={async () => {
-                await onLogout();
-                navigate("/login");
-              }}
-            >
-              Logout
-            </Button>
-          </div>
-        </>
+        <Menu mode="horizontal" className="desktop-nav" items={menuItems} />
       )}
+
+      <div>
+        {status === "pending" && (
+          <span className="job-status">
+            Generating your routine... <Spin />
+          </span>
+        )}
+        {!isMobile && (
+          <Button
+            type="primary"
+            danger
+            className="logout-btn desktop-nav"
+            icon={<LogoutOutlined />}
+            onClick={async () => {
+              await onLogout();
+              navigate("/login");
+            }}
+          >
+            Logout
+          </Button>
+        )}
+      </div>
 
       {isMobile && (
         <div className="mobile-nav">
-          <Button
-            className="hamburger-btn"
-            icon={<MenuOutlined />}
-            onClick={showDrawer}
-          />
           {status === "pending" && (
             <span className="mobile-job-status">
               Generating your routine... <Spin />
             </span>
           )}
+          <Button
+            className="hamburger-btn"
+            icon={<MenuOutlined />}
+            onClick={showDrawer}
+          />
         </div>
       )}
 
@@ -119,19 +112,12 @@ const Navbar = ({ onLogout }) => {
         }}
         className="custom-drawer"
       >
-        <div className="drawer-menu">
-          {menuItems.map((item) => (
-            <Link
-              key={item.key}
-              to={item.path}
-              className="drawer-link"
-              onClick={closeDrawer}
-            >
-              {item.icon}
-              <span>{item.label}</span>
-            </Link>
-          ))}
-        </div>
+        <Menu
+          mode="vertical"
+          onClick={closeDrawer}
+          className="drawer-menu"
+          items={menuItems}
+        />
         <div className="drawer-footer">
           <Button
             type="primary"
