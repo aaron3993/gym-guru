@@ -13,10 +13,10 @@ import LandingPage from "./pages/LandingPage/LandingPage";
 import { useAuth } from "./contexts/AuthContext";
 import RoutineDetailPage from "./pages/RoutinesPage/RoutineList/RoutineCard/RoutineDetailPage/RoutineDetailPage";
 import { logEvent, analytics } from "./firebase";
-import Layout from "./components/Layout"; // Import the new Layout component
+import Layout from "./components/Layout";
 
 const App = () => {
-  const { user, isAuthenticated, isLoading, handleLogout } = useAuth();
+  const { user, isAuthenticated, isLoading } = useAuth();
 
   useEffect(() => {
     logEvent(analytics, "user_landed");
