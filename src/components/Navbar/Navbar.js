@@ -39,7 +39,7 @@ const Navbar = ({ onLogout }) => {
   const menuItems = [
     {
       key: "home",
-      label: <Link to="/">Home</Link>,
+      label: <Link to="/home">Gym Guru</Link>,
       icon: <HomeOutlined />,
     },
     {
@@ -63,6 +63,7 @@ const Navbar = ({ onLogout }) => {
     <nav className="navbar">
       {!isMobile && (
         <Menu
+          style={{ borderBottom: "none" }}
           mode="horizontal"
           className="desktop-nav"
           items={menuItems.map((item) => ({
