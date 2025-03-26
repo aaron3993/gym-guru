@@ -8,7 +8,7 @@ Live website: https://gymguru-37ed9.web.app/
 
 - **User Registration:** Create your account to unlock the full potential of Gym Guru. Your personalized profile allows you to save and revisit your workout routines seamlessly.
 
-- **Weekly Workout Plan Generation (Powered by OpenAI):** Generate a customized weekly workout plan using OpenAI's API. Based on your preferences and goals, Gym Guru creates a plan designed to keep you on track and motivated.
+- **Weekly Workout Plan Generation (Powered by Gemini AI):** Generate a customized weekly workout plan using Google's Gemini API. Based on your preferences and goals, Gym Guru creates a plan designed to keep you on track and motivated.
 
 - **Real-Time Feedback**: Each workout routine generation creates a background job that runs asynchronously. Jobs are actively monitored for progress and completion to ensure reliability and provide real-time updates to users.
 
@@ -27,7 +27,7 @@ Live website: https://gymguru-37ed9.web.app/
 ## Technologies Used
 
 - **React:** Building a dynamic and responsive user interface.
-- **OpenAI API:** Used for generating personalized weekly workout plans based on user goals and preferences.
+- **Google Gemini API:** Used for generating personalized weekly workout plans based on user goals and preferences.
 - **Firebase Auth:** Enabling user authentication for a secure registration and login experience, and user management.
 - **Firestore:** Storing user profiles, workouts, routines, jobs, and exercise data in a scalable NoSQL database.
 - **ExerciseDB (RapidAPI):** Leveraging the RapidAPI ExerciseDB for a comprehensive database of exercises.
