@@ -73,7 +73,7 @@ const Navbar = ({ onLogout }) => {
         />
       )}
 
-      <div>
+      <div className="desktop-nav-end">
         {status === "pending" && (
           <span className="job-status">
             Generating your routine... <Spin />
@@ -83,7 +83,7 @@ const Navbar = ({ onLogout }) => {
           <Button
             type="primary"
             danger
-            className="logout-btn desktop-nav"
+            className="logout-btn"
             icon={<LogoutOutlined />}
             onClick={async () => {
               await onLogout();
