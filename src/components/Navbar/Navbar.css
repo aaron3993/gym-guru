@@ -111,7 +111,7 @@
   cursor: pointer;
 }
 
-.nav-right {
+.desktop-nav-end {
   display: flex;
   align-items: center;
 }
