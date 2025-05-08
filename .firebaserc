@@ -4,6 +4,17 @@
     "staging": "gym-guru-staging",
     "prod": "gymguru-37ed9"
   },
-  "targets": {},
+  "targets": {
+    "gymguru-37ed9": {
+      "hosting": {
+        "staging": [
+          "gym-guru-staging"
+        ],
+        "production": [
+          "gymguru-37ed9"
+        ]
+      }
+    }
+  },
   "etags": {}
 }
