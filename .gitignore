@@ -13,7 +13,7 @@ node_modules# See https://help.github.com/articles/ignoring-files/ for more abou
 
 # misc
 .DS_Store
-.env.staging
+.env
 .env.local
 .env.production
 .env.development.local
